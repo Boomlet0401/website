@@ -1,0 +1,426 @@
+
+
+.NavbarHeader{
+  position:fixed;
+  margin-left: 17em;
+  margin-top: 0em;
+  height: 6em;
+  box-shadow: -44px 46px 24px -53px rgba(0,0,0,0.18);
+  z-index:9999;
+  background-color:#fff;
+  width: 80em;
+}
+
+.NavbarButton1{
+  background-color: white;
+  border: 1px solid red;
+  color: red;
+  height: 30px;
+  top:5em;
+  width: 60px;
+  border-radius: 4px;
+  position : absolute;
+  right: 15%;
+  z-index:99999999;
+  cursor: pointer;
+}
+
+.NavbarButton2{
+  background-color: white;
+  border: 1px solid blue;
+  color: blue;
+  top:5em;
+  height: 30px;
+  width: 60px;
+  border-radius: 4px;
+  position : absolute;
+  right: 10%;
+  z-index:99999999;
+  cursor: pointer;
+}
+
+.Navbar{
+  margin-left: 8em;
+  margin-top: -1em;
+}
+
+p{
+  font-size: 10px;
+}
+
+.main{
+  border: 1px solid #e8e8e8;
+  height: auto;
+  width: 70em;
+  border-radius : 5px;
+  margin-left:17em;
+}
+
+
+.InfluencerName{
+ /* margin-top: 20em;*/
+  margin-left: 2em;
+}
+
+
+input{
+  border:0;
+  position: absolute;
+  width: 17em;
+  font-size: 1rem;
+  color: black;
+  outline:0;
+  border-bottom: 2px solid #c9c9c9;
+  font-size: 0.9em;
+  background-color: #e8e8e8;
+  padding: 12px;
+  padding-bottom: 0.5px;
+  padding-left: 18px;
+  height: 35px;
+}
+
+#l1{
+  position: absolute;
+  font-size: 0.8em;
+  opacity:0.5;
+  top: 20.3em;
+  left: 25.8em;
+}
+
+.l2{
+  left: 55.8em!important;
+}
+
+.b2{
+  left: 48em;
+}
+
+.l3{
+  left: 86em!important;
+}
+
+.b3{
+  left: 75em;
+}
+
+.l4{
+  top: 26.4em!important;
+}
+
+.b4{
+  top: 23em;
+}
+
+.l5{
+  top: 26.4em!important;
+  left: 55.8em!important;
+}
+
+.b5{
+  top: 23em;
+  left: 48em;
+}
+
+.l6{
+  top: 26.4em!important;
+  left: 86em!important;
+}
+
+.b6{
+  top: 23em;
+  left: 75em;
+}
+
+.piclabel{
+  position: relative;
+  top: 12em;
+  font-size: 1rem;
+}
+
+.photoholder{
+  border-radius : 2em; 
+  border: 1px dashed black;
+  width: 9em;
+  margin-top: 13em;
+  padding :5em;
+  text-align: center;
+
+}
+
+.heading1{
+  margin-left: 1em;
+  font-size: 2em;
+}
+
+.g1{
+  margin-top: 4em;
+  margin-left: 2em;
+}
+
+.g2{
+  margin-left: 3em;
+}
+
+.g3{
+  margin-left: 3em;
+}
+
+.r1{
+  color: blue;
+  background-color: blue;
+}
+.r2{
+  margin-left: 1.3em;
+  color: blue;
+  background-color: blue;
+}
+
+.r3{
+  margin-left: 1.5em;
+  color: blue;
+  background-color: blue;
+}
+
+.r4{
+  margin-left: 1.5em;
+}
+
+.IT{
+  margin-top: -6em;
+  margin-left: 35em;
+}
+
+.s1{
+  width: 70em;
+}
+.s2{
+  width: 70em;
+}
+.s3{
+  width: 70em;
+}
+.s4{
+  width: 70em;
+}
+
+.s5{
+  height: 5.5em;
+  width: 70em;
+}
+
+.sl1{
+  margin-top: 45em;
+  z-index:1000;
+}
+
+.sl2{
+  margin-top: 51.5em;
+  z-index:1000;
+}
+
+.sl3{
+  margin-top: 58.5em;
+  z-index:1000;
+}
+
+.sl4{
+  margin-top: 65.4em;
+  z-index:1000;
+}
+
+.sl5{
+  margin-top: 72em;
+}
+
+.social1{
+  margin-top:9em;
+  margin-left:22em;
+}
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 2em;
+ /* margin-bottom: 1em;*/
+  margin-top:-2em;
+  margin-left:10em;
+  cursor: pointer;
+  font-size: 1em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5em;
+  width: 1.5em;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.ct1{
+  margin-left: 30em;
+  margin-top:  -2em;
+}
+
+.ct2{
+  margin-top:  -1.4em;
+  margin-left: 40em;
+}
+
+.linkb1{
+  margin-left: -22em;
+}
+
+.linkl1{
+  margin-top: 86.5em;
+}
+
+.linkl2{
+  margin-top: 86.5em;
+}
+
+.linkl3{
+  margin-top: 86.5em;
+}
+
+.social6{
+  margin-bottom: 20em;
+}
+
+.instb4{
+  margin-top: 90em;
+  margin-left: -22em;
+}
+
+.instb5{
+  margin-top: 90em;
+}
+
+.inst1,.inst2,.inst3{
+  margin-top:102em;
+  z-index:1000;
+}
+
+.inst4,.inst5{
+  margin-top:101em;
+  z-index:1000;
+}
+
+.blog1,.blog2,.blog3{
+  margin-top: 121.6em;
+}
+
+.twit1,.twit2,.twit3{
+  margin-top: 137em;
+}
+
+.faceb4{
+  margin-top:135em;
+  z-index:100;
+  margin-left: -22em;
+}
+
+.faceb5{
+  margin-top:135em;
+  z-index:100;
+
+}
+
+.face1,.face2,.face3{
+  margin-top: 152.6em;
+}
+
+.face4,.face5{
+  margin-top:151.5em;
+  z-index:100;
+}
+
+.tktk1,.tktk2,.tktk3{
+  margin-top:168em;
+  z-index:100;
+}
+
+.tktk4{
+  margin-top:167.6em;
+}
+
+.tktkb4{
+  margin-top:149em;
+  margin-left: -22em;
+}
+
+.r1,.r2,.r3,.r4{
+  width:auto;
+}
+
+.img1{
+  position:fixed;
+  z-index:9999999;
+  top:2em;
+  left:5em;
+}
+
+.heading{
+  margin-top: 1em;
+  margin-left: 10em;
+  font-size:0.6em;
+}
+
+.img2{
+  position:fixed;
+  top:0%;
+  z-index:999999;
+}
+
+.linkedin{
+  margin-left:-19em;
+}
