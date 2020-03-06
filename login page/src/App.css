@@ -1,0 +1,93 @@
+.box1{
+	margin:auto;
+  border: none;
+  box-shadow: 1px -2px 50px -2px rgba(0,0,0,0.27);
+    width: 20em;
+    margin-top:9em;
+    margin-left: 31em;
+    padding: 2em;
+    padding-top: 1em;
+    border-radius: 0.5em;
+    background-color:#fff;
+}
+
+
+input[type=text]{
+	-webkit-transition: width .35s ease-in-out;
+    transition: width .35s ease-in-out;
+    border: none;
+    padding: 1em;
+    padding-left:0;
+    border-bottom: 1px solid grey;
+    width: 22em;
+
+}
+
+input[type=text]:focus {
+  border-bottom: 1px solid blue;
+}
+
+input[type=password]{
+	-webkit-transition: width .35s ease-in-out;
+    transition: width .35s ease-in-out;
+    padding: 1em;
+    border: none;
+    padding-left:0;
+    font-weight: 10em;
+    border-bottom: 1px solid grey;
+    width: 22em;
+
+}
+
+input[type=password]:focus {
+  border:none;
+  border-bottom: 1px solid blue!important;
+}
+
+.b1{
+	border-radius:0.3em;
+	border: none;
+	background-color: blue;
+	color: white;
+	height: 3em;
+	width: 6.5em;
+	margin-left: 17em;
+}
+
+.b1:hover{
+   /* background-color: #0053b3;*/
+   opacity: 1;
+    cursor: pointer;
+}
+
+
+.line{
+  text-align:center;
+  letter-spacing: 0.01em;
+	}
+
+
+.usernme{
+   opacity:0.5;
+}
+
+.psswrd{
+  opacity:0.5;
+}
+
+
+.background{
+  padding:1em;
+  margin-left:5em;
+  align-self :center;
+  height:44.9em;
+  width:86%;
+  background-color: #f2f2f2;
+  z-index: -100000;
+}
+
+.logo{
+  height: 2em;
+  width: 10em;
+  margin-left:5.3em;
+}
