@@ -15,9 +15,9 @@ class Dashboard extends Component {
         return (
             <div className="main_bock">
                 <div className="right">
-                    <Sidebar />
+                    <Sidebar {...this.props} />
                 </div>
-                <div className="main_container">                
+                <div className="main_container">
                     <TopBarBlock {...this.props}>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <div style={{ background: '#F5F5F5', display: 'flex', padding: '0 15px', borderRadius: '3px' }}>

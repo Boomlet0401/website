@@ -36,7 +36,7 @@ class Edit_influancer extends Component {
         return (
             <div className="main_bock">
                 <div className="right">
-                    <Sidebar />
+                    <Sidebar {...this.props} />
                 </div>
                 <div className="main_container">
                     <TopBarBlock {...this.props}>

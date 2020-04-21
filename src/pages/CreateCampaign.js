@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import TopBarBlock from '../components/TopBarBlock';
-import { Link } from 'react-router-dom';
 import { Container, Row, Col, Form, Modal, Table } from 'react-bootstrap';
 import '../components/Jquery.js';
 import AddInfluencer from './AddInfluencer';
@@ -12,7 +11,6 @@ import insta from '../assets/icons/Instagram.svg';
 import pie_chart from '../assets/icons/pie-chart.svg';
 import male from '../assets/icons/male.svg';
 import female from '../assets/icons/Female.svg';
-import Desclaimer_data from '../data/Desclaimer_data';
 import Disclaimer from '../components/widget/Disclaimer';
 
 
@@ -258,7 +256,7 @@ class CreateCampaign extends Component {
                                     <p style={{ margin: '10px 0px', fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Category A</p>
                                     <div className={'influencer_details_header_block'}>
                                         <div className={'d-flex align-items-center'}>
-                                            <img style={{}} src={yt} />
+                                            <img alt="" style={{}} src={yt} />
                                             <p style={{ margin: '0px 20px', fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>YouTube</p>
                                         </div>
                                         <div className={'d-flex align-items-center'} >
@@ -321,8 +319,8 @@ class CreateCampaign extends Component {
                                                         <input className={'table-input'} type="text" placeholder="" value="1,50000" /> Rs.
                                                 </td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 45 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 45 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 45 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 45 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
 
@@ -337,8 +335,8 @@ class CreateCampaign extends Component {
                                                     <td>1 YT video</td>
                                                     <td>1,50000 Rs.</td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -352,24 +350,8 @@ class CreateCampaign extends Component {
                                                     <td>1 YT video</td>
                                                     <td>1,50000 Rs.</td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>Bhuvan Bam</td>
-                                                    <td>15.7 M</td>
-                                                    <td>Hindi</td>
-                                                    <td>300K</td>
-                                                    <td>2,92,340</td>
-                                                    <td>0.06</td>
-                                                    <td>1,20,000</td>
-                                                    <td>1 YT video</td>
-                                                    <td>1,50000 Rs.</td>
-                                                    <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
 
@@ -384,8 +366,24 @@ class CreateCampaign extends Component {
                                                     <td>1 YT video</td>
                                                     <td>1,50000 Rs.</td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Bhuvan Bam</td>
+                                                    <td>15.7 M</td>
+                                                    <td>Hindi</td>
+                                                    <td>300K</td>
+                                                    <td>2,92,340</td>
+                                                    <td>0.06</td>
+                                                    <td>1,20,000</td>
+                                                    <td>1 YT video</td>
+                                                    <td>1,50000 Rs.</td>
+                                                    <td className={'d-flex'}>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
 
@@ -422,7 +420,7 @@ class CreateCampaign extends Component {
                                     <p style={{ margin: '10px 0px', fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Category B</p>
                                     <div className={'influencer_details_header_block'}>
                                         <div className={'d-flex align-items-center'}>
-                                            <img style={{}} src={insta} />
+                                            <img alt="" style={{}} src={insta} />
                                             <p style={{ margin: '0px 20px', fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Instagram</p>
                                         </div>
                                         <div className={'d-flex align-items-center'} >
@@ -484,8 +482,8 @@ class CreateCampaign extends Component {
                                                         <input className={'table-input'} type="text" placeholder="" value="1,50000" /> Rs.
                                                 </td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 45 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 45 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 45 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 45 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
 
@@ -500,8 +498,8 @@ class CreateCampaign extends Component {
                                                     <td>1 YT video</td>
                                                     <td>1,50000 Rs.</td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -515,24 +513,8 @@ class CreateCampaign extends Component {
                                                     <td>1 YT video</td>
                                                     <td>1,50000 Rs.</td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>Bhuvan Bam</td>
-                                                    <td>15.7 M</td>
-                                                    <td>Hindi</td>
-                                                    <td>300K</td>
-                                                    <td>2,92,340</td>
-                                                    <td>0.06</td>
-                                                    <td>1,20,000</td>
-                                                    <td>1 YT video</td>
-                                                    <td>1,50000 Rs.</td>
-                                                    <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
 
@@ -547,8 +529,24 @@ class CreateCampaign extends Component {
                                                     <td>1 YT video</td>
                                                     <td>1,50000 Rs.</td>
                                                     <td className={'d-flex'}>
-                                                        <span><img style={{ width: 35 }} src={edit} /></span>
-                                                        <span className={'mx-3'}><img style={{ width: 35 }} src={deleteimg} /></span>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Bhuvan Bam</td>
+                                                    <td>15.7 M</td>
+                                                    <td>Hindi</td>
+                                                    <td>300K</td>
+                                                    <td>2,92,340</td>
+                                                    <td>0.06</td>
+                                                    <td>1,20,000</td>
+                                                    <td>1 YT video</td>
+                                                    <td>1,50000 Rs.</td>
+                                                    <td className={'d-flex'}>
+                                                        <span><img alt="" style={{ width: 35 }} src={edit} /></span>
+                                                        <span className={'mx-3'}><img alt="" style={{ width: 35 }} src={deleteimg} /></span>
                                                     </td>
                                                 </tr>
 
@@ -581,7 +579,7 @@ class CreateCampaign extends Component {
                                     <Row>
                                         <Col lg={4}>
                                             <div className={'d-flex align-items-center'}>
-                                                <img style={{ width: 25 }} src={pie_chart} />
+                                                <img alt="" style={{ width: 25 }} src={pie_chart} />
                                                 <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600', margin: '0px 15px' }}>Bhuvan Bam</p>
                                             </div>
                                         </Col>
@@ -1085,11 +1083,11 @@ class CreateCampaign extends Component {
                                         <Col lg={3}>
                                             <div className={'gender-widght-block'}>
                                                 <div className={'gender-widght-contain mb-3'}>
-                                                    <img style={{}} src={male} />
+                                                    <img alt="" style={{}} src={male} />
                                                     <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>77%</p>
                                                 </div>
                                                 <div className={'gender-widght-contain'}>
-                                                    <img style={{}} src={female} />
+                                                    <img alt="" style={{}} src={female} />
                                                     <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>37%</p>
                                                 </div>
                                             </div>

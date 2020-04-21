@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './CampaignRow.module.css';
-import { Container, Row, Col, Form, Modal } from 'react-bootstrap';
 import '../Jquery.js';
 import { Link } from 'react-router-dom';
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TopBarBlock from '../components/TopBarBlock';
 import filter from '../assets/icons/filter.svg';
-import { Container, Row, Col, Form, Modal, Table } from 'react-bootstrap';
+import { Container, Row, Col, Table } from 'react-bootstrap';
 import styles from '../../src/components/CampaignRow/CampaignRow.module.css';
 import yt from '../assets/icons/youtube.svg';
 import pie_chart from '../assets/icons/pie-chart.svg';
@@ -43,7 +43,7 @@ class ViewProposal extends Component {
                             </div>
                             <div className={'d-flex align-items-center'}>
                                 <p style={{ fontSize: 14, fontWeight: '500', margin: '0px 15px' }}>Filter Proposal by Date </p>
-                                <img src={filter} style={{ width: 22 }}></img>
+                                <img alt="" src={filter} style={{ width: 22 }}></img>
                             </div>
                         </div>
                         <div style={{ margin: '35px 0px', }} className={styles.Campaigns_block}>
@@ -88,7 +88,7 @@ class ViewProposal extends Component {
 
                                 <div className={'influencer_details_header_block my-2'}>
                                     <div className={'d-flex align-items-center'}>
-                                        <img style={{}} src={yt} />
+                                        <img alt="" style={{}} src={yt} />
                                         <p style={{ margin: '0px 20px', fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>YOUTUBE</p>
                                         <p style={{ margin: '0px 10px', fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Category A</p>
                                     </div>
@@ -223,7 +223,7 @@ class ViewProposal extends Component {
                                 <Row>
                                     <Col lg={4}>
                                         <div className={'d-flex align-items-center'}>
-                                            <img style={{ width: 25 }} src={pie_chart} />
+                                            <img alt="" style={{ width: 25 }} src={pie_chart} />
                                             <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600', margin: '0px 15px' }}>Bhuvan Bam</p>
                                         </div>
                                     </Col>
@@ -437,11 +437,11 @@ class ViewProposal extends Component {
                                     <Col lg={3}>
                                         <div className={'gender-widght-block'}>
                                             <div className={'gender-widght-contain mb-3'}>
-                                                <img style={{}} src={male} />
+                                                <img alt="" style={{}} src={male} />
                                                 <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>77%</p>
                                             </div>
                                             <div className={'gender-widght-contain'}>
-                                                <img style={{}} src={female} />
+                                                <img alt="" style={{}} src={female} />
                                                 <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>37%</p>
                                             </div>
                                         </div>

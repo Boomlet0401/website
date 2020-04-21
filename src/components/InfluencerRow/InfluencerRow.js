@@ -9,7 +9,29 @@ import { Link } from 'react-router-dom';
 import styles from './InfluencerRow.module.css';
 
 class InfluencerRow extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
+
+    componentDidMount() {
+        this.setdata();
+    }
+
+    setdata() {
+
+    }
+
     render() {
+
+        const influencer = this.props.item;
+        const language = JSON.parse(influencer.language);
+        const location = JSON.parse(influencer.location);
+        const category = JSON.parse(influencer.category);
+        const vendor = JSON.parse(influencer.vendor);
+
         return (
             <div style={{ display: 'flex', flexDirection: 'row', marginBottom: 20 }}>
                 <div>
@@ -27,14 +49,18 @@ class InfluencerRow extends Component {
                                 <p className={'py-2 text-center'}>{this.props.item.type}</p>
                             </div>
                             <div className={'px-2'}>
-                                <div className={styles.influencerName}>{this.props.item.name}</div>
-                                <p className={styles.influencerPhone}> {this.props.item.phone} </p>
-                                <p className={styles.influencerEmail}> {this.props.item.email} </p>
-                                <p className={styles.influencerCity}> {this.props.item.city} </p>
+                                <div className={styles.influencerName}>{influencer.name}</div>
+                                <p className={styles.influencerPhone}> {influencer.contact_1} </p>
+                                <p className={styles.influencerEmail}> {influencer.email} </p>
+                                <p className={styles.influencerCity}> {influencer.country} </p>
                                 <div style={{ margin: 0 }}>
-                                    <button className={styles.tag}> travel </button>
-                                    <button className={styles.tag}> sports </button>
-                                    <button className={styles.tag}> travel </button>
+                                    {
+                                        category.map((item, index) => {
+                                            return (
+                                                <button key={index} className={styles.tag}> {item} </button>
+                                            );
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -42,23 +68,23 @@ class InfluencerRow extends Component {
                             <div className={styles.social}>
                                 <div className={styles.social_block}>
                                     <img className={styles.social_icon} alt="" src={insta} />
-                                    <p className={styles.social_count}>{this.props.item.instagram_follower}</p>
+                                    <p className={styles.social_count}>{influencer.insta_followers === "" ? "N/A" : influencer.insta_followers}</p>
                                 </div>
                                 <div className={styles.social_block}>
                                     <img className={styles.social_icon} alt="" src={facebook} />
-                                    <p className={styles.social_count}>{this.props.item.facebook_follower}</p>
+                                    <p className={styles.social_count}>{influencer.fb_followers === "" ? "N/A" : influencer.fb_followers}</p>
                                 </div>
                                 <div className={styles.social_block}>
                                     <img className={styles.social_icon} alt="" src={lk} />
-                                    <p className={styles.social_count}>{this.props.item.linkedin_follower}</p>
+                                    <p className={styles.social_count}>{influencer.lk_connections === "" ? "N/A" : influencer.lk_connections}</p>
                                 </div>
                                 <div className={styles.social_block}>
                                     <img className={styles.social_icon} alt="" src={tw} />
-                                    <p className={styles.social_count}>{this.props.item.twitter_follower}</p>
+                                    <p className={styles.social_count}>{influencer.tw_connections === "" ? "N/A" : influencer.tw_connections}</p>
                                 </div>
                                 <div className={styles.social_block}>
                                     <img className={styles.social_icon} alt="" src={yt} />
-                                    <p className={styles.social_count}>{this.props.item.youtube_follower}</p>
+                                    <p className={styles.social_count}>{influencer.insta_followers === "" ? "N/A" : influencer.insta_followers}</p>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +102,7 @@ class InfluencerRow extends Component {
                         <div>
                             <button className="btn  mx-2">Delete</button>
                             <Link to="/edit-influancer" className="btn mx-2">Edit</Link>
-                            <Link className={'btn mx-2 btn-blue-hollow px-3 py-1'} target={'_blank'} to="/view-influancer">View</Link>
+                            <Link className={'btn mx-2 btn-blue-hollow px-3 py-1'} target={'_blank'} to={"/view-influancer/" + influencer.id}>View</Link>
                         </div>
                     </div>
                 </div>

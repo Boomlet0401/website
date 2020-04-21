@@ -1,18 +1,69 @@
 import React, { Component } from 'react';
 import Sidebar from '../components/Sidebar';
-import pew from '../assets/images/pew.jpg';
 import TopBarBlock from '../components/TopBarBlock';
 import searchIcon from '../assets/icons/search.svg';
 import { Link } from 'react-router-dom';
-import INFLUENCER_LIST from '../data/INFLUENCER_LIST';
+// import INFLUENCER_LIST from '../data/INFLUENCER_LIST';
 import InfluencerRow from '../components/InfluencerRow/InfluencerRow';
+import { Spinner } from 'react-bootstrap';
+import Global from '../data/Global';
 
 class Manage_influencer extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+            list: [],
+        }
+    }
+
+    componentDidMount() {
+        this.loadData();
+    }
+
+    async loadData() {
+        this.setState({
+            loading: true,
+        });
+        let url = Global.API.INFLUENCER_LIST;
+        let data = {
+            search: "",
+        }
+        let response = await fetch(url, {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+        let res = await response.json();
+        console.log(res);
+
+        if (res.status === "success") {
+            this.setState({
+                loading: false,
+                list: res.list,
+            });
+        } else {
+            this.setState({
+                loading: false,
+                list: [],
+            });
+        }
+
+    }
+
+
     render() {
+
+        const INFLUENCER_LIST = this.state.list;
+
         return (
             <div className="main_bock">
                 <div className="right">
-                    <Sidebar />
+                    <Sidebar {...this.props} />
                 </div>
                 <div className="main_container">
                     <TopBarBlock {...this.props}>
@@ -34,11 +85,26 @@ class Manage_influencer extends Component {
                     <div className="inner_block py-4">
                         <div style={{ marginBottom: 30 }} className="">
                             {
-                                INFLUENCER_LIST.map((item, index) => {
-                                    return (
-                                        <InfluencerRow item={item} key={index} />
-                                    )
-                                })
+                                this.state.loading ?
+                                    <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <div style={{ textAlign: 'center' }}>
+                                            <Spinner animation="border" role="status">
+                                                <span className="sr-only">Loading...</span>
+                                            </Spinner>
+                                            <p style={{ marginTop: 10 }}>Loading wait ...</p>
+                                        </div>
+                                    </div>
+                                    :
+
+                                    INFLUENCER_LIST.length === 0 ?
+                                        <p style={{ padding: 20 }}>NO DATA</p>
+                                        :
+
+                                        INFLUENCER_LIST.map((item, index) => {
+                                            return (
+                                                <InfluencerRow item={item} key={index} />
+                                            )
+                                        })
                             }
                         </div>
                     </div>

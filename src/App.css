@@ -68,7 +68,7 @@ a{
   font-size: 0.7em;
   top: 0;
   padding: 4px 15px;
-  z-index: 0;
+  z-index: 10;
   color: #a5a5a5;
 }
 .input_box input,
@@ -81,7 +81,7 @@ a{
   border-radius: 5px;
   z-index: 1;
   position: relative;
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: #404040;
 }
 input:focus,
@@ -492,7 +492,10 @@ margin-right: 20px;
     margin: 0px;
     color: #262626;
     opacity: 84%;
-
+}
+.form_error{
+  position: absolute;
+  bottom: 0;
 }
 /*  end Page */
 /*Aveek*/

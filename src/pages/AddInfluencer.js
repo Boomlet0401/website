@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import Sidebar from '../components/Sidebar';
-import pew from '../assets/images/pew.jpg';
 import TopBarBlock from '../components/TopBarBlock';
 import searchIcon from '../assets/icons/search.svg';
-import { Link } from 'react-router-dom';
 import InfluencerRow from '../components/InfluencerRow/InfluencerRow';
 import INFLUENCER_LIST from '../data/INFLUENCER_LIST';
 import InfluencerFilter from '../components/InfluencerFilter/InfluencerFilter';

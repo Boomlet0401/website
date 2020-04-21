@@ -3,6 +3,7 @@ import menuLogo from '../assets/images/menu_logo.png';
 import dashboardIcon from '../assets/icons/dashboard.svg';
 import promotionIcon from '../assets/icons/promotion.svg';
 import influencerIcon from '../assets/icons/Influencer.svg';
+import Auth from './Auth';
 
 class Sidebar extends Component {
     constructor(props) {
@@ -30,6 +31,14 @@ class Sidebar extends Component {
                         <img className="menu_icon" alt="" src={influencerIcon} />
                         <span>INFLUENCER</span>
                     </a>
+                    <button className="btn btn-blue"
+                        onClick={() => {
+                            Auth.logout(() => {
+                                this.props.history.push("/");
+                            });
+                        }}>
+                        <span>LOGOUT</span>
+                    </button>
                 </div>
             </div>
         );

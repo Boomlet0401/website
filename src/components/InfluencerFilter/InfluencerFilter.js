@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styles from './InfluencerFilter.module.css';
 import { Container, Row, Col, Form, Modal } from 'react-bootstrap';
 import '../Jquery.js';
 import { Multiselect } from 'multiselect-react-dropdown';
