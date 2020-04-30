@@ -15,7 +15,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import boomlet.app.dao.InfluancerDAO;
 import boomlet.app.data.Influancer;
-import boomlet.app.data.User;
 
 public class InfluancerImpl implements InfluancerDAO {
 

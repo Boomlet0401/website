@@ -67,6 +67,10 @@ class CreateInfluancer extends Component {
             tt_fans: "",
             tt_hearts: "",
             tt_post_cost: "",
+            verified_yt: false,
+            yt_link: "",
+            yt_subscribers: "",
+            yt_video_cost: "",
             btnText: "SAVE",
             btnState: "",
             formError: [],
@@ -160,6 +164,10 @@ class CreateInfluancer extends Component {
                 tt_fans: "",
                 tt_hearts: "",
                 tt_post_cost: "",
+                verified_yt: false,
+                yt_link: "",
+                yt_subscribers: "",
+                yt_video_cost: "",
             });
             window.scrollTo({
                 top: 0,
@@ -1235,6 +1243,78 @@ class CreateInfluancer extends Component {
                                                     }}
                                                     value={this.state.tt_post_cost}
                                                     type="text" placeholder="Enter cost" name="tt_post_cost" />
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                            <div style={{}}>
+                                                <h4 className={'form-headings'}>Youtube Details</h4>
+                                            </div>
+                                            <div style={{}}>
+                                                <div style={{ display: 'flex' }}>
+                                                    <div className={'mx-4'}>
+                                                        <Form.Check
+                                                            custom
+                                                            name={'verified_tt'}
+                                                            onChange={(event) => {
+                                                                this.setState({
+                                                                    verified_yt: event.target.checked,
+                                                                });
+                                                            }}
+                                                            label="Verified"
+                                                            id="verified_yt"
+                                                            type={'checkbox'} />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg={4} md={6} xs={6}>
+                                        <div>
+                                            <div className="input_box width-input border-bottom">
+                                                <label>Link</label>
+                                                <input
+                                                    onChange={(event) => {
+                                                        this.setState({
+                                                            yt_link: event.target.value,
+                                                        });
+                                                    }}
+                                                    value={this.state.yt_link}
+                                                    type="text" placeholder="Enter link" name="yt_link" />
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg={4} md={6} xs={6}>
+                                        <div>
+                                            <div className="input_box width-input border-bottom">
+                                                <label>Subscribers</label>
+                                                <input
+                                                    onChange={(event) => {
+                                                        this.setState({
+                                                            yt_subscribers: event.target.value,
+                                                        });
+                                                    }}
+                                                    value={this.state.yt_subscribers}
+                                                    type="number" placeholder="Enter fans" name="yt_subscribers" />
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg={4} md={6} xs={6}>
+                                        <div>
+                                            <div className="input_box width-input border-bottom">
+                                                <label>Video Cost (in Rs.) </label>
+                                                <input
+                                                    onChange={(event) => {
+                                                        this.setState({
+                                                            yt_video_cost: event.target.value,
+                                                        });
+                                                    }}
+                                                    value={this.state.yt_video_cost}
+                                                    type="text" placeholder="Enter cost" name="yt_video_cost" />
                                             </div>
                                         </div>
                                     </Col>

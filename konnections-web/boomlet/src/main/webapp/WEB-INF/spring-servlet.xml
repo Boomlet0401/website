@@ -71,5 +71,13 @@
 	<bean id="tiktokdao" class="boomlet.app.daoimpl.TiktokImpl">
 		<property name="template" ref="jt"></property>
 	</bean>
+	
+	<bean id="youtubedao" class="boomlet.app.daoimpl.YoutubeImpl">
+		<property name="template" ref="jt"></property>
+	</bean>
+	
+	<bean id="proposaldao" class="boomlet.app.daoimpl.ProposalImpl">
+		<property name="template" ref="jt"></property>
+	</bean>
 
 </beans>  

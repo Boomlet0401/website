@@ -12,8 +12,7 @@ import pie_chart from '../assets/icons/pie-chart.svg';
 import male from '../assets/icons/male.svg';
 import female from '../assets/icons/Female.svg';
 import Disclaimer from '../components/widget/Disclaimer';
-
-
+import Global from '../data/Global';
 
 
 class CreateCampaign extends Component {
@@ -22,6 +21,21 @@ class CreateCampaign extends Component {
         this.state = {
             addInfluencer: false,
         };
+    }
+
+    async sendData() {
+        let url = Global.API.CREATE_PROPOSAL;
+        let data = this.state;
+        console.log(data);
+        let response = await fetch(url, {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+        let res = await response.json();
     }
 
 
