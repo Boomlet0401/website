@@ -26,7 +26,7 @@ public class ProposalImpl implements ProposalDAO{
 	@Override
 	public BigInteger save(final Proposal proposal) {
 		final String sql = "INSERT INTO " + table_name
-				+ " (proposal_date,brand_agency,brand_name,client_name,strategist,contact_number,email_id,influencer_category,influencer_type,plateform,deliverables,co_ordinates,campaign_budget,campaign_duration,client_detail) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " (proposal_date,brand_agency,brand_name,client_name,strategist,contact_number,email_id,influencer_category,influencer_type,plateform,deliverables,co_ordinates,campaign_budget,campaign_duration,client_detail,added_by,added_by_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
 
@@ -49,7 +49,9 @@ public class ProposalImpl implements ProposalDAO{
 				ps.setString(12, proposal.getCo_ordinates());
 				ps.setString(13, proposal.getCampaign_budget());
 				ps.setString(14, proposal.getCampaign_duration());
-				ps.setString(15, proposal.getClient_detail());				
+				ps.setString(15, proposal.getClient_detail());		
+				ps.setString(16, proposal.getAdded_by());
+				ps.setLong(17, proposal.getAdded_by_id());
 				return ps;
 			}
 		}, generatedKeyHolder);
@@ -64,11 +66,7 @@ public class ProposalImpl implements ProposalDAO{
 	@Override
 	public void delete(long id) {
 		String sql = "DELETE FROM "+table_name+" WHERE id= " + id;		
-		try {
-			jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Proposal.class));	
-		}catch (EmptyResultDataAccessException e) {
-			
-		}		
+		jdbcTemplate.update(sql);		
 	}
 
 	@Override

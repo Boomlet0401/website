@@ -20,33 +20,18 @@ public class Proposal {
 	private String campaign_budget;
 	private String campaign_duration;
 	private String client_detail;
+	private String added_by;
+    private long added_by_id;
+    private String updated_by;
+    private long updated_by_id;
+    private Date last_update_date;
+    private boolean update_request;
+    private long update_id;
 	
 	public Proposal() {
 	}
 
-	public Proposal(long id, Date proposal_date, String brand_agency, String brand_name, String client_name,
-			String strategist, String contact_number, String email_id, String influencer_category,
-			String influencer_type, String plateform, String deliverables, String co_ordinates, String campaign_budget,
-			String campaign_duration, String client_detail) {
-		super();
-		this.id = id;
-		this.proposal_date = proposal_date;
-		this.brand_agency = brand_agency;
-		this.brand_name = brand_name;
-		this.client_name = client_name;
-		this.strategist = strategist;
-		this.contact_number = contact_number;
-		this.email_id = email_id;
-		this.influencer_category = influencer_category;
-		this.influencer_type = influencer_type;
-		this.plateform = plateform;
-		this.deliverables = deliverables;
-		this.co_ordinates = co_ordinates;
-		this.campaign_budget = campaign_budget;
-		this.campaign_duration = campaign_duration;
-		this.client_detail = client_detail;
-	}
-
+	
 	public long getId() {
 		return id;
 	}
@@ -173,6 +158,76 @@ public class Proposal {
 
 	public void setClient_detail(String client_detail) {
 		this.client_detail = client_detail;
+	}
+
+
+	public String getAdded_by() {
+		return added_by;
+	}
+
+
+	public void setAdded_by(String added_by) {
+		this.added_by = added_by;
+	}
+
+
+	public long getAdded_by_id() {
+		return added_by_id;
+	}
+
+
+	public void setAdded_by_id(long added_by_id) {
+		this.added_by_id = added_by_id;
+	}
+
+
+	public String getUpdated_by() {
+		return updated_by;
+	}
+
+
+	public void setUpdated_by(String updated_by) {
+		this.updated_by = updated_by;
+	}
+
+
+	public long getUpdated_by_id() {
+		return updated_by_id;
+	}
+
+
+	public void setUpdated_by_id(long updated_by_id) {
+		this.updated_by_id = updated_by_id;
+	}
+
+
+	public Date getLast_update_date() {
+		return last_update_date;
+	}
+
+
+	public void setLast_update_date(Date last_update_date) {
+		this.last_update_date = last_update_date;
+	}
+
+
+	public boolean isUpdate_request() {
+		return update_request;
+	}
+
+
+	public void setUpdate_request(boolean update_request) {
+		this.update_request = update_request;
+	}
+
+
+	public long getUpdate_id() {
+		return update_id;
+	}
+
+
+	public void setUpdate_id(long update_id) {
+		this.update_id = update_id;
 	}
 	
 	

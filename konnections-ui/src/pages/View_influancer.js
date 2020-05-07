@@ -8,6 +8,7 @@ import { Col } from 'react-bootstrap';
 import correctimage from '../assets/icons/correct.svg';
 import CampaignRow from '../components/CampaignRow/CampaignRow';
 import Global from '../data/Global';
+import { requestAPI } from '../functions/load';
 
 class View_influancer extends Component {
     constructor() {
@@ -30,14 +31,7 @@ class View_influancer extends Component {
         let data = {
             id: this.props.match.params.id,
         }
-        let response = await fetch(url, {
-            method: 'post',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
+        let response = await requestAPI(url, "post", data);
         let res = await response.json();
         console.log(res);
 

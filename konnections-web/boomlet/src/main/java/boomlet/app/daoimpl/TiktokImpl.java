@@ -6,10 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-
 import boomlet.app.dao.TiktokDAO;
 import boomlet.app.data.Tiktok;
 
@@ -32,7 +33,7 @@ public class TiktokImpl implements TiktokDAO{
 				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
 				ps.setLong(1, tiktok.getInfluencer_id());
 				ps.setString(2, tiktok.getLink());
-				ps.setString(3, tiktok.getFan());
+				ps.setString(3, tiktok.getFans());
 				ps.setString(4, tiktok.getHearts());				
 				ps.setString(5, tiktok.getPost_cost());
 				ps.setBoolean(6, tiktok.isVerified());
@@ -51,8 +52,8 @@ public class TiktokImpl implements TiktokDAO{
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
-		
+		String sql = "DELETE FROM "+table_name+" WHERE influencer_id= " + id;		
+		jdbcTemplate.update(sql);
 	}
 
 	@Override
@@ -63,8 +64,14 @@ public class TiktokImpl implements TiktokDAO{
 
 	@Override
 	public Tiktok get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM "+table_name+" WHERE influencer_id= " + id;		
+		Tiktok tiktok;		
+		try {
+			tiktok = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Tiktok.class));	
+		}catch (EmptyResultDataAccessException e) {
+			return null;
+		}		
+		return tiktok;
 	}
 
 }

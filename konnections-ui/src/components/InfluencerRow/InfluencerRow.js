@@ -7,20 +7,49 @@ import lk from '../../assets/icons/linkedin.svg';
 import bhuvan from '../../assets/images/Bhuvan.png';
 import { Link } from 'react-router-dom';
 import styles from './InfluencerRow.module.css';
+import Global from '../../data/Global';
+import { requestAPI } from '../../functions/load';
+import { Form } from 'react-bootstrap';
 
 class InfluencerRow extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            btnText: "Delete",
+            btnState: "",
+            removed: false,
         }
     }
 
     componentDidMount() {
-        this.setdata();
     }
 
-    setdata() {
+    async deleteInfluencer(id) {
+        this.setState({
+            btnText: "Please wait...",
+            btnState: "disabled",
+        });
+        let url = Global.API.DELETE_INFLUENCER;
+        let data = {
+            id: id
+        }
+        let response = await requestAPI(url, "post", data);
+        let res = await response.json();
+        console.log(res);
+        if (res.status === "success") {
+            this.setState({
+                btnText: "Delete",
+                btnState: "",
+                removed: true,
+            });
+        } else {
+            this.setState({
+                btnText: "Delete",
+                btnState: "",
+            });
+            alert(res.message);
+        }
 
     }
 
@@ -31,15 +60,42 @@ class InfluencerRow extends Component {
         const location = JSON.parse(influencer.location);
         const category = JSON.parse(influencer.category);
         const vendor = JSON.parse(influencer.vendor);
+        let showCheckBox = true;
+
+        if (this.props.showCheckBox != undefined) {
+            showCheckBox = this.props.showCheckBox;
+        }
+
+        if (this.state.removed) {
+            return null;
+        }
 
         return (
             <div style={{ display: 'flex', flexDirection: 'row', marginBottom: 20 }}>
-                <div>
-                    <label className={styles.checkbox_influencer}>
-                        <input type="checkbox" />
-                        {/* <span class="checkmark"></span> */}
-                    </label>
-                </div>
+                {
+                    showCheckBox &&
+                    <div>
+                        <label className={styles.checkbox_influencer}>
+                            <Form.Check
+                                className={''}
+                                custom
+                                style={{ fontSize: 12 }}
+                                name={influencer.id}
+                                id={influencer.id}
+                                label={""}
+                                onChange={(event) => {
+                                    let checked = event.target.checked;
+                                    if (checked) {
+                                        this.props.addInfluencer(influencer);
+                                    } else {
+                                        this.props.removeInfluencer(influencer.id);
+                                    }
+                                }}
+                                type={'checkbox'} />
+                        </label>
+                    </div>
+                }
+
                 <div className={styles.influencer_block} style={{ flexGrow: 1 }}>
                     <div className={styles.influencer_detail}>
                         <div style={{ display: 'flex' }}>
@@ -96,12 +152,18 @@ class InfluencerRow extends Component {
                                 <span className={'font-weight-bold '}>Updated by:</span> {this.props.item.updated_by}
                             </p>
                             <p className={'m-0 small text-secondary'}>
-                                <span className={'font-weight-bold '}>Added by:</span> {this.props.item.added_by}
+                                <span className={'font-weight-bold '}>Added by:</span> {influencer.added_by}
                             </p>
                         </div>
                         <div>
-                            <button className="btn  mx-2">Delete</button>
-                            <Link to="/edit-influancer" className="btn mx-2">Edit</Link>
+                            <button
+                                onClick={(e) => {
+                                    if (window.confirm(`Are you sure you wish to delete influencer "${influencer.name}" ?`)) this.deleteInfluencer(influencer.id)
+                                }}
+                                className={"btn  mx-2 " + this.state.btnState}>
+                                {this.state.btnText}
+                            </button>
+                            <Link to={"/edit-influancer/" + influencer.id} className={"btn mx-2"}>Edit</Link>
                             <Link className={'btn mx-2 btn-blue-hollow px-3 py-1'} target={'_blank'} to={"/view-influancer/" + influencer.id}>View</Link>
                         </div>
                     </div>

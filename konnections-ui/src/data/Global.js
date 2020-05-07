@@ -1,4 +1,4 @@
-const BASE_URL = "http://182.70.251.183:8080/boomlet/";
+const BASE_URL = "http://192.168.1.34:8080/boomlet/";
 
 export default {
     API: {
@@ -13,6 +13,8 @@ export default {
         CREATE_PROPOSAL: BASE_URL + "api/create-proposal",
         PROPOSAL_LIST: BASE_URL + "api/get-proposals",
         GET_PROPOSAL: BASE_URL + "api/get-proposal",
-
+        GET_USERS: BASE_URL + "api/get-users",
+        UPDATE_USER_SCOPS: BASE_URL + "api/update-userscops",
+        ACTIVE_INACTIVE_USER: BASE_URL + "api/active-inactive-user",
     }
 }

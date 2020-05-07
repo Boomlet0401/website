@@ -23,13 +23,17 @@ class Sidebar extends Component {
                         <img className="menu_icon" alt="" src={dashboardIcon} />
                         <span>OVERVIEW</span>
                     </a>
-                    <a href="./manage-proposal" className="menu_item">
+                    <a href="/manage-proposal" className="menu_item">
                         <img className="menu_icon" alt="" src={promotionIcon} />
                         <span>CAMPAIGN</span>
                     </a>
-                    <a href="./manage-influencer" className="menu_item">
+                    <a href="/manage-influencer" className="menu_item">
                         <img className="menu_icon" alt="" src={influencerIcon} />
                         <span>INFLUENCER</span>
+                    </a>
+                    <a href="/users" className="menu_item">
+                        <img className="menu_icon" alt="" src={influencerIcon} />
+                        <span>USERS</span>
                     </a>
                     <button className="btn btn-blue"
                         onClick={() => {

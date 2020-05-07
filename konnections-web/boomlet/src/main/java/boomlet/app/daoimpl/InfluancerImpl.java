@@ -16,6 +16,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import boomlet.app.dao.InfluancerDAO;
 import boomlet.app.data.Influancer;
 
+
 public class InfluancerImpl implements InfluancerDAO {
 
 	private final String table_name = "influancer";
@@ -30,7 +31,7 @@ public class InfluancerImpl implements InfluancerDAO {
 	public BigInteger save(final Influancer inf) {
 
 		final String sql = "INSERT INTO " + table_name
-				+ " (name,gender,email,type,contact_1,contact_2,contact_3,country,profile_image,language,location,category,vendor,remark,created_by,aproved,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " (name,gender,email,type,contact_1,contact_2,contact_3,country,profile_image,language,location,category,vendor,remark,created_by,aproved,created_at,added_by,added_by_id,last_update_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
 
@@ -56,6 +57,9 @@ public class InfluancerImpl implements InfluancerDAO {
 				ps.setLong(15, inf.getCreated_by());
 				ps.setBoolean(16, inf.isAproved());
 				ps.setString(17, LocalDate.now().toString());
+				ps.setString(18, inf.getAdded_by());
+				ps.setLong(19, inf.getAdded_by_id());
+				ps.setDate(20, inf.getLast_update_date());
 				return ps;
 			}
 		}, generatedKeyHolder);
@@ -65,15 +69,40 @@ public class InfluancerImpl implements InfluancerDAO {
 	}
 
 	@Override
-	public void update(Influancer user, long id) {
-		// TODO Auto-generated method stub
+	public long update(final Influancer user, final long id) {
+		
+		String sql = "UPDATE "+table_name+" SET ";
+		
+		sql += "updated_by=?, ";
+		sql += "updated_by_id=?, ";
+		sql += "update_request=?, ";
+		sql += "update_id=? ";
+		sql += "WHERE id = ?";
+		
+		final String queryString = sql;			
+		
+		long rows = jdbcTemplate.update(new PreparedStatementCreator() {
 
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(queryString, new String[] { "id" });
+				ps.setString(1, user.getUpdated_by());
+				ps.setLong(2, user.getUpdated_by_id());	
+				ps.setBoolean(3, user.isUpdate_request());
+				ps.setLong(4, user.getUpdate_id());
+				ps.setLong(5, id);
+				return ps;
+			}
+			
+		});
+		
+		return rows;
 	}
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
-
+		String sql = "DELETE FROM "+table_name+" WHERE id= " + id;		
+		jdbcTemplate.update(sql);
 	}
 
 	@Override
@@ -94,7 +123,7 @@ public class InfluancerImpl implements InfluancerDAO {
 		sql += "LEFT JOIN linkedin ON influancer.id = linkedin.influencer_id ";
 		sql += "LEFT JOIN twitter ON influancer.id = twitter.influencer_id ";
 		
-		sql += "GROUP BY influancer.id";	
+		sql += "GROUP BY influancer.id ORDER BY influancer.id DESC";	
 
 //		String sql = "SELECT "+table_name+".*, in FROM "+table_name+"  ";
 		return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Influancer.class));

@@ -14,6 +14,8 @@
 	<!-- Provide support for component scanning -->
 	<context:component-scan
 		base-package="boomlet.web.controller" />
+	<context:component-scan
+		base-package="boomlet.web.service" />
 	<!--Provide support for conversion, formatting and validation -->
 	<mvc:annotation-driven />
 	<!-- Define Spring MVC view resolver -->
@@ -43,7 +45,7 @@
 	<bean id="userTokendao" class="boomlet.app.daoimpl.UserTokenImpl">
 		<property name="template" ref="jt"></property>
 	</bean>
-	
+			
 	<bean id="influncerdao" class="boomlet.app.daoimpl.InfluancerImpl">
 		<property name="template" ref="jt"></property>
 	</bean>
@@ -77,6 +79,10 @@
 	</bean>
 	
 	<bean id="proposaldao" class="boomlet.app.daoimpl.ProposalImpl">
+		<property name="template" ref="jt"></property>
+	</bean>
+	
+	<bean id="updateInfluencerdao" class="boomlet.app.daoimpl.UpdateInfluencerImpl">
 		<property name="template" ref="jt"></property>
 	</bean>
 

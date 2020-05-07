@@ -26,41 +26,18 @@ public class Influancer {
     private String fb_followers;
     private String lk_connections;
     private String tw_connections;
+    private String added_by;
+    private long added_by_id;
+    private String updated_by;
+    private long updated_by_id;
+    private Date last_update_date;
+    private boolean update_request;
+    private long update_id;
     
     public Influancer() {
     	
     }   
 	
-	public Influancer(long id, String name, String email, String gender, String type, String contact_1,
-			String contact_2, String contact_3, String country, String profile_image, String language, String location,
-			String category, String vendor, String remark, long created_by, boolean aproved, Date created_at,
-			String insta_followers, String fb_followers, String lk_connections, String tw_connections) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.gender = gender;
-		this.type = type;
-		this.contact_1 = contact_1;
-		this.contact_2 = contact_2;
-		this.contact_3 = contact_3;
-		this.country = country;
-		this.profile_image = profile_image;
-		this.language = language;
-		this.location = location;
-		this.category = category;
-		this.vendor = vendor;
-		this.remark = remark;
-		this.created_by = created_by;
-		this.aproved = aproved;
-		this.created_at = created_at;
-		this.insta_followers = insta_followers;
-		this.fb_followers = fb_followers;
-		this.lk_connections = lk_connections;
-		this.tw_connections = tw_connections;
-	}
-
-
 	public long getId() {
 		return id;
 	}
@@ -244,5 +221,63 @@ public class Influancer {
 	public void setAproved(boolean aproved) {
 		this.aproved = aproved;
 	}
+
+	public String getAdded_by() {
+		return added_by;
+	}
+
+	public void setAdded_by(String added_by) {
+		this.added_by = added_by;
+	}
+
+	public long getAdded_by_id() {
+		return added_by_id;
+	}
+
+	public void setAdded_by_id(long added_by_id) {
+		this.added_by_id = added_by_id;
+	}
+
+	public String getUpdated_by() {
+		return updated_by;
+	}
+
+	public void setUpdated_by(String updated_by) {
+		this.updated_by = updated_by;
+	}
+
+	public long getUpdated_by_id() {
+		return updated_by_id;
+	}
+
+	public void setUpdated_by_id(long updated_by_id) {
+		this.updated_by_id = updated_by_id;
+	}
+
+	public Date getLast_update_date() {
+		return last_update_date;
+	}
+
+	public void setLast_update_date(Date last_update_date) {
+		this.last_update_date = last_update_date;
+	}
+
+	public boolean isUpdate_request() {
+		return update_request;
+	}
+
+	public void setUpdate_request(boolean update_request) {
+		this.update_request = update_request;
+	}
+
+	public long getUpdate_id() {
+		return update_id;
+	}
+
+	public void setUpdate_id(long update_id) {
+		this.update_id = update_id;
+	}
+	
+	
     
 }

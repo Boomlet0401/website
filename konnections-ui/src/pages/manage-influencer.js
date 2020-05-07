@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import InfluencerRow from '../components/InfluencerRow/InfluencerRow';
 import { Spinner } from 'react-bootstrap';
 import Global from '../data/Global';
+import { requestAPI } from '../functions/load';
 
 class Manage_influencer extends Component {
 
@@ -30,14 +31,7 @@ class Manage_influencer extends Component {
         let data = {
             search: "",
         }
-        let response = await fetch(url, {
-            method: 'post',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
+        let response = await requestAPI(url, "post", data);
         let res = await response.json();
         console.log(res);
 
@@ -95,14 +89,12 @@ class Manage_influencer extends Component {
                                         </div>
                                     </div>
                                     :
-
                                     INFLUENCER_LIST.length === 0 ?
                                         <p style={{ padding: 20 }}>NO DATA</p>
                                         :
-
                                         INFLUENCER_LIST.map((item, index) => {
                                             return (
-                                                <InfluencerRow item={item} key={index} />
+                                                <InfluencerRow showCheckBox={false} item={item} key={index} />
                                             )
                                         })
                             }

@@ -7,6 +7,7 @@ public class UserToken {
 	private long id;
 	private Timestamp expiry;
 	private String token;
+	private long user_id;
 	
 	public UserToken() {
 		
@@ -36,11 +37,12 @@ public class UserToken {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
-	@Override
-	public String toString() {
-		return "UserToken [id=" + id + ", expiry=" + expiry + ", token=" + token + "]";
+	public long getUser_id() {
+		return user_id;
 	}
-	
+	public void setUser_id(long user_id) {
+		this.user_id = user_id;
+	}
+		
 
 }

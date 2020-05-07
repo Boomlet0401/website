@@ -5,7 +5,7 @@ public class Youtube {
 	private long id;
 	private long influencer_id;
 	private String link;
-	private long subscribers;	
+	private String subscribers;	
 	private String video_cost;
 	private boolean verified;
 	
@@ -14,16 +14,6 @@ public class Youtube {
 	}
 	
 	
-	public Youtube(long id, long influencer_id, String link, long subscribers, String video_cost, boolean verified) {
-		super();
-		this.id = id;
-		this.influencer_id = influencer_id;
-		this.link = link;
-		this.subscribers = subscribers;
-		this.video_cost = video_cost;
-		this.verified = verified;
-	}
-
 
 	public long getId() {
 		return id;
@@ -55,12 +45,12 @@ public class Youtube {
 	}
 
 
-	public long getSubscribers() {
+	public String getSubscribers() {
 		return subscribers;
 	}
 
 
-	public void setSubscribers(long subscribers) {
+	public void setSubscribers(String subscribers) {
 		this.subscribers = subscribers;
 	}
 

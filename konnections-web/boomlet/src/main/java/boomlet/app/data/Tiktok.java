@@ -5,7 +5,7 @@ public class Tiktok {
 	private long id;
 	private long influencer_id;
 	private String link;
-	private String fan;
+	private String fans;
 	private String hearts;	
 	private String post_cost;
 	private boolean verified;
@@ -14,18 +14,16 @@ public class Tiktok {
 	public Tiktok() {	
 	}
 
-	public Tiktok(long id, long influencer_id, String link, String fan, String hearts, String post_cost,
-			boolean verified, boolean active) {
-		super();
-		this.id = id;
-		this.influencer_id = influencer_id;
-		this.link = link;
-		this.fan = fan;
-		this.hearts = hearts;
-		this.post_cost = post_cost;
-		this.verified = verified;
-		this.active = active;
+	
+	public String getFans() {
+		return fans;
 	}
+
+
+	public void setFans(String fans) {
+		this.fans = fans;
+	}
+
 
 	public long getId() {
 		return id;
@@ -51,14 +49,7 @@ public class Tiktok {
 		this.link = link;
 	}
 
-	public String getFan() {
-		return fan;
-	}
-
-	public void setFan(String fan) {
-		this.fan = fan;
-	}
-
+	
 	public String getHearts() {
 		return hearts;
 	}
@@ -91,11 +82,5 @@ public class Tiktok {
 		this.active = active;
 	}
 
-	@Override
-	public String toString() {
-		return "Tiktok [id=" + id + ", influencer_id=" + influencer_id + ", link=" + link + ", fan=" + fan + ", hearts="
-				+ hearts + ", post_cost=" + post_cost + ", verified=" + verified + ", active=" + active + "]";
-	}	
 	
-
 }

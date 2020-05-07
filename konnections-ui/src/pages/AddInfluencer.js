@@ -4,8 +4,10 @@ import searchIcon from '../assets/icons/search.svg';
 import InfluencerRow from '../components/InfluencerRow/InfluencerRow';
 import INFLUENCER_LIST from '../data/INFLUENCER_LIST';
 import InfluencerFilter from '../components/InfluencerFilter/InfluencerFilter';
-import { Modal } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import Global from '../data/Global';
+import { requestAPI } from '../functions/load';
 
 class AddInfluencer extends Component {
 
@@ -13,14 +15,89 @@ class AddInfluencer extends Component {
         super(props);
         this.state = {
             dataTypeModel: false,
+            loading: true,
+            list: [],
+            selectedInfluencer: [],
+            type: "",
+            selectedProfile: {
+                "linkedin": false,
+                "instagram": false,
+                "blog": false,
+                "twitter": false,
+                "facebook": false,
+                "tiktok": false,
+                "youtube": false,
+            }
         }
+        this.addInfluencer = this.addInfluencer.bind(this);
+        this.removeInfluencer = this.removeInfluencer.bind(this);
+    }
+
+    componentDidMount() {
+        this.loadData();
+    }
+
+    async loadData() {
+        this.setState({
+            loading: true,
+        });
+        let url = Global.API.INFLUENCER_LIST;
+        let data = {
+            search: "",
+        }
+        let response = await requestAPI(url, "post", data);
+        let res = await response.json();
+        if (res.status === "success") {
+            this.setState({
+                loading: false,
+                list: res.list,
+            });
+        } else {
+            this.setState({
+                loading: false,
+                list: [],
+            });
+        }
+
     }
 
     addToPraposel() {
-        this.props.hideModel();
+
+        console.log(this.state);
+
+        if (this.state.type === "") {
+            alert("Please select type");
+            return;
+        }
+
+        if (this.state.selectedInfluencer.length === 0) {
+            alert("Please select atleat one influencer");
+            return;
+        }
+
+        this.props.hideModel(this.state.selectedInfluencer, this.state.type, this.state.selectedProfile);
+    }
+
+    addInfluencer(influencer) {
+        this.state.selectedInfluencer.push(influencer);
+        console.log(this.state.selectedInfluencer);
+    }
+
+    removeInfluencer(id) {
+        let newInfluencer = [];
+        this.state.selectedInfluencer.map((influencer, index) => {
+            if (influencer.id !== id) {
+                newInfluencer.push(influencer);
+            }
+        });
+        this.state.selectedInfluencer = newInfluencer;
+        console.log(this.state.selectedInfluencer);
     }
 
     render() {
+
+        const INFLUENCER_LIST = this.state.list;
+
         return (
             <div className="main_bock">
                 <div className="main_container" style={{ padding: 0 }}>
@@ -40,8 +117,38 @@ class AddInfluencer extends Component {
                         </div>
                     </TopBarBlock>
                     <div className="inner_block">
-                        <InfluencerFilter />
-                        <div style={{ marginBottom: 30 }} className="">
+
+                        {
+                            this.state.loading ?
+                                <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div style={{ textAlign: 'center' }}>
+                                        <Spinner animation="border" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </Spinner>
+                                        <p style={{ marginTop: 10 }}>Loading wait ...</p>
+                                    </div>
+                                </div>
+                                :
+                                <>
+                                    <InfluencerFilter />
+                                    {
+                                        INFLUENCER_LIST.length === 0 ?
+                                            <p style={{ padding: 20 }}>NO DATA</p>
+                                            :
+                                            INFLUENCER_LIST.map((item, index) => {
+                                                return (
+                                                    <InfluencerRow
+                                                        addInfluencer={this.addInfluencer}
+                                                        removeInfluencer={this.removeInfluencer}
+                                                        showCheckBox={true} item={item} key={index} />
+                                                )
+                                            })
+                                    }
+                                </>
+                        }
+
+
+                        {/* <div style={{ marginBottom: 30 }} className="">
                             {
                                 INFLUENCER_LIST.map((item, index) => {
                                     return (
@@ -49,7 +156,7 @@ class AddInfluencer extends Component {
                                     )
                                 })
                             }
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -61,14 +168,20 @@ class AddInfluencer extends Component {
                     show={this.state.dataTypeModel}>
                     <div className={'px-4 py-4'}>
                         <p className={'font-weight-bold'}>Choose Data Type</p>
-                        <div className={'mt-5'}>
+                        <div className={'mt-1'}>
                             <p>
                                 <Form.Check
                                     className={''}
                                     custom
                                     name={'type'}
                                     label="Create Influencer details"
-                                    id="type_male"
+                                    onChange={(event) => {
+                                        let checked = event.target.checked;
+                                        if (checked) {
+                                            this.state.type = "detail";
+                                        }
+                                    }}
+                                    id="type_detail"
                                     type={'radio'} />
                             </p>
                             <p>
@@ -77,14 +190,103 @@ class AddInfluencer extends Component {
                                     custom
                                     name={'type'}
                                     label="Create Influencer Analysis"
-                                    id="type_female"
+                                    onChange={(event) => {
+                                        let checked = event.target.checked;
+                                        if (checked) {
+                                            this.state.type = "analysis";
+                                        }
+                                    }}
+                                    id="type_analysis"
                                     type={'radio'} />
                             </p>
-                            <div className="input_box border-bottom mb-0 mt-4">
-                                <label>Choose Influencer Category..</label>
-                                <input type="text" placeholder={'Enter category name'} />
-                            </div>
-                            <p style={{ fontSize: '0.7rem' }} className={'text-secondary'}>e.g: category A, Couple, Male, Female etc</p>
+                        </div>
+                        <hr />
+                        <div>
+                            <p className={'font-weight-bold'}>Select Profile</p>
+                            <Form.Check
+                                className={''}
+                                custom
+                                inline
+                                style={{ fontSize: 12 }}
+                                name={"linkedin"}
+                                id={"linkedin"}
+                                label={"Linkedin"}
+                                onChange={(event) => {
+                                    this.state.selectedProfile.linkedin = event.target.checked;
+                                }}
+                                type={'checkbox'} />
+                            <Form.Check
+                                className={''}
+                                custom
+                                inline
+                                style={{ fontSize: 12 }}
+                                name={"instagram"}
+                                id={"instagram"}
+                                label={"Instagram"}
+                                onChange={(event) => {
+                                    this.state.selectedProfile.instagram = event.target.checked;
+                                }}
+                                type={'checkbox'} />
+                            <Form.Check
+                                className={''}
+                                custom
+                                inline
+                                style={{ fontSize: 12 }}
+                                name={"blog"}
+                                id={"blog"}
+                                label={"Blog"}
+                                onChange={(event) => {
+                                    this.state.selectedProfile.blog = event.target.checked;
+                                }}
+                                type={'checkbox'} />
+                            <Form.Check
+                                className={''}
+                                custom
+                                inline
+                                style={{ fontSize: 12 }}
+                                name={"twitter"}
+                                id={"twitter"}
+                                label={"Twitter"}
+                                onChange={(event) => {
+                                    this.state.selectedProfile.twitter = event.target.checked;
+                                }}
+                                type={'checkbox'} />
+                            <Form.Check
+                                className={''}
+                                custom
+                                inline
+                                style={{ fontSize: 12 }}
+                                name={"facebook"}
+                                id={"facebook"}
+                                label={"Facebook"}
+                                onChange={(event) => {
+                                    this.state.selectedProfile.facebook = event.target.checked;
+                                }}
+                                type={'checkbox'} />
+                            <Form.Check
+                                className={''}
+                                custom
+                                inline
+                                style={{ fontSize: 12 }}
+                                name={"tiktok"}
+                                id={"tiktok"}
+                                label={"Tiktok"}
+                                onChange={(event) => {
+                                    this.state.selectedProfile.tiktok = event.target.checked;
+                                }}
+                                type={'checkbox'} />
+                            <Form.Check
+                                className={''}
+                                custom
+                                inline
+                                style={{ fontSize: 12 }}
+                                name={"youtube"}
+                                id={"youtube"}
+                                label={"Youtube"}
+                                onChange={(event) => {
+                                    this.state.selectedProfile.youtube = event.target.checked;
+                                }}
+                                type={'checkbox'} />
                         </div>
 
                         <div className={'text-right py-3'}>

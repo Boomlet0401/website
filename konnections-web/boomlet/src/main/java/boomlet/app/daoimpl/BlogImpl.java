@@ -6,10 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-
 import boomlet.app.dao.BlogDAO;
 import boomlet.app.data.Blog;
 
@@ -34,8 +35,8 @@ public class BlogImpl implements BlogDAO{
 				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
 				ps.setLong(1, blog.getInfluencer_id());
 				ps.setString(2, blog.getLink());
-				ps.setString(3, blog.getPage_view());
-				ps.setString(4, blog.getActicle_cost());
+				ps.setString(3, blog.getPage_views());
+				ps.setString(4, blog.getArticle_cost());
 				ps.setBoolean(5, blog.isActive());							
 				return ps;
 			}
@@ -51,8 +52,8 @@ public class BlogImpl implements BlogDAO{
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
-		
+		String sql = "DELETE FROM "+table_name+" WHERE influencer_id = " + id;		
+		jdbcTemplate.update(sql);
 	}
 
 	@Override
@@ -63,8 +64,14 @@ public class BlogImpl implements BlogDAO{
 
 	@Override
 	public Blog get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM "+table_name+" WHERE influencer_id= " + id;		
+		Blog blog;		
+		try {
+			blog = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Blog.class));	
+		}catch (EmptyResultDataAccessException e) {
+			return null;
+		}		
+		return blog;
 	}
 
 }

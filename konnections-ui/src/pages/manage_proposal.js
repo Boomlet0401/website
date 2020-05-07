@@ -4,6 +4,7 @@ import TopBarBlock from '../components/TopBarBlock';
 import ManageProposalBody from '../components/ManageProposalBody';
 import { Link } from 'react-router-dom';
 import Global from '../data/Global';
+import { requestAPI } from '../functions/load';
 
 const activeData = [
     {
@@ -76,14 +77,7 @@ class Manage_influencer extends Component {
     async loadData() {
         let url = Global.API.PROPOSAL_LIST;
         let data = this.state;
-        let response = await fetch(url, {
-            method: 'post',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
+        let response = await requestAPI(url, "post", data);
         let res = await response.json();
     }
 

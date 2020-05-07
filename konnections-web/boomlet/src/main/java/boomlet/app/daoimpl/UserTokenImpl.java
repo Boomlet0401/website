@@ -61,6 +61,18 @@ public class UserTokenImpl implements UserTokenDAO{
 		}		
 		return userToken;		
 	}
+
+	@Override
+	public UserToken checkToken(UserToken userToken) {
+		String sql = "SELECT * FROM "+table_name+" WHERE token = '"+userToken.getToken()+"'" ;		
+		UserToken token;		
+		try {
+			token = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(UserToken.class));	
+		}catch (EmptyResultDataAccessException e) {
+			return null;
+		}		
+		return token;
+	}
 	
 	
 

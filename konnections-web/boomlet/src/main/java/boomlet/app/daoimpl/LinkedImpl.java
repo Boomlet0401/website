@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -54,8 +56,8 @@ public class LinkedImpl implements LinkedinDAO {
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
-
+		String sql = "DELETE FROM "+table_name+" WHERE influencer_id= " + id;		
+		jdbcTemplate.update(sql);
 	}
 
 	@Override
@@ -66,8 +68,14 @@ public class LinkedImpl implements LinkedinDAO {
 
 	@Override
 	public Linkedin get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM "+table_name+" WHERE influencer_id= " + id;		
+		Linkedin linkedin;		
+		try {
+			linkedin = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Linkedin.class));	
+		}catch (EmptyResultDataAccessException e) {
+			return null;
+		}		
+		return linkedin;
 	}
 
 }

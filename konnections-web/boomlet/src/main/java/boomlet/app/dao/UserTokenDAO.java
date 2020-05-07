@@ -8,4 +8,5 @@ import boomlet.app.data.UserToken;
 public interface UserTokenDAO {
 	public BigInteger generateToken(User user);
 	public UserToken getToken(long id);
+	public UserToken checkToken(UserToken userToken);
 }

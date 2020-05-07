@@ -5,22 +5,13 @@ public class Blog {
 	private long id;
 	private long influencer_id;
 	private String link;	
-	private String page_view;	
-	private String acticle_cost;	
+	private String page_views;	
+	private String article_cost;	
 	private boolean active;
 	
 	public Blog() {		
 	}
 
-	public Blog(long id, long influencer_id, String link, String page_view, String acticle_cost, boolean active) {
-		super();
-		this.id = id;
-		this.influencer_id = influencer_id;
-		this.link = link;
-		this.page_view = page_view;
-		this.acticle_cost = acticle_cost;
-		this.active = active;
-	}
 
 	public long getId() {
 		return id;
@@ -46,21 +37,26 @@ public class Blog {
 		this.link = link;
 	}
 
-	public String getPage_view() {
-		return page_view;
+		
+	public String getPage_views() {
+		return page_views;
 	}
 
-	public void setPage_view(String page_view) {
-		this.page_view = page_view;
+
+	public void setPage_views(String page_views) {
+		this.page_views = page_views;
 	}
 
-	public String getActicle_cost() {
-		return acticle_cost;
+
+	public String getArticle_cost() {
+		return article_cost;
 	}
 
-	public void setActicle_cost(String acticle_cost) {
-		this.acticle_cost = acticle_cost;
+
+	public void setArticle_cost(String article_cost) {
+		this.article_cost = article_cost;
 	}
+
 
 	public boolean isActive() {
 		return active;
@@ -68,12 +64,6 @@ public class Blog {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-	@Override
-	public String toString() {
-		return "Blog [id=" + id + ", influencer_id=" + influencer_id + ", link=" + link + ", page_view=" + page_view
-				+ ", acticle_cost=" + acticle_cost + ", active=" + active + "]";
 	}
 
 	

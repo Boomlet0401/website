@@ -8,6 +8,7 @@ import uploadimage from '../assets/icons/upload image.svg';
 import { Form } from 'react-bootstrap';
 import { Multiselect } from 'multiselect-react-dropdown';
 import Global from '../data/Global';
+import { requestAPI } from '../functions/load';
 
 
 class CreateInfluancer extends Component {
@@ -82,11 +83,9 @@ class CreateInfluancer extends Component {
 
     async formSubmit(e) {
         e.preventDefault();
-
-        // if (this.state.btnState === "disabled") {
-        //     return;
-        // }
-
+        if (this.state.btnState === "disabled") {
+            return;
+        }
         this.setState({
             btnText: "Please wait...",
             btnState: "disabled",
@@ -96,16 +95,7 @@ class CreateInfluancer extends Component {
 
         let url = Global.API.CREATE_INFLUANCER;
         let data = this.state;
-        console.log(data);
-
-        let response = await fetch(url, {
-            method: 'post',
-            body: JSON.stringify(data),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
+        let response = await requestAPI(url, "post", data);
         let res = await response.json();
         this.setState({
             btnText: "SAVE",
@@ -199,8 +189,9 @@ class CreateInfluancer extends Component {
                 <div className="right">
                     <Sidebar {...this.props} />
                 </div>
-                <form className="form" onSubmit={(e) => this.formSubmit(e)}>
-                    <div className="main_container">
+
+                <div className="main_container">
+                    <form className="form" onSubmit={(e) => this.formSubmit(e)}>
                         <TopBarBlock {...this.props}>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -233,14 +224,12 @@ class CreateInfluancer extends Component {
                             onClose={() => this.setState({ message_error: "" })} dismissible>
                             {this.state.message_error}
                         </Alert>
-
                         <Alert className="mt-3"
                             show={this.state.message_success === "" ? false : true}
                             variant={"success"}
                             onClose={() => this.setState({ message_success: "" })} dismissible>
                             {this.state.message_success}
                         </Alert>
-
                         <div className="inner-container my-4">
                             <Container fluid={true}>
                                 <div className={'my-3'}>
@@ -506,6 +495,7 @@ class CreateInfluancer extends Component {
                                         <div className={'ms-multiselect-container'}>
                                             <Multiselect
                                                 options={this.state.Languages}
+                                                selectedValues={this.state.selectedLanguages}
                                                 onSelect={(selectedList, selectedItem) => {
                                                     this.setState({
                                                         selectedLanguages: selectedList,
@@ -543,6 +533,7 @@ class CreateInfluancer extends Component {
                                         <div className={'ms-multiselect-container'}>
                                             <Multiselect
                                                 options={this.state.Locations}
+                                                selectedValues={this.state.selectedLocations}
                                                 onSelect={(selectedList, selectedItem) => {
                                                     this.setState({
                                                         selectedLocations: selectedList,
@@ -580,6 +571,7 @@ class CreateInfluancer extends Component {
                                         <div className={'ms-multiselect-container'}>
                                             <Multiselect
                                                 options={this.state.categories}
+                                                selectedValues={this.state.selectedCategories}
                                                 onSelect={(selectedList, selectedItem) => {
                                                     this.setState({
                                                         selectedCategories: selectedList,
@@ -617,6 +609,7 @@ class CreateInfluancer extends Component {
                                         <div className={'ms-multiselect-container'}>
                                             <Multiselect
                                                 options={this.state.vendors}
+                                                selectedValues={this.state.selectedVendors}
                                                 onSelect={(selectedList, selectedItem) => {
                                                     this.setState({
                                                         selectedVendors: selectedList,
@@ -1321,9 +1314,9 @@ class CreateInfluancer extends Component {
                                 </Row>
                             </Container>
                         </div>
-                    </div>
-                </form>
-            </div >
+                    </form>
+                </div>
+            </div>
         );
     }
 

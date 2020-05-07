@@ -6,11 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
 import boomlet.app.dao.YoutubeDAO;
+import boomlet.app.data.Proposal;
 import boomlet.app.data.Youtube;
 
 public class YoutubeImpl implements YoutubeDAO{
@@ -24,7 +27,7 @@ public class YoutubeImpl implements YoutubeDAO{
 	@Override
 	public BigInteger save(final Youtube youtube) {
 		final String sql = "INSERT INTO " + table_name
-				+ " (influencer_id,link,link,subscribers,video_cost,verified) VALUES(?,?,?,?,?,?)";
+				+ " (influencer_id,link,subscribers,video_cost,verified) VALUES(?,?,?,?,?)";
 		GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
@@ -32,9 +35,9 @@ public class YoutubeImpl implements YoutubeDAO{
 				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
 				ps.setLong(1, youtube.getInfluencer_id());
 				ps.setString(2, youtube.getLink());
-				ps.setLong(3, youtube.getSubscribers());						
-				ps.setString(5, youtube.getVideo_cost());
-				ps.setBoolean(6, youtube.isVerified());					
+				ps.setString(3, youtube.getSubscribers());						
+				ps.setString(4, youtube.getVideo_cost());
+				ps.setBoolean(5, youtube.isVerified());					
 				return ps;
 			}
 		}, generatedKeyHolder);
@@ -43,14 +46,18 @@ public class YoutubeImpl implements YoutubeDAO{
 
 	@Override
 	public void update(Youtube youtube, long id) {
-		// TODO Auto-generated method stub
-		
+		String sql = "DELETE FROM "+table_name+" WHERE influencer_id= " + id;		
+		try {
+			jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Proposal.class));	
+		}catch (EmptyResultDataAccessException e) {
+			
+		}
 	}
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
-		
+		String sql = "DELETE FROM "+table_name+" WHERE influencer_id= " + id;		
+		jdbcTemplate.update(sql);
 	}
 
 	@Override
@@ -61,8 +68,14 @@ public class YoutubeImpl implements YoutubeDAO{
 
 	@Override
 	public Youtube get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT * FROM "+table_name+" WHERE influencer_id= " + id;		
+		Youtube youtube;		
+		try {
+			youtube = jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Youtube.class));	
+		}catch (EmptyResultDataAccessException e) {
+			return null;
+		}		
+		return youtube;
 	}
 
 }
