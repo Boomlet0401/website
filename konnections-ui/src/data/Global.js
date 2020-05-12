@@ -16,5 +16,7 @@ export default {
         GET_USERS: BASE_URL + "api/get-users",
         UPDATE_USER_SCOPS: BASE_URL + "api/update-userscops",
         ACTIVE_INACTIVE_USER: BASE_URL + "api/active-inactive-user",
+        GET_DISCLAIMER: BASE_URL + "api/get-disclaimer",
+        ADD_DISCLAIMER: BASE_URL + "api/add-disclaimer",
     }
 }

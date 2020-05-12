@@ -56,13 +56,13 @@ class InfluencerRow extends Component {
     render() {
 
         const influencer = this.props.item;
-        const language = JSON.parse(influencer.language);
-        const location = JSON.parse(influencer.location);
+        // const language = JSON.parse(influencer.language);
+        // const location = JSON.parse(influencer.location);
         const category = JSON.parse(influencer.category);
-        const vendor = JSON.parse(influencer.vendor);
+        // const vendor = JSON.parse(influencer.vendor);
         let showCheckBox = true;
 
-        if (this.props.showCheckBox != undefined) {
+        if (this.props.showCheckBox !== undefined) {
             showCheckBox = this.props.showCheckBox;
         }
 

@@ -1,5 +1,4 @@
 export const requestAPI = (url, method, data) => new Promise((resolve, reject) => {
-
     if (url === undefined) {
         reject('Url Required');
         return;
@@ -7,14 +6,12 @@ export const requestAPI = (url, method, data) => new Promise((resolve, reject) =
         reject('Method Required');
         return;
     }
-
     let tokenValue = null;
     let tokenString = localStorage.getItem("token");
     if (tokenString != null) {
         let token = JSON.parse(tokenString);
         tokenValue = token.token;
     }
-
     fetch(url, {
         method: method,
         body: JSON.stringify(data),
@@ -28,6 +25,5 @@ export const requestAPI = (url, method, data) => new Promise((resolve, reject) =
     }).catch((error) => {
         reject(error)
     });
+});
 
-
-});  

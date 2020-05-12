@@ -17,6 +17,12 @@ $('body').on('click', "input:checkbox[name='type']", function () {
     $(this).prop("checked", true);
 })
 
+$('body').on('click', '.edit_influencer_detail_row', function () {
+    let id = $(this).attr("data-id");
+    $("#" + id).toggleClass('d-none');
+    $("#" + (id + "_edit")).toggleClass('d-none');
+})
+
 
 
 

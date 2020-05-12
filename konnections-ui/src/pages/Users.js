@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Sidebar from '../components/Sidebar'
 import TopBarBlock from '../components/TopBarBlock'
-import { Table, Spinner, Form, Modal, Button } from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
 import Global from '../data/Global'
 import UserTable from '../components/user/UserTable'
 import { requestAPI } from '../functions/load'

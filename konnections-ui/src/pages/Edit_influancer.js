@@ -1,15 +1,13 @@
 import React, { Component, } from 'react';
 import Sidebar from '../components/Sidebar';
 import TopBarBlock from '../components/TopBarBlock';
-import { Link } from 'react-router-dom';
-import { Container, Alert, Spinner, Button } from 'react-bootstrap';
+import { Container, Alert, Spinner, } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import uploadimage from '../assets/icons/upload image.svg';
 import { Form } from 'react-bootstrap';
 import { Multiselect } from 'multiselect-react-dropdown';
 import Global from '../data/Global';
-import ReactDOM from "react-dom";
 import { requestAPI } from '../functions/load';
 
 class Edit_influancer extends Component {

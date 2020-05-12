@@ -16,6 +16,13 @@ class View_influancer extends Component {
         this.state = {
             loading: true,
             influencer: null,
+            blog: null,
+            facebook: null,
+            instagram: null,
+            linkedin: null,
+            tiktok: null,
+            twitter: null,
+            youtube: null,
         };
     }
 
@@ -39,6 +46,13 @@ class View_influancer extends Component {
             this.setState({
                 loading: false,
                 influencer: res.influencer,
+                blog: res.blog,
+                facebook: res.facebook,
+                instagram: res.instagram,
+                linkedin: res.linkedin,
+                tiktok: res.tiktok,
+                twitter: res.twitter,
+                youtube: res.youtube,
             });
         } else {
             this.setState({
@@ -50,7 +64,28 @@ class View_influancer extends Component {
 
     render() {
 
-        const { influencer } = this.state;
+
+        if (this.state.loading) {
+            return (
+                <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ textAlign: 'center' }}>
+                        <Spinner animation="border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </Spinner>
+                        <p style={{ marginTop: 10 }}>Loading wait ...</p>
+                    </div>
+                </div>
+            );
+        }
+
+        const { influencer, blog, facebook, instagram, linkedin, tiktok, twitter, youtube } = this.state;
+
+        console.log(influencer);
+
+        let influencerName = "";
+        if (influencer != undefined) {
+            influencerName = influencer.name;
+        }
 
         return (
             <div className="main_bock">
@@ -61,8 +96,8 @@ class View_influancer extends Component {
                     <TopBarBlock {...this.props}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <p style={{ margin: '0px' }}>Rishabh Shah</p>
-                                <p style={{ margin: '0px 10px', color: '#6238F2' }}>Active</p>
+                                <p style={{ margin: '0px' }}>{influencerName}</p>
+                                {/* <p style={{ margin: '0px 10px', color: '#6238F2' }}>Active</p> */}
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div>
@@ -198,17 +233,26 @@ class View_influancer extends Component {
                                             <div className={'details-row'}>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                                     <h4 className={'form-headings m-0'}>LinkedIn Details</h4>
-                                                    <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
-                                                        <img style={{ width: 18 }} src={correctimage} alt="" />
-                                                        <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
-                                                    </div>
-                                                    <div style={{
-                                                        display: "flex",
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <div className={'active-dot'}></div>
-                                                        <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
-                                                    </div>
+                                                    {
+                                                        linkedin.verified &&
+                                                        <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
+                                                            <img style={{ width: 18 }} src={correctimage} alt="" />
+                                                            <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
+                                                        </div>
+                                                    }
+
+                                                    {
+                                                        linkedin.active &&
+                                                        <div style={{
+                                                            display: "flex",
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div className={'active-dot'}></div>
+                                                            <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
+                                                        </div>
+                                                    }
+
+
                                                 </div>
                                             </div>
 
@@ -216,19 +260,19 @@ class View_influancer extends Component {
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Link</p>
-                                                        <p className={'details-contain'}>https://www.youtube.com/byn</p>
+                                                        <p className={'details-contain'}>{linkedin.link}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Connections</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{linkedin.connections}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Post Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-contain'}>{linkedin.post_cost}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -237,17 +281,25 @@ class View_influancer extends Component {
                                             <div className={'details-row'}>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                                     <h4 className={'form-headings m-0'}>Instagrams Details</h4>
-                                                    <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
-                                                        <img style={{ width: 18 }} src={correctimage} alt="" />
-                                                        <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
-                                                    </div>
-                                                    <div style={{
-                                                        display: "flex",
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <div className={'active-dot'}></div>
-                                                        <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
-                                                    </div>
+                                                    {
+                                                        instagram.verified &&
+                                                        <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
+                                                            <img style={{ width: 18 }} src={correctimage} alt="" />
+                                                            <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        instagram.active &&
+                                                        <div style={{
+                                                            display: "flex",
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div className={'active-dot'}></div>
+                                                            <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
+                                                        </div>
+                                                    }
+
+
                                                 </div>
                                             </div>
 
@@ -255,31 +307,31 @@ class View_influancer extends Component {
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Link</p>
-                                                        <p className={'details-contain'}>https://www.youtube.com/byn</p>
+                                                        <p className={'details-contain'}>{instagram.link}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Followers</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{instagram.followers}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Video Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{instagram.video_cost}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Story Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-contain'}>{instagram.story_cost}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Post Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-contain'}>{instagram.post_cost}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -290,17 +342,17 @@ class View_influancer extends Component {
                                             <div className={'details-row'}>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                                     <h4 className={'form-headings m-0'}>Blogs Details</h4>
-                                                    <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
-                                                        <img style={{ width: 18 }} src={correctimage} alt="" />
-                                                        <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
-                                                    </div>
-                                                    <div style={{
-                                                        display: "flex",
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <div className={'active-dot'}></div>
-                                                        <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
-                                                    </div>
+                                                    {
+                                                        blog.active &&
+                                                        <div style={{
+                                                            display: "flex",
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div className={'active-dot'}></div>
+                                                            <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
+                                                        </div>
+                                                    }
+
                                                 </div>
                                             </div>
 
@@ -308,19 +360,19 @@ class View_influancer extends Component {
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Link</p>
-                                                        <p className={'details-contain'}>https://www.youtube.com/byn</p>
+                                                        <p className={'details-contain'}>{blog.link}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
-                                                        <p className={'details-heading'}>Connections</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-heading'}>Monthly Page View (mpv)</p>
+                                                        <p className={'details-contain'}>{blog.page_views}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
-                                                        <p className={'details-heading'}>Post Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-heading'}>Article Cost (in Rs.)</p>
+                                                        <p className={'details-contain'}>{blog.article_cost}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -331,17 +383,26 @@ class View_influancer extends Component {
                                             <div className={'details-row'}>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                                     <h4 className={'form-headings m-0'}>Twitter Details</h4>
-                                                    <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
-                                                        <img style={{ width: 18 }} src={correctimage} alt="" />
-                                                        <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
-                                                    </div>
-                                                    <div style={{
-                                                        display: "flex",
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <div className={'active-dot'}></div>
-                                                        <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
-                                                    </div>
+                                                    {
+                                                        twitter.verified &&
+                                                        <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
+                                                            <img style={{ width: 18 }} src={correctimage} alt="" />
+                                                            <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        twitter.active &&
+                                                        <div style={{
+                                                            display: "flex",
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div className={'active-dot'}></div>
+                                                            <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
+                                                        </div>
+
+                                                    }
+
+
                                                 </div>
                                             </div>
 
@@ -349,19 +410,19 @@ class View_influancer extends Component {
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Link</p>
-                                                        <p className={'details-contain'}>https://www.youtube.com/byn</p>
+                                                        <p className={'details-contain'}>{twitter.link}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Connections</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{twitter.connections}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Post Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-contain'}>{twitter.post_cost}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -372,17 +433,24 @@ class View_influancer extends Component {
                                             <div className={'details-row'}>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                                     <h4 className={'form-headings m-0'}>Facebook Details</h4>
-                                                    <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
-                                                        <img style={{ width: 18 }} src={correctimage} alt="" />
-                                                        <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
-                                                    </div>
-                                                    <div style={{
-                                                        display: "flex",
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <div className={'active-dot'}></div>
-                                                        <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
-                                                    </div>
+                                                    {
+                                                        facebook.verified &&
+                                                        <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
+                                                            <img style={{ width: 18 }} src={correctimage} alt="" />
+                                                            <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        facebook.active &&
+                                                        <div style={{
+                                                            display: "flex",
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div className={'active-dot'}></div>
+                                                            <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
+                                                        </div>
+                                                    }
+
                                                 </div>
                                             </div>
 
@@ -390,31 +458,31 @@ class View_influancer extends Component {
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Link</p>
-                                                        <p className={'details-contain'}>https://www.youtube.com/byn</p>
+                                                        <p className={'details-contain'}>{facebook.link}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Followers</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{facebook.followers}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Video Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{facebook.video_cost}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Story Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-contain'}>{facebook.story_cost}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Post Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-contain'}>{facebook.post_cost}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -425,17 +493,23 @@ class View_influancer extends Component {
                                             <div className={'details-row'}>
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                                     <h4 className={'form-headings m-0'}>Tiktok Details</h4>
-                                                    <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
-                                                        <img style={{ width: 18 }} src={correctimage} alt="" />
-                                                        <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
-                                                    </div>
-                                                    <div style={{
-                                                        display: "flex",
-                                                        alignItems: 'center'
-                                                    }}>
-                                                        <div className={'active-dot'}></div>
-                                                        <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
-                                                    </div>
+                                                    {
+                                                        tiktok.verified &&
+                                                        <div style={{ display: 'flex', margin: '0px 25px', alignItems: 'center' }}>
+                                                            <img style={{ width: 18 }} src={correctimage} alt="" />
+                                                            <p className={'m-0 ml-2'} style={{ fontSize: 12, color: '#1877F2' }}>Verified</p>
+                                                        </div>
+                                                    }
+                                                    {
+                                                        tiktok.active &&
+                                                        <div style={{
+                                                            display: "flex",
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div className={'active-dot'}></div>
+                                                            <p className={'m-0 ml-3'} style={{ fontSize: 12, color: '#14E699' }}>Active</p>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
 
@@ -443,26 +517,26 @@ class View_influancer extends Component {
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Link</p>
-                                                        <p className={'details-contain'}>https://www.youtube.com/byn</p>
+                                                        <p className={'details-contain'}>{tiktok.link}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Fans</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{tiktok.fans}</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Hearts (in Rs.)</p>
-                                                        <p className={'details-contain'}>12123</p>
+                                                        <p className={'details-contain'}>{tiktok.hearts}</p>
                                                     </div>
                                                 </Col>
 
                                                 <Col lg={4}>
                                                     <div className={'detail-block'}>
                                                         <p className={'details-heading'}>Post Cost (in Rs.)</p>
-                                                        <p className={'details-contain'}>1200</p>
+                                                        <p className={'details-contain'}>{tiktok.post_cost}</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -471,11 +545,11 @@ class View_influancer extends Component {
                                         </div>
                                     </div>
 
-                                    <div className={'my-5'}>
+                                    {/* <div className={'my-5'}>
                                         <h4 className={'form-headings'}>Previous Campaigns</h4>
-                                    </div>
+                                    </div> */}
 
-                                    <CampaignRow {...this.props} />
+                                    {/* <CampaignRow {...this.props} /> */}
                                 </div>
 
                     }

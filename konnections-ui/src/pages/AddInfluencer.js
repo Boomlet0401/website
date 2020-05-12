@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import TopBarBlock from '../components/TopBarBlock';
 import searchIcon from '../assets/icons/search.svg';
 import InfluencerRow from '../components/InfluencerRow/InfluencerRow';
-import INFLUENCER_LIST from '../data/INFLUENCER_LIST';
 import InfluencerFilter from '../components/InfluencerFilter/InfluencerFilter';
 import { Modal, Spinner } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
@@ -63,10 +62,16 @@ class AddInfluencer extends Component {
 
     addToPraposel() {
 
-        console.log(this.state);
-
+        // console.log(this.state);
         if (this.state.type === "") {
             alert("Please select type");
+            return;
+        }
+
+        if (!this.state.selectedProfile.linkedin && !this.state.selectedProfile.instagram && !this.state.selectedProfile.blog
+            && !this.state.selectedProfile.twitter && !this.state.selectedProfile.facebook && !this.state.selectedProfile.tiktok
+            && !this.state.selectedProfile.youtube) {
+            alert("Please select profile");
             return;
         }
 
@@ -85,12 +90,14 @@ class AddInfluencer extends Component {
 
     removeInfluencer(id) {
         let newInfluencer = [];
-        this.state.selectedInfluencer.map((influencer, index) => {
+        this.state.selectedInfluencer.forEach((influencer, index) => {
             if (influencer.id !== id) {
                 newInfluencer.push(influencer);
             }
         });
-        this.state.selectedInfluencer = newInfluencer;
+        this.setState({
+            selectedInfluencer: newInfluencer,
+        })
         console.log(this.state.selectedInfluencer);
     }
 
@@ -146,8 +153,6 @@ class AddInfluencer extends Component {
                                     }
                                 </>
                         }
-
-
                         {/* <div style={{ marginBottom: 30 }} className="">
                             {
                                 INFLUENCER_LIST.map((item, index) => {
@@ -169,7 +174,7 @@ class AddInfluencer extends Component {
                     <div className={'px-4 py-4'}>
                         <p className={'font-weight-bold'}>Choose Data Type</p>
                         <div className={'mt-1'}>
-                            <p>
+                            <div>
                                 <Form.Check
                                     className={''}
                                     custom
@@ -178,13 +183,15 @@ class AddInfluencer extends Component {
                                     onChange={(event) => {
                                         let checked = event.target.checked;
                                         if (checked) {
-                                            this.state.type = "detail";
+                                            this.setState({
+                                                type: "detail",
+                                            })
                                         }
                                     }}
                                     id="type_detail"
                                     type={'radio'} />
-                            </p>
-                            <p>
+                            </div>
+                            <div>
                                 <Form.Check
                                     className={''}
                                     custom
@@ -193,16 +200,18 @@ class AddInfluencer extends Component {
                                     onChange={(event) => {
                                         let checked = event.target.checked;
                                         if (checked) {
-                                            this.state.type = "analysis";
+                                            this.setState({
+                                                type: "analysis",
+                                            })
                                         }
                                     }}
                                     id="type_analysis"
                                     type={'radio'} />
-                            </p>
+                            </div>
                         </div>
                         <hr />
                         <div>
-                            <p className={'font-weight-bold'}>Select Profile</p>
+                            <p className={'font-weight-bold'}>Select Profile <small>( only for detail )</small></p>
                             <Form.Check
                                 className={''}
                                 custom
@@ -212,7 +221,9 @@ class AddInfluencer extends Component {
                                 id={"linkedin"}
                                 label={"Linkedin"}
                                 onChange={(event) => {
-                                    this.state.selectedProfile.linkedin = event.target.checked;
+                                    let selectedProfile = this.state.selectedProfile;
+                                    selectedProfile.linkedin = event.target.checked;
+                                    this.setState({ selectedProfile });
                                 }}
                                 type={'checkbox'} />
                             <Form.Check
@@ -224,7 +235,9 @@ class AddInfluencer extends Component {
                                 id={"instagram"}
                                 label={"Instagram"}
                                 onChange={(event) => {
-                                    this.state.selectedProfile.instagram = event.target.checked;
+                                    let selectedProfile = this.state.selectedProfile;
+                                    selectedProfile.instagram = event.target.checked;
+                                    this.setState({ selectedProfile });
                                 }}
                                 type={'checkbox'} />
                             <Form.Check
@@ -236,7 +249,9 @@ class AddInfluencer extends Component {
                                 id={"blog"}
                                 label={"Blog"}
                                 onChange={(event) => {
-                                    this.state.selectedProfile.blog = event.target.checked;
+                                    let selectedProfile = this.state.selectedProfile;
+                                    selectedProfile.blog = event.target.checked;
+                                    this.setState({ selectedProfile });
                                 }}
                                 type={'checkbox'} />
                             <Form.Check
@@ -248,7 +263,9 @@ class AddInfluencer extends Component {
                                 id={"twitter"}
                                 label={"Twitter"}
                                 onChange={(event) => {
-                                    this.state.selectedProfile.twitter = event.target.checked;
+                                    let selectedProfile = this.state.selectedProfile;
+                                    selectedProfile.twitter = event.target.checked;
+                                    this.setState({ selectedProfile });
                                 }}
                                 type={'checkbox'} />
                             <Form.Check
@@ -260,7 +277,9 @@ class AddInfluencer extends Component {
                                 id={"facebook"}
                                 label={"Facebook"}
                                 onChange={(event) => {
-                                    this.state.selectedProfile.facebook = event.target.checked;
+                                    let selectedProfile = this.state.selectedProfile;
+                                    selectedProfile.facebook = event.target.checked;
+                                    this.setState({ selectedProfile });
                                 }}
                                 type={'checkbox'} />
                             <Form.Check
@@ -272,7 +291,9 @@ class AddInfluencer extends Component {
                                 id={"tiktok"}
                                 label={"Tiktok"}
                                 onChange={(event) => {
-                                    this.state.selectedProfile.tiktok = event.target.checked;
+                                    let selectedProfile = this.state.selectedProfile;
+                                    selectedProfile.tiktok = event.target.checked;
+                                    this.setState({ selectedProfile });
                                 }}
                                 type={'checkbox'} />
                             <Form.Check
@@ -284,11 +305,12 @@ class AddInfluencer extends Component {
                                 id={"youtube"}
                                 label={"Youtube"}
                                 onChange={(event) => {
-                                    this.state.selectedProfile.youtube = event.target.checked;
+                                    let selectedProfile = this.state.selectedProfile;
+                                    selectedProfile.youtube = event.target.checked;
+                                    this.setState({ selectedProfile });
                                 }}
                                 type={'checkbox'} />
                         </div>
-
                         <div className={'text-right py-3'}>
                             <span className={'btn mx-2'} onClick={() => this.setState({ dataTypeModel: false })}>
                                 Discard

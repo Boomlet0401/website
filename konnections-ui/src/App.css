@@ -324,7 +324,7 @@ font-weight: bold;
   justify-content: space-between;
 }
 .detail_table_block{
-  margin: 35px 0px;
+  margin: 15px 0px 35px;
   padding: 5px;
   background: white;
   box-shadow: 0px 0px 3px #9c9c9c70;
@@ -336,7 +336,7 @@ font-weight: bold;
   color: rgba(0, 0, 0, 0.78);
   font-weight: 600;
   font-size: 11px;
-  padding: 15px;
+  padding: 15px 10px;
   border-top: none;
 }
 .detail_table tbody tr{
@@ -374,7 +374,7 @@ font-weight: bold;
 }
 .other-input{
   padding: 9px 0px;
-  width: 80px;
+  width: 100px;
   margin-left: 30px;
   border: 1px solid #6238F2;
   color: #6238F2;
@@ -497,6 +497,13 @@ margin-right: 20px;
   position: absolute;
   bottom: 0;
 }
+.edit_influencer_detail_row:hover{
+  cursor: pointer;
+}
+.canvasjs-chart-credit{
+  display: none !important;
+}
+
 /*  end Page */
 /*Aveek*/
 

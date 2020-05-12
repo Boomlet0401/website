@@ -4,9 +4,36 @@ import { Link } from 'react-router-dom'
 class ManageProposalBody extends Component {
 
 
+
     render() {
 
+        Date.prototype.format = function (format) {
+            var date = {
+                'M+': this.getMonth() + 1,
+                'd+': this.getDate(),
+                'h+': this.getHours(),
+                'm+': this.getMinutes(),
+                's+': this.getSeconds(),
+                'q+': Math.floor((this.getMonth() + 3) / 3),
+                'S+': this.getMilliseconds()
+            };
+
+            if (/(y+)/i.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+            }
+
+            for (var k in date) {
+                if (new RegExp('(' + k + ')').test(format)) {
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? date[k] : ('00' + date[k]).substr(('' + date[k]).length));
+                }
+            }
+
+            return format;
+        }
+
         let item = this.props.item;
+        let approvedDate = new Date(item.created_at).format('yyyy-MM-dd');
+
 
         return (
             <div
@@ -36,10 +63,10 @@ class ManageProposalBody extends Component {
                                 {item.title}
                             </p>
                             <p style={{ color: '#000000', fontSize: '0.85rem', opacity: '0.54', margin: '0 0 10px' }}>
-                                Campaign Type : <strong>Lifestyle</strong>
+                                Campaign Type : <strong>{item.influencer_category}</strong>
                             </p>
                             <p style={{ color: '#000000', fontSize: '0.85rem', opacity: '0.54', margin: '0 0 0px' }}>
-                                Campiagn platform : <strong>You Tube</strong>
+                                Campiagn platform : <strong>{item.plateform}</strong>
                             </p>
                         </div>
                         <div style={{ textAlign: 'right', fontSize: '0.8rem' }}>
@@ -51,7 +78,7 @@ class ManageProposalBody extends Component {
                                 Deliverables :
                             </p>
                             <p style={{ color: '#000000' }}>
-                                <span style={{ fontWeight: '700' }}>1 YT + 3 Stories</span>
+                                <span style={{ fontWeight: '700' }}>{item.deliverables}</span>
                             </p>
                         </div>
                     </div>
@@ -75,14 +102,14 @@ class ManageProposalBody extends Component {
                                     display: 'inline-block',
                                     marginRight: 20
                                 }}>
-                                <span style={{ fontWeight: '500' }}>Client Name</span> : KKO
+                                <span style={{ fontWeight: '500' }}>Client Name</span> : {item.client_name}
                             </span>
                             <span
                                 style={{
                                     display: 'inline-block',
                                     color: 'rgb(109, 109, 109)',
                                 }}>
-                                <span style={{ fontWeight: '500' }}>Approved date</span> : 29-02-2020
+                                <span style={{ fontWeight: '500' }}>Approved date</span> : {approvedDate}
                             </span>
                         </div>
                         <Link
@@ -96,7 +123,7 @@ class ManageProposalBody extends Component {
                                 fontSize: '0.7rem',
                                 fontWeight: '500',
                             }}
-                            to="/view-proposal">
+                            to={"/view-proposal/" + item.id}>
                             View Detail
                         </Link>
                     </div>

@@ -13,6 +13,7 @@ import SignUp from './pages/SignUp';
 import ViewProposal from './pages/ViewProposal';
 import { ProtectedRoute } from './components/protected.route';
 import Users from './pages/Users';
+import ProposalPreview from './pages/ProposalPreview';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
           <ProtectedRoute path={'/create-influancer'} component={CreateInfluancer} />
           <ProtectedRoute path={'/view-influancer/:id'} component={View_influancer} />
           <ProtectedRoute path={'/edit-influancer/:id'} component={Edit_influancer} />
-          <ProtectedRoute path={'/view-proposal'} component={ViewProposal} />
+          <ProtectedRoute path={'/view-proposal/:id'} component={ViewProposal} />
+          <ProtectedRoute path={'/proposal-preview'} component={ProposalPreview} />
           <ProtectedRoute path={'/users'} component={Users} />
         </Switch>
       </div>

@@ -5,68 +5,18 @@ import ManageProposalBody from '../components/ManageProposalBody';
 import { Link } from 'react-router-dom';
 import Global from '../data/Global';
 import { requestAPI } from '../functions/load';
+import { Spinner } from 'react-bootstrap';
 
-const activeData = [
-    {
-        id: "1",
-        title: "Approved list"
-    },
-    {
-        id: "2",
-        title: "Approved list"
-    },
-    {
-        id: "3",
-        title: "Approved list"
-    },
-    {
-        id: "4",
-        title: "Approved list"
-    },
-    {
-        id: "5",
-        title: "Approved list"
-    },
-    {
-        id: "6",
-        title: "Approved list"
-    },
-    {
-        id: "7",
-        title: "Approved list"
-    },
-    {
-        id: "8",
-        title: "Approved list"
-    },
-    {
-        id: "9",
-        title: "Approved list"
-    },
-    {
-        id: "10",
-        title: "Approved list"
-    }
-];
-
-const pendingData = [
-    {
-        id: "1",
-        title: "Pending title"
-    },
-    {
-        id: "2",
-        title: "Pending title"
-    },
-
-];
 
 class Manage_influencer extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: true,
             activeTab: 'approved',
-            list: activeData,
+            list: [],
+            activeList: [],
+            pendingList: [],
         };
     }
 
@@ -79,18 +29,45 @@ class Manage_influencer extends Component {
         let data = this.state;
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
+        console.log(res);
+        if (res.status === "success") {
+
+            let approvedList = [];
+            let pendingList = [];
+
+            res.list.forEach((item, index) => {
+                if (item.approved) {
+                    approvedList.push(item);
+                } else {
+                    pendingList.push(item);
+                }
+            })
+
+            this.setState({
+                list: res.list,
+                loading: false,
+                activeList: approvedList,
+                pendingList: pendingList,
+            });
+        } else {
+            this.setState({
+                list: [],
+                loading: false,
+            });
+            alert(res.message);
+        }
     }
 
     tabClick(e, tab) {
         e.preventDefault();
         if (tab === 'approved') {
             this.setState({
-                list: activeData,
+                list: this.state.activeList,
                 activeTab: 'approved'
             });
         } else if (tab === 'pending') {
             this.setState({
-                list: pendingData,
+                list: this.state.pendingList,
                 activeTab: 'pending'
             });
         }
@@ -155,11 +132,26 @@ class Manage_influencer extends Component {
                     </TopBarBlock>
                     <div style={{ margin: '30px auto', width: '1000px', maxWidth: '100%' }}>
                         {
-                            this.state.list.map((item, index) => {
-                                return (
-                                    <ManageProposalBody key={index} item={item} />
-                                );
-                            })
+                            this.state.loading ?
+                                <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div style={{ textAlign: 'center' }}>
+                                        <Spinner animation="border" role="status">
+                                            <span className="sr-only">Loading...</span>
+                                        </Spinner>
+                                        <p style={{ marginTop: 10 }}>Loading wait ...</p>
+                                    </div>
+                                </div>
+                                :
+                                this.state.list.length === 0 ?
+                                    <div>
+                                        <p>NO DATA</p>
+                                    </div>
+                                    :
+                                    this.state.list.map((item, index) => {
+                                        return (
+                                            <ManageProposalBody key={index} item={item} />
+                                        );
+                                    })
                         }
                     </div>
 
