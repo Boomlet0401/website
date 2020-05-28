@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Sidebar from '../components/Sidebar';
 import TopBarBlock from '../components/TopBarBlock';
 import searchIcon from '../assets/icons/search.svg';
+import RolesManager from '../components/RolesManager';
 
 class Dashboard extends Component {
 
@@ -9,6 +10,12 @@ class Dashboard extends Component {
         super(props);
         this.state = {
         };
+    }
+
+    componentDidMount() {
+        if (RolesManager.isClient()) {
+            this.props.history.push('/proposals');
+        }
     }
 
     render() {

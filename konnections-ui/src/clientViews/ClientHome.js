@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import Sidebar from '../components/Sidebar';
-import TopBarBlock from '../components/TopBarBlock';
-import ManageProposalBody from '../components/ManageProposalBody';
-import { Link } from 'react-router-dom';
 import Global from '../data/Global';
 import { requestAPI } from '../functions/load';
+import TopBarBlock from '../components/TopBarBlock';
 import { Spinner } from 'react-bootstrap';
-import RolesManager from '../components/RolesManager';
+import ManageProposalBody from '../components/ManageProposalBody';
+import Auth from '../components/Auth';
 
-
-class Manage_influencer extends Component {
+class ClientHome extends Component {
 
     constructor(props) {
         super(props);
@@ -24,6 +21,21 @@ class Manage_influencer extends Component {
 
     componentDidMount() {
         this.loadData();
+    }
+
+    tabClick(e, tab) {
+        e.preventDefault();
+        if (tab === 'approved') {
+            this.setState({
+                list: this.state.activeList,
+                activeTab: 'approved'
+            });
+        } else if (tab === 'pending') {
+            this.setState({
+                list: this.state.pendingList,
+                activeTab: 'pending'
+            });
+        }
     }
 
     async loadData() {
@@ -43,11 +55,11 @@ class Manage_influencer extends Component {
                 }
             })
             this.setState({
-                list: pendingList,
+                list: approvedList,
                 loading: false,
                 activeList: approvedList,
                 pendingList: pendingList,
-                activeTab: 'pending',
+                activeTab: 'approved',
             });
         } else {
             this.setState({
@@ -58,31 +70,16 @@ class Manage_influencer extends Component {
         }
     }
 
-    tabClick(e, tab) {
-        e.preventDefault();
-        if (tab === 'approved') {
-            this.setState({
-                list: this.state.activeList,
-                activeTab: 'approved'
-            });
-        } else if (tab === 'pending') {
-            this.setState({
-                list: this.state.pendingList,
-                activeTab: 'pending'
-            });
-        }
-
-    }
-
     render() {
         return (
             <div className="main_bock">
-                <div className="right">
-                    <Sidebar {...this.props} />
-                </div>
-                <div className="main_container">
 
-                    <TopBarBlock {...this.props} backbutton="nodisplay" paddingbottom="nopaddingbottom">
+                <div className="main_container" style={{ maxWidth: 1400, width: "100%" }}>
+
+                    <TopBarBlock {...this.props}
+                        showTopLogo={true}
+                        backbutton="nodisplay"
+                        paddingbottom="nopaddingbottom">
                         <div
                             style={{
                                 display: 'flex',
@@ -120,16 +117,22 @@ class Manage_influencer extends Component {
                                     Pending
                                 </span>
                             </div>
+
                             <div>
-                                <Link
-                                    to={'/create-campaign'}
-                                    style={{ margin: '10px 10px', }}
-                                    className="btn btn-blue">
-                                    Create Campaign
-                                </Link>
+                                <button className="btn btn-blue"
+                                    onClick={() => {
+                                        Auth.logout(() => {
+                                            this.props.history.push("/");
+                                        });
+                                    }}>
+                                    <span>LOGOUT</span>
+                                </button>
                             </div>
+
                         </div>
                     </TopBarBlock>
+
+
                     <div style={{ margin: '30px auto', width: '1000px', maxWidth: '100%' }}>
                         {
                             this.state.loading ?
@@ -155,10 +158,12 @@ class Manage_influencer extends Component {
                         }
                     </div>
 
+
                 </div>
-            </div >
-        );
+            </div>
+        )
     }
+
 }
 
-export default Manage_influencer;
+export default ClientHome;

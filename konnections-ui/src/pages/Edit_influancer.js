@@ -1,7 +1,7 @@
 import React, { Component, } from 'react';
 import Sidebar from '../components/Sidebar';
 import TopBarBlock from '../components/TopBarBlock';
-import { Container, Alert, Spinner, } from 'react-bootstrap';
+import { Container, Alert, Spinner, Tabs, Tab, } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import uploadimage from '../assets/icons/upload image.svg';
@@ -9,6 +9,7 @@ import { Form } from 'react-bootstrap';
 import { Multiselect } from 'multiselect-react-dropdown';
 import Global from '../data/Global';
 import { requestAPI } from '../functions/load';
+
 
 class Edit_influancer extends Component {
     constructor() {
@@ -84,11 +85,36 @@ class Edit_influancer extends Component {
             updated_date: "",
             btnTextDelete: "Delete",
             btnStateDelete: "",
+            countries: [],
+            state: [],
+            city: [],
         };
     }
 
     componentDidMount() {
         this.loadData();
+        this.loadCountries();
+    }
+
+    async loadCountries() {
+        let url = Global.API.GET_COUNTRIES;
+        let response = await requestAPI(url, "post", {});
+        let res = await response.json();
+        this.setState({ countries: res.list });
+    }
+
+    async loadStates(countryId) {
+        let url = Global.API.GET_STATES;
+        let response = await requestAPI(url, "post", { id: countryId });
+        let res = await response.json();
+        this.setState({ state: res.list });
+    }
+
+    async loadCities(countryId) {
+        let url = Global.API.GET_CITIES;
+        let response = await requestAPI(url, "post", { id: countryId });
+        let res = await response.json();
+        this.setState({ city: res.list });
     }
 
     async loadData() {
@@ -765,668 +791,690 @@ class Edit_influancer extends Component {
                                                     </Col>
                                                 </Row>
 
-
-                                                <Row>
-                                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{}}>
-                                                                <h4 className={'form-headings'}>Linkedin Details</h4>
-                                                            </div>
-                                                            <div style={{}}>
-                                                                <div style={{ display: 'flex' }}>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            custom
-                                                                            name={'l_verified'}
-                                                                            label="Verified"
-                                                                            checked={this.state.l_verified}
-                                                                            onChange={(event) => {
-                                                                                this.setState({
-                                                                                    l_verified: event.target.checked,
-                                                                                });
-                                                                            }}
-                                                                            id="verified"
-                                                                            type={'checkbox'} />
+                                                <Tabs defaultActiveKey="linkedin" id="social-tab-controll">
+                                                    <Tab eventKey="linkedin" title="Linkedin">
+                                                        <Row>
+                                                            <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                                    <div style={{}}>
+                                                                        <h4 className={'form-headings'}>Linkedin Details</h4>
                                                                     </div>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            className={''}
-                                                                            custom
-                                                                            name={'l_active'}
-                                                                            checked={this.state.l_active}
-                                                                            onChange={(event) => {
-                                                                                this.setState({
-                                                                                    l_active: event.target.checked,
-                                                                                });
-                                                                            }}
-                                                                            label="Active"
-                                                                            id="active"
-                                                                            type={'checkbox'} />
+                                                                    <div style={{}}>
+                                                                        <div style={{ display: 'flex' }}>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    custom
+                                                                                    name={'l_verified'}
+                                                                                    label="Verified"
+                                                                                    checked={this.state.l_verified}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            l_verified: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    id="verified"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    className={''}
+                                                                                    custom
+                                                                                    name={'l_active'}
+                                                                                    checked={this.state.l_active}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            l_active: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Active"
+                                                                                    id="active"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Link</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            l_link: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.l_link}
-                                                                    type="text" placeholder="Enter link" name="l_link" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Connections</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            l_connections: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.l_connections}
-                                                                    type="text" placeholder="Enter connections" name="l_connection" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Post Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            l_post_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.l_post_cost}
-                                                                    type="text" placeholder="Enter post cost" name="l_post_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{}}>
-                                                                <h4 className={'form-headings'}>Instagram Details</h4>
-                                                            </div>
-                                                            <div style={{}}>
-                                                                <div style={{ display: 'flex' }}>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            custom
-                                                                            name={'verified_insta'}
-                                                                            checked={this.state.verified_insta}
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Link</label>
+                                                                        <input
                                                                             onChange={(event) => {
                                                                                 this.setState({
-                                                                                    verified_insta: event.target.checked,
+                                                                                    l_link: event.target.value,
                                                                                 });
                                                                             }}
-                                                                            label="Verified"
-                                                                            id="verified_insta"
-                                                                            type={'checkbox'} />
-                                                                    </div>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            className={''}
-                                                                            custom
-                                                                            name={'active_insta'}
-                                                                            checked={this.state.active_insta}
-                                                                            onChange={(event) => {
-                                                                                this.setState({
-                                                                                    active_insta: event.target.checked,
-                                                                                });
-                                                                            }}
-                                                                            label="Active"
-                                                                            id="Active_insta"
-                                                                            type={'checkbox'} />
+                                                                            value={this.state.l_link}
+                                                                            type="text" placeholder="Enter link" name="l_link" />
                                                                     </div>
                                                                 </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Link</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            insta_link: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.insta_link}
-                                                                    type="text" placeholder="Enter link" name="insta_link" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Followers</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            insta_followers: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.insta_followers}
-                                                                    type="text" placeholder="Enter followers" name="insta_followers" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Video Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            insta_video_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.insta_video_cost}
-                                                                    type="text" placeholder="Enter cost" name="insta_video_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Story Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            insta_story_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.insta_story_cost}
-                                                                    type="text" placeholder="Enter cost" name="insta_story_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Post Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            insta_post_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.insta_post_cost}
-                                                                    type="text" placeholder="Enter cost" name="insta_post_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{}}>
-                                                                <h4 className={'form-headings'}>Blog Details</h4>
-                                                            </div>
-                                                            <div style={{}}>
-                                                                <div style={{ display: 'flex' }}>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            className={''}
-                                                                            custom
-                                                                            name={'active_blog'}
-                                                                            checked={this.state.active_blog}
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Connections</label>
+                                                                        <input
                                                                             onChange={(event) => {
                                                                                 this.setState({
-                                                                                    active_blog: event.target.checked,
+                                                                                    l_connections: event.target.value,
                                                                                 });
                                                                             }}
-                                                                            label="Active"
-                                                                            id="Active_blog"
-                                                                            type={'checkbox'} />
+                                                                            value={this.state.l_connections}
+                                                                            type="text" placeholder="Enter connections" name="l_connection" />
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Link</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            blog_link: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.blog_link}
-                                                                    type="text" placeholder="Enter link" name="blog_link" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Monthly Page View (mpv)</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            blog_page_view: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.blog_page_view}
-                                                                    type="text" placeholder="Enter page view" name="blog_page_view" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Article Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            blog_article_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.blog_article_cost}
-                                                                    type="text" placeholder="Enter article cost" name="blog_article_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{}}>
-                                                                <h4 className={'form-headings'}>Twitter Details</h4>
-                                                            </div>
-                                                            <div style={{}}>
-                                                                <div style={{ display: 'flex' }}>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            custom
-                                                                            name={'verified_tw'}
-                                                                            checked={this.state.verified_tw}
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Post Cost (in Rs.) </label>
+                                                                        <input
                                                                             onChange={(event) => {
                                                                                 this.setState({
-                                                                                    verified_tw: event.target.checked,
+                                                                                    l_post_cost: event.target.value,
                                                                                 });
                                                                             }}
-                                                                            label="Verified"
-                                                                            id="verified_tw"
-                                                                            type={'checkbox'} />
-                                                                    </div>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            className={''}
-                                                                            custom
-                                                                            name={'active_tw'}
-                                                                            checked={this.state.active_tw}
-                                                                            onChange={(event) => {
-                                                                                this.setState({
-                                                                                    active_tw: event.target.checked,
-                                                                                });
-                                                                            }}
-                                                                            label="Active"
-                                                                            id="Active_tw"
-                                                                            type={'checkbox'} />
+                                                                            value={this.state.l_post_cost}
+                                                                            type="text" placeholder="Enter post cost" name="l_post_cost" />
                                                                     </div>
                                                                 </div>
+                                                            </Col>
+                                                        </Row>
 
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Link</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            tw_link: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.tw_link}
-                                                                    type="text" placeholder="Enter link" name="tw_link" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Connections</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            tw_connections: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.tw_connections}
-                                                                    type="text" placeholder="Enter connections" name="tw_connections" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Post Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            tw_post_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.tw_post_cost}
-                                                                    type="text" placeholder="Enter cost" name="tw_post_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{}}>
-                                                                <h4 className={'form-headings'}>Facebook Details</h4>
-                                                            </div>
-                                                            <div style={{}}>
-                                                                <div style={{ display: 'flex' }}>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            custom
-                                                                            name={'verified_fb'}
-                                                                            checked={this.state.verified_fb}
-                                                                            onChange={(event) => {
-                                                                                this.setState({
-                                                                                    verified_fb: event.target.checked,
-                                                                                });
-                                                                            }}
-                                                                            label="Verified"
-                                                                            id="verified_fb"
-                                                                            type={'checkbox'} />
+                                                    </Tab>
+                                                    <Tab eventKey="instagram" title="Instagram">
+                                                        <Row>
+                                                            <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                                    <div style={{}}>
+                                                                        <h4 className={'form-headings'}>Instagram Details</h4>
                                                                     </div>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            className={''}
-                                                                            custom
-                                                                            name={'active_fb'}
-                                                                            checked={this.state.active_fb}
-                                                                            onChange={(event) => {
-                                                                                this.setState({
-                                                                                    active_fb: event.target.checked,
-                                                                                });
-                                                                            }}
-                                                                            label="Active"
-                                                                            id="Active_fb"
-                                                                            type={'checkbox'} />
+                                                                    <div style={{}}>
+                                                                        <div style={{ display: 'flex' }}>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    custom
+                                                                                    name={'verified_insta'}
+                                                                                    checked={this.state.verified_insta}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            verified_insta: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Verified"
+                                                                                    id="verified_insta"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    className={''}
+                                                                                    custom
+                                                                                    name={'active_insta'}
+                                                                                    checked={this.state.active_insta}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            active_insta: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Active"
+                                                                                    id="Active_insta"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Link</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            fb_link: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.fb_link}
-                                                                    type="text" placeholder="Enter link" name="fb_link" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Followers</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            fb_followers: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.fb_followers}
-                                                                    type="text" placeholder="Enter followers" name="fb_followers" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Video Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            fb_video_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.fb_video_cost}
-                                                                    type="text" placeholder="Enter cost" name="fb_video_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Story Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            fb_story_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.fb_story_cost}
-                                                                    type="text" placeholder="Enter cost" name="fb_story_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Post Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            fb_post_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.fb_post_cost}
-                                                                    type="text" placeholder="Enter cost" name="fb_post_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{}}>
-                                                                <h4 className={'form-headings'}>Tiktok Details</h4>
-                                                            </div>
-                                                            <div style={{}}>
-                                                                <div style={{ display: 'flex' }}>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            custom
-                                                                            name={'verified_tt'}
-                                                                            checked={this.state.verified_tt}
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Link</label>
+                                                                        <input
                                                                             onChange={(event) => {
                                                                                 this.setState({
-                                                                                    verified_tt: event.target.checked,
+                                                                                    insta_link: event.target.value,
                                                                                 });
                                                                             }}
-                                                                            label="Verified"
-                                                                            id="verified_tt"
-                                                                            type={'checkbox'} />
-                                                                    </div>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            className={''}
-                                                                            custom
-                                                                            name={'active_tt'}
-                                                                            checked={this.state.active_tt}
-                                                                            onChange={(event) => {
-                                                                                this.setState({
-                                                                                    active_tt: event.target.checked,
-                                                                                });
-                                                                            }}
-                                                                            label="Active"
-                                                                            id="Active_tt"
-                                                                            type={'checkbox'} />
+                                                                            value={this.state.insta_link}
+                                                                            type="text" placeholder="Enter link" name="insta_link" />
                                                                     </div>
                                                                 </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Link</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            tt_link: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.tt_link}
-                                                                    type="text" placeholder="Enter link" name="tt_link" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Fans</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            tt_fans: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.tt_fans}
-                                                                    type="text" placeholder="Enter fans" name="tt_fans" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Hearts</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            tt_hearts: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.tt_hearts}
-                                                                    type="text" placeholder="Enter hearts" name="tt_hearts" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Post Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            tt_post_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.tt_post_cost}
-                                                                    type="text" placeholder="Enter cost" name="tt_post_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                            <div style={{}}>
-                                                                <h4 className={'form-headings'}>Youtube Details</h4>
-                                                            </div>
-                                                            <div style={{}}>
-                                                                <div style={{ display: 'flex' }}>
-                                                                    <div className={'mx-4'}>
-                                                                        <Form.Check
-                                                                            custom
-                                                                            name={'verified_yt'}
-                                                                            checked={this.state.verified_yt}
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Followers</label>
+                                                                        <input
                                                                             onChange={(event) => {
                                                                                 this.setState({
-                                                                                    verified_yt: event.target.checked,
+                                                                                    insta_followers: event.target.value,
                                                                                 });
                                                                             }}
-                                                                            label="Verified"
-                                                                            id="verified_yt"
-                                                                            type={'checkbox'} />
+                                                                            value={this.state.insta_followers}
+                                                                            type="text" placeholder="Enter followers" name="insta_followers" />
                                                                     </div>
                                                                 </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Video Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    insta_video_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.insta_video_cost}
+                                                                            type="text" placeholder="Enter cost" name="insta_video_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Story Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    insta_story_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.insta_story_cost}
+                                                                            type="text" placeholder="Enter cost" name="insta_story_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Post Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    insta_post_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.insta_post_cost}
+                                                                            type="text" placeholder="Enter cost" name="insta_post_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
 
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Link</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            yt_link: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.yt_link}
-                                                                    type="text" placeholder="Enter link" name="yt_link" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Subscribers</label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            yt_subscribers: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.yt_subscribers}
-                                                                    type="number" placeholder="Enter fans" name="yt_subscribers" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={4} md={6} xs={6}>
-                                                        <div>
-                                                            <div className="input_box width-input border-bottom">
-                                                                <label>Video Cost (in Rs.) </label>
-                                                                <input
-                                                                    onChange={(event) => {
-                                                                        this.setState({
-                                                                            yt_video_cost: event.target.value,
-                                                                        });
-                                                                    }}
-                                                                    value={this.state.yt_video_cost}
-                                                                    type="text" placeholder="Enter cost" name="yt_video_cost" />
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
+                                                    </Tab>
+                                                    <Tab eventKey="blog" title="Blog">
+                                                        <Row>
+                                                            <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                                    <div style={{}}>
+                                                                        <h4 className={'form-headings'}>Blog Details</h4>
+                                                                    </div>
+                                                                    <div style={{}}>
+                                                                        <div style={{ display: 'flex' }}>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    className={''}
+                                                                                    custom
+                                                                                    name={'active_blog'}
+                                                                                    checked={this.state.active_blog}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            active_blog: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Active"
+                                                                                    id="Active_blog"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Link</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    blog_link: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.blog_link}
+                                                                            type="text" placeholder="Enter link" name="blog_link" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Monthly Page View (mpv)</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    blog_page_view: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.blog_page_view}
+                                                                            type="text" placeholder="Enter page view" name="blog_page_view" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Article Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    blog_article_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.blog_article_cost}
+                                                                            type="text" placeholder="Enter article cost" name="blog_article_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </Tab>
+                                                    <Tab eventKey="twitter" title="Twitter">
+                                                        <Row>
+                                                            <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                                    <div style={{}}>
+                                                                        <h4 className={'form-headings'}>Twitter Details</h4>
+                                                                    </div>
+                                                                    <div style={{}}>
+                                                                        <div style={{ display: 'flex' }}>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    custom
+                                                                                    name={'verified_tw'}
+                                                                                    checked={this.state.verified_tw}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            verified_tw: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Verified"
+                                                                                    id="verified_tw"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    className={''}
+                                                                                    custom
+                                                                                    name={'active_tw'}
+                                                                                    checked={this.state.active_tw}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            active_tw: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Active"
+                                                                                    id="Active_tw"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Link</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    tw_link: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.tw_link}
+                                                                            type="text" placeholder="Enter link" name="tw_link" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Connections</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    tw_connections: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.tw_connections}
+                                                                            type="text" placeholder="Enter connections" name="tw_connections" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Post Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    tw_post_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.tw_post_cost}
+                                                                            type="text" placeholder="Enter cost" name="tw_post_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </Tab>
+                                                    <Tab eventKey="facebook" title="Facebook">
+                                                        <Row>
+                                                            <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                                    <div style={{}}>
+                                                                        <h4 className={'form-headings'}>Facebook Details</h4>
+                                                                    </div>
+                                                                    <div style={{}}>
+                                                                        <div style={{ display: 'flex' }}>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    custom
+                                                                                    name={'verified_fb'}
+                                                                                    checked={this.state.verified_fb}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            verified_fb: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Verified"
+                                                                                    id="verified_fb"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    className={''}
+                                                                                    custom
+                                                                                    name={'active_fb'}
+                                                                                    checked={this.state.active_fb}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            active_fb: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Active"
+                                                                                    id="Active_fb"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Link</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    fb_link: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.fb_link}
+                                                                            type="text" placeholder="Enter link" name="fb_link" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Followers</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    fb_followers: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.fb_followers}
+                                                                            type="text" placeholder="Enter followers" name="fb_followers" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Video Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    fb_video_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.fb_video_cost}
+                                                                            type="text" placeholder="Enter cost" name="fb_video_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Story Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    fb_story_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.fb_story_cost}
+                                                                            type="text" placeholder="Enter cost" name="fb_story_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Post Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    fb_post_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.fb_post_cost}
+                                                                            type="text" placeholder="Enter cost" name="fb_post_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </Tab>
+                                                    <Tab eventKey="tiktok" title="Tiktok">
+                                                        <Row>
+                                                            <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                                    <div style={{}}>
+                                                                        <h4 className={'form-headings'}>Tiktok Details</h4>
+                                                                    </div>
+                                                                    <div style={{}}>
+                                                                        <div style={{ display: 'flex' }}>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    custom
+                                                                                    name={'verified_tt'}
+                                                                                    checked={this.state.verified_tt}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            verified_tt: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Verified"
+                                                                                    id="verified_tt"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    className={''}
+                                                                                    custom
+                                                                                    name={'active_tt'}
+                                                                                    checked={this.state.active_tt}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            active_tt: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Active"
+                                                                                    id="Active_tt"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Link</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    tt_link: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.tt_link}
+                                                                            type="text" placeholder="Enter link" name="tt_link" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Fans</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    tt_fans: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.tt_fans}
+                                                                            type="text" placeholder="Enter fans" name="tt_fans" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Hearts</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    tt_hearts: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.tt_hearts}
+                                                                            type="text" placeholder="Enter hearts" name="tt_hearts" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Post Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    tt_post_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.tt_post_cost}
+                                                                            type="text" placeholder="Enter cost" name="tt_post_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </Tab>
+                                                    <Tab eventKey="youtube" title="Youtube">
+                                                        <Row>
+                                                            <Col lg={12} style={{ marginTop: 15, marginBottom: 15 }}>
+                                                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                                    <div style={{}}>
+                                                                        <h4 className={'form-headings'}>Youtube Details</h4>
+                                                                    </div>
+                                                                    <div style={{}}>
+                                                                        <div style={{ display: 'flex' }}>
+                                                                            <div className={'mx-4'}>
+                                                                                <Form.Check
+                                                                                    custom
+                                                                                    name={'verified_yt'}
+                                                                                    checked={this.state.verified_yt}
+                                                                                    onChange={(event) => {
+                                                                                        this.setState({
+                                                                                            verified_yt: event.target.checked,
+                                                                                        });
+                                                                                    }}
+                                                                                    label="Verified"
+                                                                                    id="verified_yt"
+                                                                                    type={'checkbox'} />
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Link</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    yt_link: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.yt_link}
+                                                                            type="text" placeholder="Enter link" name="yt_link" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Subscribers</label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    yt_subscribers: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.yt_subscribers}
+                                                                            type="number" placeholder="Enter fans" name="yt_subscribers" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                            <Col lg={4} md={6} xs={6}>
+                                                                <div>
+                                                                    <div className="input_box width-input border-bottom">
+                                                                        <label>Video Cost (in Rs.) </label>
+                                                                        <input
+                                                                            onChange={(event) => {
+                                                                                this.setState({
+                                                                                    yt_video_cost: event.target.value,
+                                                                                });
+                                                                            }}
+                                                                            value={this.state.yt_video_cost}
+                                                                            type="text" placeholder="Enter cost" name="yt_video_cost" />
+                                                                    </div>
+                                                                </div>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </Tab>
+                                                </Tabs>
                                             </Container>
 
 

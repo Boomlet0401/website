@@ -16,7 +16,7 @@ export default class UserTable extends Component {
             contentPublisher: false,
             campaignManager: false,
             selectedUserId: "",
-            btnUpdateScopsText: "Update Scops",
+            btnUpdateScopsText: "Update Roles",
             btnUpdateScopsState: false,
             formError: [],
             messageSuccessScop: "",
@@ -140,7 +140,6 @@ export default class UserTable extends Component {
 
     }
 
-
     render() {
         return (
             <>
@@ -151,7 +150,7 @@ export default class UserTable extends Component {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>Scops</th>
+                            <th>Roles</th>
                             <th>Active</th>
                         </tr>
                     </thead>
@@ -159,7 +158,11 @@ export default class UserTable extends Component {
                         {
                             this.props.userList.map((user, index) => {
                                 return (
-                                    <UserRow user={user} index={index} key={index}
+                                    <UserRow
+                                        key={index}
+                                        user={user}
+                                        index={index}
+                                        refereshList={this.props.refereshList}
                                         showAddScops={this.showAddScops} />
                                 );
                             })
@@ -169,7 +172,7 @@ export default class UserTable extends Component {
 
                 <Modal show={this.state.showScopAdd}>
                     <Modal.Header>
-                        <Modal.Title>Add Scops to user</Modal.Title>
+                        <Modal.Title>Add Roles to user</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {

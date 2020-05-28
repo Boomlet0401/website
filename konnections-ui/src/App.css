@@ -503,6 +503,9 @@ margin-right: 20px;
 .canvasjs-chart-credit{
   display: none !important;
 }
+.optionListContainer{
+  z-index: 1000 !important;
+}
 
 /*  end Page */
 /*Aveek*/

@@ -48,6 +48,8 @@ class CreateCampaign extends Component {
             co_ordinates: "",
             campaign_budget: "",
             campaign_duration: "",
+            client: "",
+            client_list: [],
             client_detail: "",
             formError: [],
             messageSuccess: "",
@@ -70,6 +72,12 @@ class CreateCampaign extends Component {
             disclaimers: [],
             btnText: "Save & Create",
             btnState: "",
+            statisticsSocialReach: "",
+            statisticsEstimatedEngagement: "",
+            statisticsEstimatedEngagementPrice: "",
+            statisticsMale: "",
+            statisticsFemale: "",
+            addStatistics: false,
         }
         this.addInfluencer = this.addInfluencer.bind(this);
         this.updateBlog = this.updateBlog.bind(this);
@@ -83,6 +91,28 @@ class CreateCampaign extends Component {
     }
 
     componentDidMount() {
+        this.getClients();
+    }
+
+    async getClients() {
+        let url = Global.API.GET_USERS;
+        let data = {
+            search: "",
+        }
+        let response = await requestAPI(url, "post", data);
+        let res = await response.json();
+        console.log(res);
+        if (res.status === "success") {
+            let client = [];
+            res.list.forEach((item, index) => {
+                if (item.scops === "client") {
+                    client.push(item);
+                }
+            });
+            this.setState({
+                client_list: client,
+            });
+        }
     }
 
     async formSubmit(e) {
@@ -144,6 +174,12 @@ class CreateCampaign extends Component {
                 influencerAnalysis: [],
                 btnText: "Save & Create",
                 btnState: "",
+                statisticsSocialReach: "",
+                statisticsEstimatedEngagement: "",
+                statisticsEstimatedEngagementPrice: "",
+                statisticsMale: "",
+                statisticsFemale: "",
+                addStatistics: false,
             }, () => this.disClaimerRef.current.refreshDisclaimer());
         } else {
             this.setState({
@@ -237,7 +273,6 @@ class CreateCampaign extends Component {
                                     background: '#FBFAFF',
                                     margin: '0 -20px'
                                 }}>
-
                                 {
                                     this.state.messageSuccess !== "" &&
                                     <div className={'alert alert-success'}>
@@ -532,6 +567,30 @@ class CreateCampaign extends Component {
                                                         this.state.formError.campaign_duration !== "" && <p className="text-danger small form_error">{this.state.formError.campaign_duration}</p>
                                                     }
                                                 </Col>
+                                                <Col lg={4} md={6} xs={6}>
+                                                    <div>
+                                                        <div className="input_box width-input  border-bottom">
+                                                            <label>Select Client</label>
+                                                            <select
+                                                                onChange={(event) => {
+                                                                    this.setState({
+                                                                        client: event.target.value,
+                                                                    });
+                                                                }}
+                                                                value={this.state.client}>
+                                                                <option value={""}>-- select --</option>
+                                                                {
+                                                                    this.state.client_list.map((item, index) => {
+                                                                        return (<option key={item.id} value={item.id}>{item.name}</option>);
+                                                                    })
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    {
+                                                        this.state.formError.client !== "" && <p className="text-danger small form_error">{this.state.formError.client}</p>
+                                                    }
+                                                </Col>
                                             </Row>
                                             <Row>
                                                 <Col>
@@ -626,24 +685,120 @@ class CreateCampaign extends Component {
                                     this.state.influencerAnalysis.length > 0 &&
                                     <div>
                                         {/* Overall Statistics */}
-                                        <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Overall Statistics</p>
+                                        <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>
+                                            {"Overall Statistics"}
+                                            <span onClick={() => this.setState({ addStatistics: !this.state.addStatistics, })} className={'btn'}>
+                                                {
+                                                    this.state.addStatistics ?
+                                                        <span className="material-icons">
+                                                            {"save"}
+                                                        </span>
+                                                        :
+                                                        <span className="material-icons">
+                                                            {"edit"}
+                                                        </span>
+                                                }
+                                            </span>
+                                        </p>
                                         <div>
+                                            {
+                                                this.state.addStatistics &&
+                                                <div>
+                                                    <Row>
+                                                        <Col lg={4} md={6} xs={6}>
+                                                            <div>
+                                                                <div className="input_box width-input border-bottom">
+                                                                    <label>Social Reach</label>
+                                                                    <input
+                                                                        onChange={(event) => {
+                                                                            this.setState({
+                                                                                statisticsSocialReach: event.target.value,
+                                                                            });
+                                                                        }}
+                                                                        value={this.state.statisticsSocialReach}
+                                                                        type="text" placeholder="Enter Social Reach" />
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={4} md={6} xs={6}>
+                                                            <div>
+                                                                <div className="input_box width-input border-bottom">
+                                                                    <label>Estimated Engagement</label>
+                                                                    <input
+                                                                        onChange={(event) => {
+                                                                            this.setState({
+                                                                                statisticsEstimatedEngagement: event.target.value,
+                                                                            });
+                                                                        }}
+                                                                        value={this.state.statisticsEstimatedEngagement}
+                                                                        type="text" placeholder="Enter Estimated Engagement" />
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={4} md={6} xs={6}>
+                                                            <div>
+                                                                <div className="input_box width-input border-bottom">
+                                                                    <label>Estimated Engagement Price</label>
+                                                                    <input
+                                                                        onChange={(event) => {
+                                                                            this.setState({
+                                                                                statisticsEstimatedEngagementPrice: event.target.value,
+                                                                            });
+                                                                        }}
+                                                                        value={this.state.statisticsEstimatedEngagementPrice}
+                                                                        type="text" placeholder="Enter Estimated Engagement Price" />
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={4} md={6} xs={6}>
+                                                            <div>
+                                                                <div className="input_box width-input border-bottom">
+                                                                    <label>Male</label>
+                                                                    <input
+                                                                        onChange={(event) => {
+                                                                            this.setState({
+                                                                                statisticsMale: event.target.value,
+                                                                            });
+                                                                        }}
+                                                                        value={this.state.statisticsMale}
+                                                                        type="text" placeholder="Enter Male in %" />
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={4} md={6} xs={6}>
+                                                            <div>
+                                                                <div className="input_box width-input border-bottom">
+                                                                    <label>Female</label>
+                                                                    <input
+                                                                        onChange={(event) => {
+                                                                            this.setState({
+                                                                                statisticsFemale: event.target.value,
+                                                                            });
+                                                                        }}
+                                                                        value={this.state.statisticsFemale}
+                                                                        type="text" placeholder="Enter Female in %" />
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            }
                                             <Row>
                                                 <Col lg={3}>
                                                     <div className={'analytic-widght-block'}>
-                                                        <p className={'analytic-widght-heading'}>1</p>
+                                                        <p className={'analytic-widght-heading'}>{this.state.influencerAnalysis.length}</p>
                                                         <p className={'analytic-widght-title'}>Influencer selected</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={3}>
                                                     <div className={'analytic-widght-block'} style={{ background: '#1DA1F2' }}>
-                                                        <p className={'analytic-widght-heading'}>5.7M</p>
+                                                        <p className={'analytic-widght-heading'}>{this.state.statisticsSocialReach}</p>
                                                         <p className={'analytic-widght-title'}>Social Reach</p>
                                                     </div>
                                                 </Col>
                                                 <Col lg={3}>
                                                     <div className={'analytic-widght-block'} style={{ background: '#2FC996' }}>
-                                                        <p className={'analytic-widght-heading'}>35k</p>
+                                                        <p className={'analytic-widght-heading'}>{this.state.statisticsEstimatedEngagement}</p>
                                                         <p className={'analytic-widght-title'}>Estimated Engagement</p>
                                                     </div>
                                                 </Col>
@@ -651,20 +806,22 @@ class CreateCampaign extends Component {
                                                     <div className={'gender-widght-block'}>
                                                         <div className={'gender-widght-contain mb-3'}>
                                                             <img alt="" style={{}} src={male} />
-                                                            <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>77%</p>
+                                                            <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>
+                                                                {this.state.statisticsMale + "%"}
+                                                            </p>
                                                         </div>
                                                         <div className={'gender-widght-contain'}>
                                                             <img alt="" style={{}} src={female} />
-                                                            <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>37%</p>
+                                                            <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>
+                                                                {this.state.statisticsFemale + "%"}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </Col>
                                                 <Col lg={3}>
                                                     <div className={'analytic-widght-block'} style={{ background: '#D342D9' }}>
-                                                        <p className={'analytic-widght-heading'}>35k</p>
-                                                        <p className={'analytic-widght-title'}>Estimated Engagement</p>
-                                                        <p className={'analytic-widght-title mt-3'}>Avg Estimated price</p>
-                                                        <p className={'analytic-widght-title'}>$894</p>
+                                                        <p className={'analytic-widght-heading'}>{this.state.statisticsEstimatedEngagementPrice}</p>
+                                                        <p className={'analytic-widght-title'}>Avg Estimated price</p>
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -687,7 +844,6 @@ class CreateCampaign extends Component {
                 <Modal className={'full-width-model'} show={this.state.addInfluencer}>
                     <AddInfluencer hideModel={this.addInfluencer} />
                 </Modal>
-
 
                 <Modal className={'full-width-model'} show={this.state.preview}>
                     <ProposalPreview hideModel={() => this.setState({ preview: false })} state={this.state} />
