@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import TopBarBlock from '../components/TopBarBlock';
-import filter from '../assets/icons/filter.svg';
-import { Container, Row, Col, Table } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import styles from '../../src/components/CampaignRow/CampaignRow.module.css';
-import yt from '../assets/icons/youtube.svg';
-import pie_chart from '../assets/icons/pie-chart.svg';
-
 import male from '../assets/icons/male.svg';
 import female from '../assets/icons/Female.svg';
-import Desclaimer_data from '../data/Desclaimer_data';
 import YoutubeBlock from '../components/proposal/view/YoutubeBlock';
 import BlogBlock from '../components/proposal/view/BlogBlock';
 import FacebookBlock from '../components/proposal/view/FacebookBlock';

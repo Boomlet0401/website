@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import Global from '../data/Global';
 import { requestAPI } from '../functions/load';
 import { Spinner } from 'react-bootstrap';
-import RolesManager from '../components/RolesManager';
-
 
 class Manage_influencer extends Component {
 
@@ -31,7 +29,6 @@ class Manage_influencer extends Component {
         let data = this.state;
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
             let approvedList = [];
             let pendingList = [];

@@ -236,7 +236,6 @@ class Edit_influancer extends Component {
             btnState: "",
             formError: res.ferror,
         });
-        console.log(res);
         if (res.status === "success") {
             this.setState({
                 message_success: res.message,
@@ -271,7 +270,6 @@ class Edit_influancer extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
             // this.setState({
             //     btnTextDelete: "Please wait...",

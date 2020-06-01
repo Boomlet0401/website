@@ -1,8 +1,8 @@
 // FOR LIVE
-const BASE_URL = "https://182.70.251.183:8443/boomlet/";
+// const BASE_URL = "https://182.70.251.183:8443/boomlet/";
 
 // FOR DEVELOPMENT
-// const BASE_URL = "https://192.168.1.34:9443/boomlet/";
+const BASE_URL = "https://192.168.1.34:9443/boomlet/";
 
 export default {
     API: {
@@ -25,5 +25,6 @@ export default {
         GET_COUNTRIES: BASE_URL + "location/countries",
         GET_STATES: BASE_URL + "location/states",
         GET_CITIES: BASE_URL + "location/cities",
+        ADD_EMPLOYEE: BASE_URL + "api/add-employee",
     }
 }

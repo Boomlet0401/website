@@ -156,7 +156,6 @@ class CreateInfluancer extends Component {
             btnState: "",
             formError: res.ferror,
         });
-        console.log(res);
         if (res.status === "success") {
             this.setState({
                 message_success: res.message,

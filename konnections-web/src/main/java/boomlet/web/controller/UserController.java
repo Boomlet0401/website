@@ -1344,5 +1344,79 @@ public class UserController {
 		}
 
 	}
+	
+	@PostMapping("/add-employee")
+	public Map<String, Object> addEmployee(@RequestBody Map<String, Object> requestParams) {
+		
+		User user = new User();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", "error");
+		map.put("message", "");
+		
+		Map<String, String> error = new HashMap<String, String>();
+
+		String name = (String) requestParams.get("name");
+		String email = (String) requestParams.get("email");		
+		String mobile = (String) requestParams.get("mobile");
+
+		if (name == null || name.equalsIgnoreCase("")) {
+			error.put("name", "Please enter name");
+			map.put("ferror", error);
+			return map;
+		} else {
+			user.setName(name);
+		}
+
+		if (email == null || email.equalsIgnoreCase("")) {
+			error.put("email", "Please enter email address");
+			map.put("ferror", error);
+			return map;
+		} else {
+			user.setEmail(email);
+		}
+
+		if (mobile == null || mobile.equalsIgnoreCase("")) {
+			error.put("mobile", "Please enter mobile number");
+			map.put("ferror", error);
+			return map;
+		} else {
+			user.setMobile(mobile);
+		}
+
+		user.setPass("123456");
+		
+		User oldUser = new User();
+
+		// Check Email
+		oldUser = userdao.get(user.getEmail());
+		if (oldUser != null) {
+			error.put("email", "email already registered");
+			map.put("ferror", error);
+			return map;
+		}
+
+		// Check Mobile
+		oldUser = userdao.getByMobile(user.getMobile());
+		if (oldUser != null) {
+			error.put("mobile", "mobile number already registered");
+			map.put("ferror", error);
+			return map;
+		}
+		
+		map.put("ferror", error);		
+
+		long id = userdao.save(user);
+		if(id > 0) {			
+			map.put("status", "success");
+			map.put("message", "Employee added successfully");
+			return map;
+		}else {
+			map.put("status", "error");
+			map.put("message", "OOPS! Something wrong");
+			return map;
+		}
+		
+		
+	}
 
 }

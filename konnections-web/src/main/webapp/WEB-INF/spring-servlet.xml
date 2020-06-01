@@ -18,6 +18,9 @@
 		base-package="boomlet.web.service" />
 	<!--Provide support for conversion, formatting and validation -->
 	<mvc:annotation-driven />
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
 	<!-- Define Spring MVC view resolver -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

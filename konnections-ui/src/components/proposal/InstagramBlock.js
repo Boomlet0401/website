@@ -16,8 +16,14 @@ export default class InstagramBlock extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            detailRows: this.props.influencerDetail,
+        });
+    }
+
     render() {
-        this.state.detailRows = this.props.influencerDetail;
+        // this.state.detailRows = this.props.influencerDetail;
         if (this.state.detailRows.length === 0) {
             return null;
         }

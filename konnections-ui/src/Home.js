@@ -6,6 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import Auth from './components/Auth';
 import RolesManager from './components/RolesManager';
 import { GoogleLogin } from 'react-google-login';
+import { emailValidation } from './functions/FormValidation';
 
 class Home extends Component {
 
@@ -60,12 +61,11 @@ class Home extends Component {
         let e_pass = "";
 
         let formE = false;
-        let regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if (email === "") {
             formE = true;
             e_email = "Enter email address"
-        } else if (regEmail.test(email) === false) {
+        } else if (emailValidation.test(email) === false) {
             formE = true;
             e_email = "Enter valid email address"
         }
@@ -108,7 +108,6 @@ class Home extends Component {
             }
         });
         let res = await response.json();
-        console.log(res);
         let formError = res.ferror;
         this.setState({
             e_email: formError.email,
@@ -139,7 +138,6 @@ class Home extends Component {
             btnState: "disabled",
         });
         let profileObj = responseObject.profileObj;
-        console.log(profileObj);
         let url = Global.API.LOGIN;
         let data = {
             email: profileObj.email,
@@ -155,7 +153,6 @@ class Home extends Component {
             }
         });
         let res = await response.json();
-        console.log(res);
         let formError = res.ferror;
         this.setState({
             e_email: formError.email,
@@ -178,8 +175,6 @@ class Home extends Component {
 
     render() {
 
-        let regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
         return (
             <div className="login_background">
                 <div className="loginBox">
@@ -200,7 +195,7 @@ class Home extends Component {
 
                                             if (email === "") {
                                                 e_email = "Please enter email";
-                                            } else if (regEmail.test(email) === false) {
+                                            } else if (emailValidation.test(email) === false) {
                                                 e_email = "Invalid email";
                                             } else {
                                                 e_email = "";
@@ -261,7 +256,6 @@ class Home extends Component {
                                             this.loginWithGoogle(responseGoogle);
                                         }}
                                         onFailure={(responseGoogle) => {
-                                            console.log(responseGoogle);
                                         }} />
                                     :
                                     <button className={"btn btn-blue px-4 " + this.state.btnState}>{this.state.btnText}</button>

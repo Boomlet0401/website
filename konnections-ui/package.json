@@ -1,6 +1,7 @@
 {
   "name": "boomlet",
   "version": "0.1.0",
+  "homepage": "http://localhost:8080/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -36,5 +37,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
+    "@typescript-eslint/parser": "^3.0.2",
+    "eslint": "^6.6.0",
+    "eslint-plugin-react": "^7.20.0"
   }
 }

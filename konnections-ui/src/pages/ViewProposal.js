@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import TopBarBlock from '../components/TopBarBlock';
-import filter from '../assets/icons/filter.svg';
-import { Container, Row, Col, Table, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import styles from '../../src/components/CampaignRow/CampaignRow.module.css';
-import yt from '../assets/icons/youtube.svg';
-import pie_chart from '../assets/icons/pie-chart.svg';
-
 import male from '../assets/icons/male.svg';
 import female from '../assets/icons/Female.svg';
-import Desclaimer_data from '../data/Desclaimer_data';
 import Global from '../data/Global';
-import { requestAPI } from '../functions/load';
-
+import { requestAPI, timespanToDate } from '../functions/load';
 import YoutubeBlock from '../components/proposal/view/YoutubeBlock';
 import BlogBlock from '../components/proposal/view/BlogBlock';
 import FacebookBlock from '../components/proposal/view/FacebookBlock';
@@ -78,11 +72,8 @@ class ViewProposal extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
-
             let proposal = res.proposal;
-
             this.setState({
                 loading: false,
                 proposal: true,
@@ -197,7 +188,7 @@ class ViewProposal extends Component {
 
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #00000038', padding: '10px 0px', }}>
                                                 <div style={{ display: 'flex', }}>
-                                                    <p className={styles.content_heading}><strong>Campaign Date: </strong>{this.state.proposal_date}</p>
+                                                    <p className={styles.content_heading}><strong>Campaign Date: </strong>{timespanToDate(this.state.proposal_date)}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -232,7 +223,7 @@ class ViewProposal extends Component {
 
                                         {/* Analysis Block */}
                                         {
-                                            this.state.influencerAnalysis.length != 0 &&
+                                            this.state.influencerAnalysis.length !== 0 &&
                                             <div>
                                                 <p className={'font-weight-bold m-0 py-4'}>Analysis </p>
                                                 <div className={'analysis_main_container'}>
@@ -244,7 +235,7 @@ class ViewProposal extends Component {
 
                                         {/* Overall analysis Block */}
                                         {
-                                            this.state.influencerAnalysis.length != 0 &&
+                                            this.state.influencerAnalysis.length !== 0 &&
                                             <div>
                                                 <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Overall Statistics</p>
 

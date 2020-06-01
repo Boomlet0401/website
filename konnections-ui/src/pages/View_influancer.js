@@ -6,7 +6,6 @@ import { Container, Spinner } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import correctimage from '../assets/icons/correct.svg';
-import CampaignRow from '../components/CampaignRow/CampaignRow';
 import Global from '../data/Global';
 import { requestAPI } from '../functions/load';
 
@@ -40,8 +39,6 @@ class View_influancer extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
-
         if (res.status === "success") {
             this.setState({
                 loading: false,
@@ -78,12 +75,10 @@ class View_influancer extends Component {
             );
         }
 
-        const { influencer, blog, facebook, instagram, linkedin, tiktok, twitter, youtube } = this.state;
-
-        console.log(influencer);
+        const { influencer, blog, facebook, instagram, linkedin, tiktok, twitter } = this.state;
 
         let influencerName = "";
-        if (influencer != undefined) {
+        if (influencer !== undefined) {
             influencerName = influencer.name;
         }
 

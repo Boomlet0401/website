@@ -11,6 +11,7 @@ const youtubeRows = () => {
             deliverables: "",
             packageCost: "",
             remark: "",
+            approve: "false",
         }
     );
 };
@@ -37,6 +38,7 @@ const instagramRows = () => {
             deliverables: "",
             packageCost: "",
             remark: "",
+            approve: "false",
         }
     );
 };
@@ -62,6 +64,7 @@ const linkedinRows = () => {
             deliverables: "",
             packageCost: "",
             remark: "",
+            approve: "false",
         }
     );
 };
@@ -86,6 +89,7 @@ const blogRows = () => {
             deliverables: "",
             packageCost: "",
             remark: "",
+            approve: "false",
         }
     );
 };
@@ -110,6 +114,7 @@ const twitterRows = () => {
             deliverables: "",
             packageCost: "",
             remark: "",
+            approve: "false",
         }
     );
 };
@@ -134,6 +139,7 @@ const facebookRows = () => {
             deliverables: "",
             packageCost: "",
             remark: "",
+            approve: "false",
         }
     );
 };
@@ -158,6 +164,7 @@ const tiktokRows = () => {
             deliverables: "",
             packageCost: "",
             remark: "",
+            approve: "false",
         }
     );
 };
@@ -172,7 +179,7 @@ export const tiktokColumns = [
 
 export function influencerMaper(selectedProfile, selectedInfluencer, state) {
 
-    selectedInfluencer.forEach((influencer, index) => {
+    selectedInfluencer.forEach((influencer) => {
         if (selectedProfile.linkedin) {
             const inf = { influencer: influencer, detailRow: linkedinRows() }
             state.influencerDetailLinkedin.push(inf);
@@ -248,7 +255,7 @@ const analyticData = () => {
 
 export function influencerMaperAnalysis(selectedProfile, selectedInfluencer, state) {
 
-    selectedInfluencer.forEach((influencer, index) => {
+    selectedInfluencer.forEach((influencer, ) => {
 
         const inf = { influencer: influencer, detailRow: analyticData() }
         if (selectedProfile.linkedin) {

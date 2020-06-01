@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/boomlet/static/css/main.ee204f3e.chunk.css",
+    "main.js": "/boomlet/static/js/main.72673503.chunk.js",
+    "main.js.map": "/boomlet/static/js/main.72673503.chunk.js.map",
+    "runtime-main.js": "/boomlet/static/js/runtime-main.c7ad5b71.js",
+    "runtime-main.js.map": "/boomlet/static/js/runtime-main.c7ad5b71.js.map",
+    "static/js/2.78768c14.chunk.js": "/boomlet/static/js/2.78768c14.chunk.js",
+    "static/js/2.78768c14.chunk.js.map": "/boomlet/static/js/2.78768c14.chunk.js.map",
+    "index.html": "/boomlet/index.html",
+    "precache-manifest.e00673be55fb6e5f7d47063d78227251.js": "/boomlet/precache-manifest.e00673be55fb6e5f7d47063d78227251.js",
+    "service-worker.js": "/boomlet/service-worker.js",
+    "static/css/main.ee204f3e.chunk.css.map": "/boomlet/static/css/main.ee204f3e.chunk.css.map",
+    "static/js/2.78768c14.chunk.js.LICENSE.txt": "/boomlet/static/js/2.78768c14.chunk.js.LICENSE.txt",
+    "static/media/Bhuvan.png": "/boomlet/static/media/Bhuvan.2d622134.png",
+    "static/media/Female.svg": "/boomlet/static/media/Female.754b785f.svg",
+    "static/media/Influencer.svg": "/boomlet/static/media/Influencer.290a4914.svg",
+    "static/media/Instagram.svg": "/boomlet/static/media/Instagram.92053974.svg",
+    "static/media/back-arrow.svg": "/boomlet/static/media/back-arrow.f26e2d18.svg",
+    "static/media/correct.svg": "/boomlet/static/media/correct.bda4b3aa.svg",
+    "static/media/dashboard.svg": "/boomlet/static/media/dashboard.bc7d62ee.svg",
+    "static/media/delete24.svg": "/boomlet/static/media/delete24.15582413.svg",
+    "static/media/edit-24px.svg": "/boomlet/static/media/edit-24px.9983fecc.svg",
+    "static/media/facebook.svg": "/boomlet/static/media/facebook.ec99f948.svg",
+    "static/media/linkedin.svg": "/boomlet/static/media/linkedin.60c2f7fe.svg",
+    "static/media/male.svg": "/boomlet/static/media/male.1990c33b.svg",
+    "static/media/pie-chart.svg": "/boomlet/static/media/pie-chart.ff9ac914.svg",
+    "static/media/promotion.svg": "/boomlet/static/media/promotion.9941573c.svg",
+    "static/media/save-24px.svg": "/boomlet/static/media/save-24px.80a893d0.svg",
+    "static/media/search.svg": "/boomlet/static/media/search.6600bcca.svg",
+    "static/media/twitter.svg": "/boomlet/static/media/twitter.093d8f11.svg",
+    "static/media/upload image.svg": "/boomlet/static/media/upload image.2aeadb06.svg",
+    "static/media/youtube.svg": "/boomlet/static/media/youtube.6347dc90.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c7ad5b71.js",
+    "static/js/2.78768c14.chunk.js",
+    "static/css/main.ee204f3e.chunk.css",
+    "static/js/main.72673503.chunk.js"
+  ]
+}

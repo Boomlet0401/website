@@ -3,8 +3,8 @@ import Global from '../data/Global';
 import { requestAPI } from '../functions/load';
 import TopBarBlock from '../components/TopBarBlock';
 import { Spinner } from 'react-bootstrap';
-import ManageProposalBody from '../components/ManageProposalBody';
 import Auth from '../components/Auth';
+import ProposalRow from './components/ProposalRow';
 
 class ClientHome extends Component {
 
@@ -43,11 +43,10 @@ class ClientHome extends Component {
         let data = this.state;
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
             let approvedList = [];
             let pendingList = [];
-            res.list.forEach((item, index) => {
+            res.list.forEach((item) => {
                 if (item.approved) {
                     approvedList.push(item);
                 } else {
@@ -152,7 +151,7 @@ class ClientHome extends Component {
                                     :
                                     this.state.list.map((item, index) => {
                                         return (
-                                            <ManageProposalBody key={index} item={item} />
+                                            <ProposalRow key={index} item={item} />
                                         );
                                     })
                         }

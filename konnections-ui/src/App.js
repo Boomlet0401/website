@@ -15,6 +15,7 @@ import { ProtectedRoute } from './components/protected.route';
 import Users from './pages/Users';
 import ProposalPreview from './pages/ProposalPreview';
 import ClientHome from './clientViews/ClientHome';
+import ClientProposalView from './clientViews/ClientProposalView';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Switch>
           <Route path={'/'} exact component={Home} />
           <Route path={'/signup'} exact component={SignUp} />
-          <ProtectedRoute path={'/dashboard'} exact component={Dashboard} />
+          <ProtectedRoute path={'/dashboard'} client={true} exact component={Dashboard} />
           <ProtectedRoute path={'/create-campaign'} exact component={CreateCampaign} />
           <ProtectedRoute path={'/manage-influencer'} exact component={Influencer} />
           <ProtectedRoute path={'/manage-proposal'} exact component={Manage_influencer} />
@@ -35,7 +36,8 @@ function App() {
           <ProtectedRoute path={'/users'} exact component={Users} />
 
           {/* // Client Screens */}
-          <ProtectedRoute path={'/proposals'} exact component={ClientHome} />
+          <ProtectedRoute path={'/proposals'} client={true} exact component={ClientHome} />
+          <ProtectedRoute path={'/proposals/view/:id'} client={true} exact component={ClientProposalView} />
 
         </Switch>
       </div>

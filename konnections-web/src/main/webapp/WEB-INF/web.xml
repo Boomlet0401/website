@@ -12,14 +12,26 @@
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
+	</servlet-mapping>	
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>		
+		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.svg</url-pattern>
+		<url-pattern>*.json</url-pattern>
+		<url-pattern>*.ico</url-pattern>
+		<url-pattern>*.txt</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.map</url-pattern>
 	</servlet-mapping>
 	<security-constraint>
-      <web-resource-collection>
-        <web-resource-name>boomlet</web-resource-name>
-        <url-pattern>/*</url-pattern>
-      </web-resource-collection>
-      <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-      </user-data-constraint>
-    </security-constraint>
+		<web-resource-collection>
+			<web-resource-name>boomlet</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 </web-app>  

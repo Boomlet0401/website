@@ -33,8 +33,6 @@ class Manage_influencer extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
-
         if (res.status === "success") {
             this.setState({
                 loading: false,

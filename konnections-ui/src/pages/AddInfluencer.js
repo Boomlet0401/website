@@ -62,7 +62,6 @@ class AddInfluencer extends Component {
 
     addToPraposel() {
 
-        // console.log(this.state);
         if (this.state.type === "") {
             alert("Please select type");
             return;
@@ -85,12 +84,11 @@ class AddInfluencer extends Component {
 
     addInfluencer(influencer) {
         this.state.selectedInfluencer.push(influencer);
-        console.log(this.state.selectedInfluencer);
     }
 
     removeInfluencer(id) {
         let newInfluencer = [];
-        this.state.selectedInfluencer.forEach((influencer, index) => {
+        this.state.selectedInfluencer.forEach((influencer) => {
             if (influencer.id !== id) {
                 newInfluencer.push(influencer);
             }
@@ -98,7 +96,6 @@ class AddInfluencer extends Component {
         this.setState({
             selectedInfluencer: newInfluencer,
         })
-        console.log(this.state.selectedInfluencer);
     }
 
     render() {

@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import Sidebar from '../components/Sidebar'
-import TopBarBlock from '../components/TopBarBlock'
-import { Spinner } from 'react-bootstrap'
-import Global from '../data/Global'
-import UserTable from '../components/user/UserTable'
-import { requestAPI } from '../functions/load'
+import React, { Component } from 'react';
+import Sidebar from '../components/Sidebar';
+import TopBarBlock from '../components/TopBarBlock';
+import { Spinner, } from 'react-bootstrap';
+import Global from '../data/Global';
+import UserTable from '../components/user/UserTable';
+import { requestAPI } from '../functions/load';
+import AddEmployeeModel from '../components/AddEmployeeModel';
 
 export default class Users extends Component {
 
@@ -34,11 +35,10 @@ export default class Users extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
             let employee = [];
             let client = [];
-            res.list.forEach((item, index) => {
+            res.list.forEach((item) => {
                 if (item.scops === "client") {
                     client.push(item);
                 } else {
@@ -84,6 +84,8 @@ export default class Users extends Component {
         }
 
     }
+
+
 
     render() {
 
@@ -156,9 +158,9 @@ export default class Users extends Component {
                                         <UserTable refereshList={this.loadData} userList={userList} />
                             }
                         </div>
-
                     </div>
                 </div>
+                <AddEmployeeModel refereshList={this.loadData} />
             </>
         )
     }

@@ -33,9 +33,7 @@ export default class UserTable extends Component {
         let campaignManager = false;
 
         if (user.scops != null) {
-            console.log(user.scops)
             let scops = user.scops.split(",");
-
             if (this.findArrayElement(scops, 'admin')) {
                 administrator = true;
             } else {
@@ -77,11 +75,17 @@ export default class UserTable extends Component {
 
     changeScopeAdmin(value) {
         this.setState({
-            administrator: true,
+            administrator: value,
             contentEditor: false,
             contentPublisher: false,
             campaignManager: false,
         });
+        // this.setState({
+        //     administrator: true,
+        //     contentEditor: false,
+        //     contentPublisher: false,
+        //     campaignManager: false,
+        // });
     }
 
     changeScopsToOther() {
@@ -106,7 +110,6 @@ export default class UserTable extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
             this.setState({
                 btnUpdateScopsText: "Update Scops",

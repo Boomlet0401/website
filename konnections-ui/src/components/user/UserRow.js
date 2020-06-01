@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import Global from '../../data/Global';
 import { requestAPI } from '../../functions/load';
@@ -8,14 +8,12 @@ export default class UserRow extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
         }
     }
 
     componentDidMount() {
 
     }
-
 
     async activeInactiveUser(user) {
         let url = Global.API.ACTIVE_INACTIVE_USER;
@@ -48,19 +46,22 @@ export default class UserRow extends Component {
                     <td>{user.mobile}</td>
                     <td>
                         {
-                            user.scops == null ?
-                                <button onClick={() => this.props.showAddScops(user)} className={'btn btn-blue small'}>
-                                    {"ADD ROLES"}
-                                </button>
+                            user.scops === "client" ?
+                                <span>{user.scops}</span>
                                 :
-                                <span>
-                                    {user.scops}
-                                    <button onClick={() => this.props.showAddScops(user)} className={'btn'}>
-                                        <span className="material-icons small">
-                                            {"edit"}
-                                        </span>
+                                user.scops === null ?
+                                    <button onClick={() => this.props.showAddScops(user)} className={'btn btn-blue small'}>
+                                        {"ADD ROLES"}
                                     </button>
-                                </span>
+                                    :
+                                    <span>
+                                        {user.scops}
+                                        <button onClick={() => this.props.showAddScops(user)} className={'btn'}>
+                                            <span className="material-icons small">
+                                                {"edit"}
+                                            </span>
+                                        </button>
+                                    </span>
                         }
                     </td>
                     <td>
@@ -69,7 +70,7 @@ export default class UserRow extends Component {
                             id={"user-active-switch-" + user.id}
                             label="Active/In-active user"
                             checked={active}
-                            onChange={(event) => {
+                            onChange={() => {
                                 this.activeInactiveUser(user);
                             }}
                         />
@@ -79,3 +80,4 @@ export default class UserRow extends Component {
         )
     }
 }
+

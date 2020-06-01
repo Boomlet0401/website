@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import TopBarBlock from '../components/TopBarBlock';
-import { Container, Row, Col, Form, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Modal } from 'react-bootstrap';
 import '../components/Jquery.js';
 import AddInfluencer from './AddInfluencer';
-import INFLUENCER_DATA from '../data/INFLUENCER_DATA';
-import pie_chart from '../assets/icons/pie-chart.svg';
 import male from '../assets/icons/male.svg';
 import female from '../assets/icons/Female.svg';
 import Disclaimer from '../components/widget/Disclaimer';
@@ -19,7 +17,6 @@ import TwitterBlock from '../components/proposal/TwitterBlock';
 import FacebookBlock from '../components/proposal/FacebookBlock';
 import TiktokBlock from '../components/proposal/TiktokBlock';
 import AnalyticBlock from '../components/proposal/AnalyticBlock';
-import { Link } from 'react-router-dom';
 import ProposalPreview from './ProposalPreview';
 import {
     youtubeColumns, blogColumns, facebookColumns, twitterColumns,
@@ -101,10 +98,9 @@ class CreateCampaign extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
             let client = [];
-            res.list.forEach((item, index) => {
+            res.list.forEach((item) => {
                 if (item.scops === "client") {
                     client.push(item);
                 }
@@ -129,7 +125,6 @@ class CreateCampaign extends Component {
         let data = this.state;
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         let formError = [];
         if (res.ferror !== undefined) {
             formError = res.ferror;
@@ -138,7 +133,7 @@ class CreateCampaign extends Component {
             this.setState({
                 messageSuccess: res.message,
                 messageError: "",
-                formError: res.ferror,
+                formError: formError,
                 preview: false,
                 addInfluencer: false,
                 proposal_date: "",
@@ -156,7 +151,6 @@ class CreateCampaign extends Component {
                 campaign_budget: "",
                 campaign_duration: "",
                 client_detail: "",
-                messageError: "",
                 youtubeColumns: youtubeColumns,
                 blogColumns: blogColumns,
                 facebookColumns: facebookColumns,
@@ -187,7 +181,7 @@ class CreateCampaign extends Component {
                 btnState: "",
                 messageSuccess: "",
                 messageError: res.message,
-                formError: res.ferror,
+                formError: formError,
             });
         }
 
