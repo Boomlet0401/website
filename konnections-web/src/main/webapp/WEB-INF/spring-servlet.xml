@@ -24,6 +24,16 @@
 		<property name="prefix" value="/WEB-INF/jsp/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+
+	<!--<mvc:resources mapping="/static/**" location="classpath:/static/static/" />
+	<mvc:resources mapping="/index.html" location="classpath:/static/index.html" />
+	&lt;!&ndash;<mvc:resources mapping="/manifest.json" location="classpath:/static/manifest.json" />
+	<mvc:resources mapping="/asset-manifest.json" location="classpath:/static/asset-manifest.json" />&ndash;&gt;
+	<mvc:resources mapping="/*.js" location="classpath:/static/" />
+	<mvc:resources mapping="/*.json" location="classpath:/static/" />
+	<mvc:resources mapping="/*.png" location="classpath:/static/" />
+	<mvc:resources mapping="/*.ico" location="classpath:/static/" />-->
+
 	<bean id="ds"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName"

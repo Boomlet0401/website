@@ -10,6 +10,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
+	<parent>
+		<groupId>com.boomlet.konnections</groupId>
+		<artifactId>konnections-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
 	<name>boomlet Maven Webapp</name>
 	<!-- FIXME change it to the project's website -->
 	<url>http://boomlet.com</url>
@@ -83,6 +89,59 @@
 
 	<build>
 		<finalName>boomlet</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/resources/static</directory>
+							<includes>
+								<include>static/</include>
+								<include>*.json</include>
+								<include>index.html</include>
+								<include>loggedout.html</include>
+								<include>favicon.ico</include>
+								<include>*.js</include>
+								<include>*.png</include>
+								<include>robots.txt</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy reactjs frontend content</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>src/main/resources/static/</outputDirectory>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<directory>${project.parent.basedir}/konnections-ui/target/classes</directory>
+									<includes>
+										<include>static/</include>
+										<include>*.json</include>
+										<include>index.html</include>
+										<include>loggedout.html</include>
+										<include>favicon.ico</include>
+										<include>*.js</include>
+										<include>*.png</include>
+										<include>robots.txt</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
 				defaults (may be moved to parent pom) -->
 			<plugins>

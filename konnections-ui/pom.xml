@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.boomlet.konnections</groupId>
+    <artifactId>konnections-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>konnections-ui</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Konnections UI</name>
+
+  <properties>
+    <version.frontend.maven.plugin>1.6</version.frontend.maven.plugin>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>${version.frontend.maven.plugin}</version>
+        <configuration>
+          <workingDirectory>./</workingDirectory>
+        </configuration>
+        <executions>
+          <!--<execution>
+            <id>install node and yarn</id>
+            <goals>
+              <goal>install-node-and-yarn</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <nodeVersion>v12.16.3</nodeVersion>
+              <yarnVersion>v1.22.4</yarnVersion>
+              &lt;!&ndash;<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+              <yarnDownloadRoot>https://github.com/yarnpkg/yarn/releases/download/</yarnDownloadRoot>&ndash;&gt;
+            </configuration>
+          </execution>-->
+          <execution>
+            <id>install node and npm</id>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <nodeVersion>v12.16.3</nodeVersion>
+              <npmVersion>6.14.4</npmVersion>
+              <!--<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+              <yarnDownloadRoot>https://github.com/yarnpkg/yarn/releases/download/</yarnDownloadRoot>-->
+            </configuration>
+          </execution>
+          <execution>
+            <id>npm cache clean &amp;&amp; npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>
+          <!--<execution>
+            <id>yarn cache clean &amp;&amp; yarn install</id>
+            <goals>
+              <goal>yarn</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>-->
+          <execution>
+            <id>npm run build</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
+          <!--<execution>
+            <id>webpack build</id>
+            <goals>
+              <goal>webpack</goal>
+            </goals>
+
+            &lt;!&ndash; optional: the default phase is "generate-resources" &ndash;&gt;
+            <phase>generate-resources</phase>
+
+            <configuration>
+              &lt;!&ndash; optional: if not specified, it will run webpack's default
+              build (and you can remove this whole <configuration> section.) &ndash;&gt;
+              <arguments>-p</arguments>
+            </configuration>
+          </execution>-->
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/build/</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <webResources>
+            <resource>
+              <!-- this is relative to the pom.xml directory -->
+              <directory>build</directory>
+              <!-- the default value is ** -->
+              <includes>
+                <include>**/*.*</include>
+              </includes>
+              <targetPath>build/</targetPath>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

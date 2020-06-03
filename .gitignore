@@ -1,0 +1,38 @@
+# Eclipse
+.project
+.settings
+.classpath
+.externalToolBuilders
+
+# IntelliJ
+.idea
+*.iml
+
+# Maven
+target
+
+# XCode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+DerivedData
+*.xcworkspace
+xcuserdata
+profile
+*.hg
+/.hg/*
+dist/
+
+# Other
+.DS_Store
+.history
+*.swp
+
+konnections-ui/lib/node_modules/**
+konnections-ui/node/**
+konnections-web/src/main/resources/static/**
+konnections-web/src/main/webapp/static/**
+konnections-ui/bin
