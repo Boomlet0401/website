@@ -32,9 +32,10 @@ public class ProposalImpl implements ProposalDAO{
 				+ "campaign_budget,campaign_duration,client_detail,added_by,added_by_id,approved,"
 				+ "youtubeColumns,blogColumns,facebookColumns,instagramColumns,linkedinColumns,tiktokColumns,twitterColumns,"
 				+ "influencerDetailLinkedin,influencerDetailInstagram,influencerDetailBlog,influencerDetailTwitter,"
-				+ "influencerDetailFacebook,influencerDetailTiktok,influencerDetailYoutube,influencerAnalysis,disclaimers"
+				+ "influencerDetailFacebook,influencerDetailTiktok,influencerDetailYoutube,influencerAnalysis,disclaimers,client,"
+				+ "statisticsSocialReach,statisticsEstimatedEngagement,statisticsEstimatedEngagementPrice,statisticsMale,statisticsFemale"
 				+ ")"
-				+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 		GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
 
@@ -45,7 +46,7 @@ public class ProposalImpl implements ProposalDAO{
 				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
 				ps.setDate(1, proposal.getProposal_date());
 				ps.setString(2, proposal.getBrand_agency());
-				ps.setString(3, proposal.getBrand_name());
+				ps.setString(3, proposal.getBrand_name());				
 				ps.setString(4, proposal.getClient_name());
 				ps.setString(5, proposal.getStrategist());
 				ps.setString(6, proposal.getContact_number());
@@ -77,6 +78,12 @@ public class ProposalImpl implements ProposalDAO{
 				ps.setString(32, proposal.getInfluencerDetailYoutube());
 				ps.setString(33, proposal.getInfluencerAnalysis());
 				ps.setString(34, proposal.getDisclaimers());
+				ps.setLong(35, proposal.getClient());
+				ps.setString(36, proposal.getStatisticsSocialReach());
+				ps.setString(37, proposal.getStatisticsEstimatedEngagement());
+				ps.setString(38, proposal.getStatisticsEstimatedEngagementPrice());
+				ps.setString(39, proposal.getStatisticsMale());
+				ps.setString(40, proposal.getStatisticsFemale());
 				return ps;
 			}
 		}, generatedKeyHolder);
@@ -96,7 +103,7 @@ public class ProposalImpl implements ProposalDAO{
 
 	@Override
 	public List<Proposal> list() {		
-		String sql = "SELECT * FROM "+table_name+" WHERE 1";
+		String sql = "SELECT * FROM "+table_name+" WHERE 1 ORDER BY id DESC";
 		return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Proposal.class));
 	}
 
@@ -110,6 +117,18 @@ public class ProposalImpl implements ProposalDAO{
 			return null;
 		}		
 		return proposal;
+	}
+
+	@Override
+	public List<Proposal> listForPublisher(long id) {
+		String sql = "SELECT * FROM "+table_name+" WHERE added_by_id="+id+" ORDER BY id DESC";
+		return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Proposal.class));
+	}
+
+	@Override
+	public List<Proposal> listForClient(long id) {
+		String sql = "SELECT * FROM "+table_name+" WHERE client="+id+" ORDER BY id DESC";
+		return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Proposal.class));
 	}
 
 }

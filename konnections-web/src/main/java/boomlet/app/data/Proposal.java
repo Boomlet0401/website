@@ -8,6 +8,7 @@ public class Proposal {
 	private Date proposal_date;
 	private String brand_agency;
 	private String brand_name;
+	private long client;
 	private String client_name;
 	private String strategist;
 	private String contact_number;
@@ -48,6 +49,13 @@ public class Proposal {
     private String influencerDetailYoutube;
     
     private String influencerAnalysis;
+    
+    private String statisticsSocialReach;
+    private String statisticsEstimatedEngagement;
+    private String statisticsEstimatedEngagementPrice;
+    private String statisticsMale;
+    private String statisticsFemale;
+    
     private String disclaimers;
 	
 	public Proposal() {
@@ -430,8 +438,66 @@ public class Proposal {
 
 	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
-	}	
-	
-	
+	}
+
+
+	public long getClient() {
+		return client;
+	}
+
+
+	public void setClient(long client) {
+		this.client = client;
+	}
+
+
+	public String getStatisticsSocialReach() {
+		return statisticsSocialReach;
+	}
+
+
+	public void setStatisticsSocialReach(String statisticsSocialReach) {
+		this.statisticsSocialReach = statisticsSocialReach;
+	}
+
+
+	public String getStatisticsEstimatedEngagement() {
+		return statisticsEstimatedEngagement;
+	}
+
+
+	public void setStatisticsEstimatedEngagement(String statisticsEstimatedEngagement) {
+		this.statisticsEstimatedEngagement = statisticsEstimatedEngagement;
+	}
+
+
+	public String getStatisticsEstimatedEngagementPrice() {
+		return statisticsEstimatedEngagementPrice;
+	}
+
+
+	public void setStatisticsEstimatedEngagementPrice(String statisticsEstimatedEngagementPrice) {
+		this.statisticsEstimatedEngagementPrice = statisticsEstimatedEngagementPrice;
+	}
+
+
+	public String getStatisticsMale() {
+		return statisticsMale;
+	}
+
+
+	public void setStatisticsMale(String statisticsMale) {
+		this.statisticsMale = statisticsMale;
+	}
+
+
+	public String getStatisticsFemale() {
+		return statisticsFemale;
+	}
+
+
+	public void setStatisticsFemale(String statisticsFemale) {
+		this.statisticsFemale = statisticsFemale;
+	}
 
 }

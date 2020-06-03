@@ -82,7 +82,6 @@ class SignUp extends Component {
       }
     });
     let res = await response.json();
-    console.log(res);
     let formError = res.ferror;
     this.setState({
       e_name: formError.name,

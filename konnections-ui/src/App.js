@@ -14,6 +14,8 @@ import ViewProposal from './pages/ViewProposal';
 import { ProtectedRoute } from './components/protected.route';
 import Users from './pages/Users';
 import ProposalPreview from './pages/ProposalPreview';
+import ClientHome from './clientViews/ClientHome';
+import ClientProposalView from './clientViews/ClientProposalView';
 
 function App() {
   return (
@@ -21,17 +23,22 @@ function App() {
       <div className="App">
         <Switch>
           <Route path={'/'} exact component={Home} />
-          <Route path={'/signup'} component={SignUp} />
-          <ProtectedRoute path={'/dashboard'} component={Dashboard} />
-          <ProtectedRoute path={'/create-campaign'} component={CreateCampaign} />
-          <ProtectedRoute path={'/manage-influencer'} component={Influencer} />
-          <ProtectedRoute path={'/manage-proposal'} component={Manage_influencer} />
-          <ProtectedRoute path={'/create-influancer'} component={CreateInfluancer} />
-          <ProtectedRoute path={'/view-influancer/:id'} component={View_influancer} />
-          <ProtectedRoute path={'/edit-influancer/:id'} component={Edit_influancer} />
-          <ProtectedRoute path={'/view-proposal/:id'} component={ViewProposal} />
-          <ProtectedRoute path={'/proposal-preview'} component={ProposalPreview} />
-          <ProtectedRoute path={'/users'} component={Users} />
+          <Route path={'/signup'} exact component={SignUp} />
+          <ProtectedRoute path={'/dashboard'} client={true} exact component={Dashboard} />
+          <ProtectedRoute path={'/create-campaign'} exact component={CreateCampaign} />
+          <ProtectedRoute path={'/manage-influencer'} exact component={Influencer} />
+          <ProtectedRoute path={'/manage-proposal'} exact component={Manage_influencer} />
+          <ProtectedRoute path={'/create-influancer'} exact component={CreateInfluancer} />
+          <ProtectedRoute path={'/view-influancer/:id'} exact component={View_influancer} />
+          <ProtectedRoute path={'/edit-influancer/:id'} exact component={Edit_influancer} />
+          <ProtectedRoute path={'/view-proposal/:id'} exact component={ViewProposal} />
+          <ProtectedRoute path={'/proposal-preview'} exact component={ProposalPreview} />
+          <ProtectedRoute path={'/users'} exact component={Users} />
+
+          {/* // Client Screens */}
+          <ProtectedRoute path={'/proposals'} client={true} exact component={ClientHome} />
+          <ProtectedRoute path={'/proposals/view/:id'} client={true} exact component={ClientProposalView} />
+
         </Switch>
       </div>
     </Router >

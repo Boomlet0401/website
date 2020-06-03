@@ -3,6 +3,7 @@ import backIcon from '../assets/icons/back-arrow.svg';
 import menuLogo from '../assets/images/menu_logo.png';
 
 class TopBarBlock extends Component {
+
     constructor(props) {
         super(props);
         this.state = {

@@ -2,10 +2,6 @@ package boomlet.web.controller;
 
 import java.math.BigInteger;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -14,7 +10,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -95,7 +90,6 @@ public class UserController {
 	// create-influencer
 	@SuppressWarnings("unchecked")
 	@PostMapping("/create-influencer")
-
 	public Map<String, Object> createInfluncer(@RequestBody Map<String, Object> requestParams,
 			@RequestHeader Map<String, Object> requestHeader) {
 
@@ -120,10 +114,15 @@ public class UserController {
 		String contact_1 = (String) requestParams.get("contact_1");
 		String contact_2 = (String) requestParams.get("contact_2");
 		String contact_3 = (String) requestParams.get("contact_3");
-		String gender = (String) requestParams.get("gender");
+		String gender = (String) requestParams.get("gender");		
 		String type = (String) requestParams.get("type");
 		List<String> selectedLanguages = (List<String>) requestParams.get("selectedLanguages");
 		ArrayList<String> selectedLocations = (ArrayList<String>) requestParams.get("selectedLocations");
+		
+		ArrayList<String> selectedCountries = (ArrayList<String>) requestParams.get("selectedCountries");
+		ArrayList<String> selectedStates = (ArrayList<String>) requestParams.get("selectedState");
+		ArrayList<String> selectedCities = (ArrayList<String>) requestParams.get("selectedCity");
+		
 		ArrayList<String> selectedCategories = (ArrayList<String>) requestParams.get("selectedCategories");
 		ArrayList<String> selectedVendors = (ArrayList<String>) requestParams.get("selectedVendors");
 		String remark = (String) requestParams.get("remark");
@@ -163,6 +162,18 @@ public class UserController {
 		}
 		if (selectedLocations == null || selectedLocations.size() == 0) {
 			error.put("location", "Please select location");
+			validation = true;
+		}
+		if (selectedCountries == null || selectedCountries.size() == 0) {
+			error.put("countries", "Please select country");
+			validation = true;
+		}
+		if (selectedStates == null || selectedStates.size() == 0) {
+			error.put("states", "Please select state");
+			validation = true;
+		}
+		if (selectedCities == null || selectedCities.size() == 0) {
+			error.put("cities", "Please select city");
 			validation = true;
 		}
 		if (selectedCategories == null || selectedCategories.size() == 0) {
@@ -340,6 +351,7 @@ public class UserController {
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);
 		accessChecker.setEditor(true);
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
@@ -369,6 +381,7 @@ public class UserController {
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
 		}
@@ -791,12 +804,13 @@ public class UserController {
 	}
 
 	// create-proposal
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({ "unchecked" })
 	@PostMapping("/create-proposal")
 	public Map<String, Object> createProposal(@RequestBody Map<String, Object> requestParams,
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
 		}
@@ -822,6 +836,7 @@ public class UserController {
 
 		String brand_agency = (String) requestParams.get("brand_agency");
 		String brand_name = (String) requestParams.get("brand_name");
+		String client = (String) requestParams.get("client");
 		String client_name = (String) requestParams.get("client_name");
 		String strategist = (String) requestParams.get("strategist");
 		String contact_number = (String) requestParams.get("contact_number");
@@ -843,8 +858,11 @@ public class UserController {
 		if (brand_name == null || brand_name.equalsIgnoreCase("")) {
 			error.put("brand_name", "Please enter brand name");
 			validation = true;
+		}		
+		if (client == null || client.equalsIgnoreCase("")) {
+			error.put("client", "Please select client");
+			validation = true;
 		}
-
 		if (client_name == null || client_name.equalsIgnoreCase("")) {
 			error.put("client_name", "Please enter client name");
 			validation = true;
@@ -920,6 +938,13 @@ public class UserController {
 		ArrayList<Object> influencerDetailYoutube = (ArrayList<Object>) requestParams.get("influencerDetailYoutube");
 
 		ArrayList<Object> influencerAnalysis = (ArrayList<Object>) requestParams.get("influencerAnalysis");
+		
+		String statisticsSocialReach = (String) requestParams.get("statisticsSocialReach");
+		String statisticsEstimatedEngagement = (String) requestParams.get("statisticsEstimatedEngagement");
+		String statisticsEstimatedEngagementPrice = (String) requestParams.get("statisticsEstimatedEngagementPrice");
+		String statisticsMale = (String) requestParams.get("statisticsMale");
+		String statisticsFemale = (String) requestParams.get("statisticsFemale");
+		
 		ArrayList<Object> disclaimers = (ArrayList<Object>) requestParams.get("disclaimers");
 
 		boolean checkInfluencerAdd = false;
@@ -954,6 +979,7 @@ public class UserController {
 		proposal.setProposal_date(proposal_date);
 		proposal.setBrand_agency(brand_agency);
 		proposal.setBrand_name(brand_name);
+		proposal.setClient(Long.parseLong(client));
 		proposal.setClient_name(client_name);
 		proposal.setStrategist(strategist);
 		proposal.setContact_number(contact_number);
@@ -969,7 +995,7 @@ public class UserController {
 		proposal.setAdded_by(accessChecker.getUser().getName());
 		proposal.setAdded_by_id(accessChecker.getUser().getId());
 
-		proposal.setApproved(true);
+		proposal.setApproved(false);
 
 		proposal.setYoutubeColumns(gson.toJson(youtubeColumns));
 		proposal.setBlogColumns(gson.toJson(blogColumns));
@@ -987,7 +1013,14 @@ public class UserController {
 		proposal.setInfluencerDetailTiktok(gson.toJson(influencerDetailTiktok));
 		proposal.setInfluencerDetailYoutube(gson.toJson(influencerDetailYoutube));
 
-		proposal.setInfluencerAnalysis(gson.toJson(influencerAnalysis));
+		proposal.setInfluencerAnalysis(gson.toJson(influencerAnalysis));		
+		
+		proposal.setStatisticsSocialReach(statisticsSocialReach);
+		proposal.setStatisticsEstimatedEngagement(statisticsEstimatedEngagement);
+		proposal.setStatisticsEstimatedEngagementPrice(statisticsEstimatedEngagementPrice);
+		proposal.setStatisticsMale(statisticsMale);
+		proposal.setStatisticsFemale(statisticsFemale);
+		
 		proposal.setDisclaimers(gson.toJson(disclaimers));
 
 		BigInteger proposal_id = proposaldao.save(proposal);
@@ -1009,6 +1042,8 @@ public class UserController {
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);
+		accessChecker.setClient(true);		
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
 		}
@@ -1017,16 +1052,25 @@ public class UserController {
 		map.put("status", "error");
 		map.put("message", "");
 
-		List<Proposal> proposalList = proposaldao.list();
-		if (proposalList.size() > 0) {
-			map.put("status", "success");
-			map.put("message", "fetching list success");
-			map.put("list", proposalList);
-		} else {
-			map.put("status", "error");
-			map.put("message", "");
-			map.put("list", proposalList);
+		List<Proposal> proposalList;
+		if(accessChecker.userHaveAdminAcceess) {
+			proposalList = proposaldao.list();
+		}else if(accessChecker.userHavePublisherAcceess) {
+			proposalList = proposaldao.listForPublisher(accessChecker.getUser().getId());			
+		}else if(accessChecker.userHaveClientAccess) {
+			proposalList = proposaldao.listForClient(accessChecker.getUser().getId());			
+		}else {
+			proposalList = new ArrayList<Proposal>();
 		}
+		
+		
+		if (proposalList.size() > 0) {
+			
+		} 
+		
+		map.put("status", "success");
+		map.put("message", "fetching list success");
+		map.put("list", proposalList);
 
 		return map;
 
@@ -1038,6 +1082,8 @@ public class UserController {
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);
+		accessChecker.setClient(true);	
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
 		}
@@ -1069,6 +1115,7 @@ public class UserController {
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);		
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
 		}
@@ -1234,6 +1281,8 @@ public class UserController {
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);
+		accessChecker.setClient(true);	
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
 		}
@@ -1262,6 +1311,7 @@ public class UserController {
 			@RequestHeader Map<String, Object> requestHeader) {
 
 		AccessChecker accessChecker = new AccessChecker(requestHeader, userdao, usertokendao);
+		accessChecker.setPublisher(true);
 		if (!accessChecker.isAccess()) {
 			return accessChecker.getResponse();
 		}
@@ -1293,6 +1343,80 @@ public class UserController {
 			return map;
 		}
 
+	}
+	
+	@PostMapping("/add-employee")
+	public Map<String, Object> addEmployee(@RequestBody Map<String, Object> requestParams) {
+		
+		User user = new User();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", "error");
+		map.put("message", "");
+		
+		Map<String, String> error = new HashMap<String, String>();
+
+		String name = (String) requestParams.get("name");
+		String email = (String) requestParams.get("email");		
+		String mobile = (String) requestParams.get("mobile");
+
+		if (name == null || name.equalsIgnoreCase("")) {
+			error.put("name", "Please enter name");
+			map.put("ferror", error);
+			return map;
+		} else {
+			user.setName(name);
+		}
+
+		if (email == null || email.equalsIgnoreCase("")) {
+			error.put("email", "Please enter email address");
+			map.put("ferror", error);
+			return map;
+		} else {
+			user.setEmail(email);
+		}
+
+		if (mobile == null || mobile.equalsIgnoreCase("")) {
+			error.put("mobile", "Please enter mobile number");
+			map.put("ferror", error);
+			return map;
+		} else {
+			user.setMobile(mobile);
+		}
+
+		user.setPass("123456");
+		
+		User oldUser = new User();
+
+		// Check Email
+		oldUser = userdao.get(user.getEmail());
+		if (oldUser != null) {
+			error.put("email", "email already registered");
+			map.put("ferror", error);
+			return map;
+		}
+
+		// Check Mobile
+		oldUser = userdao.getByMobile(user.getMobile());
+		if (oldUser != null) {
+			error.put("mobile", "mobile number already registered");
+			map.put("ferror", error);
+			return map;
+		}
+		
+		map.put("ferror", error);		
+
+		long id = userdao.save(user);
+		if(id > 0) {			
+			map.put("status", "success");
+			map.put("message", "Employee added successfully");
+			return map;
+		}else {
+			map.put("status", "error");
+			map.put("message", "OOPS! Something wrong");
+			return map;
+		}
+		
+		
 	}
 
 }

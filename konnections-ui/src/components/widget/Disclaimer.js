@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Desclaimer_data from '../../data/Desclaimer_data';
 import { Form } from 'react-bootstrap';
 import Global from '../../data/Global';
 import { requestAPI } from '../../functions/load';
@@ -71,7 +70,6 @@ class Disclaimer extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
 
             const newDisclaimer = {

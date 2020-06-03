@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import sicialIcon from '../../../assets/icons/dashboard.svg';
 
 export default class YoutubeBlock extends Component {
@@ -12,9 +12,14 @@ export default class YoutubeBlock extends Component {
             title: "Blog", // Chnage this with correcr Social
         }
     }
+    componentDidMount() {
+        this.setState({
+            detailRows: this.props.influencerDetail,
+        });
+    }
 
     render() {
-        this.state.detailRows = this.props.influencerDetail;
+        // this.state.detailRows = this.props.influencerDetail;
         if (this.state.detailRows.length === 0) {
             return null;
         }

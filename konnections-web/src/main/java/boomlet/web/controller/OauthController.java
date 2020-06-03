@@ -34,7 +34,7 @@ public class OauthController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("status", "error");
 		map.put("message", "");
-
+		
 		Map<String, String> error = new HashMap<String, String>();
 
 		String name = (String) requestParams.get("name");
@@ -91,7 +91,9 @@ public class OauthController {
 			map.put("ferror", error);
 			return map;
 		}
+		
 		map.put("ferror", error);
+		user.setScops("client");
 
 		long id = userdao.save(user);
 		if(id > 0) {			
@@ -135,21 +137,19 @@ public class OauthController {
 		map.put("ferror", error);
 		User loginUser = userdao.checkLogin(email, pass);
 		if(loginUser == null) {
-			map.put("message","Wrong password");
+			map.put("message","Login/password Incorrect");
 			return map;
 		}		
 		if(loginUser.getScops() == null) {
-			map.put("message", "You don't have any permission");
+			map.put("message", "Login/password Incorrect");
 			return map;
 		}		
 		if(!loginUser.isActive()) {
 			String activeNote = loginUser.getActive_note() == null ? "Account not active" :loginUser.getActive_note();
 			map.put("message", activeNote);
 			return map;
-		}
-		
-		BigInteger insertedKey = userTokendao.generateToken(loginUser);
-		
+		}		
+		BigInteger insertedKey = userTokendao.generateToken(loginUser);		
 		if(insertedKey.longValue() > 0) {
 			
 			UserToken userToken = userTokendao.getToken(insertedKey.longValue());

@@ -7,21 +7,25 @@ export default class AnalyticBlock extends Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
             influencers: [],
         }
     }
 
+    componentDidMount() {
+        let influencer = this.props.influencers;
+        this.setState({
+            influencers: influencer,
+        });
+    }
+
 
     render() {
 
-        this.state.influencers = this.props.influencers;
         if (this.state.influencers.length === 0) {
             return null;
         }
 
-        var CanvasJS = CanvasJSReact.CanvasJS;
         var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
         return (
@@ -30,7 +34,6 @@ export default class AnalyticBlock extends Component {
                 {
                     this.state.influencers.map((inf, index) => {
 
-                        let profile = inf.profile;
                         let influencer = inf.influencer;
                         let detailRow = inf.detailRow;
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import INFLUENCER_DATA from '../../data/INFLUENCER_DATA';
 import { Form, Row, Col } from 'react-bootstrap';
 import pie_chart from '../../assets/icons/pie-chart.svg';
 import CanvasJSReact from '../../assets/css/canvasjs.react';
@@ -13,40 +12,25 @@ export default class AnalyticBlock extends Component {
         }
     }
 
+    componentDidMount() {
+        let influencer = this.props.influencers;
+        this.setState({
+            influencers: influencer,
+        });
+    }
+
 
     render() {
 
-        this.state.influencers = this.props.influencers;
         if (this.state.influencers.length === 0) {
             return null;
         }
 
-
-        var CanvasJS = CanvasJSReact.CanvasJS;
         var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-        const CheckBox = INFLUENCER_DATA.map((item, index) =>
-            <p key={index} className={'data-item'}>
-                <Form.Check
-                    className={''}
-                    custom
-                    checked
-                    style={{ fontSize: 12 }}
-                    name={item.title}
-                    label={item.title}
-                    id={item.title}
-                    type={'checkbox'} />
-            </p>
-        )
 
         return (
             <div className={'mt-4'}>
-                {/* <div className={'my-4'}>
-                    <p className={'data-p-tag'}>Data to be displayed</p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                        {CheckBox}
-                    </div>
-                </div> */}
                 <div className={'influencer_details_header_block'}>
                     <div className={'d-flex align-items-center'}>
                         <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600', margin: 0, }}>Analysis</p>
@@ -67,11 +51,9 @@ export default class AnalyticBlock extends Component {
                         </span>
                     </div>
                 </div>
-
                 {
                     this.state.influencers.map((inf, index) => {
 
-                        let profile = inf.profile;
                         let influencer = inf.influencer;
                         let detailRow = inf.detailRow;
 

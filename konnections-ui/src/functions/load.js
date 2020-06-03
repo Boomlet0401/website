@@ -27,3 +27,23 @@ export const requestAPI = (url, method, data) => new Promise((resolve, reject) =
     });
 });
 
+
+export function timespanToDate(timespan) {
+    let dateOb = new Date(timespan);
+    let year = dateOb.getFullYear();
+    let month = dateOb.getMonth() + 1;
+    let date = dateOb.getDate();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (date < 10) {
+        date = "0" + date;
+    }
+    let dateString = "";
+    dateString += year;
+    dateString += "-";
+    dateString += month;
+    dateString += "-";
+    dateString += date;
+    return dateString;
+}

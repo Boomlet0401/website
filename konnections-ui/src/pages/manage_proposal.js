@@ -7,8 +7,8 @@ import Global from '../data/Global';
 import { requestAPI } from '../functions/load';
 import { Spinner } from 'react-bootstrap';
 
-
 class Manage_influencer extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -29,12 +29,9 @@ class Manage_influencer extends Component {
         let data = this.state;
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
-
             let approvedList = [];
             let pendingList = [];
-
             res.list.forEach((item, index) => {
                 if (item.approved) {
                     approvedList.push(item);
@@ -42,12 +39,12 @@ class Manage_influencer extends Component {
                     pendingList.push(item);
                 }
             })
-
             this.setState({
-                list: res.list,
+                list: pendingList,
                 loading: false,
                 activeList: approvedList,
                 pendingList: pendingList,
+                activeTab: 'pending',
             });
         } else {
             this.setState({

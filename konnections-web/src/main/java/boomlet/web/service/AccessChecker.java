@@ -19,11 +19,19 @@ public class AccessChecker {
 	private boolean editor;
 	private boolean publisher;
 	private boolean manager;
+	private boolean client;
+	
 	private String token;
 	private UserDAO userDAO;
 	private UserTokenDAO userTokenDAO;
 	private UserToken userToken;
 	private User user;
+	
+	public boolean userHaveAdminAcceess;
+	public boolean userHaveEditorAcceess;
+	public boolean userHavePublisherAcceess;
+	public boolean userHaveManagerAcceess;
+	public boolean userHaveClientAccess;
 
 	public AccessChecker(Map<String, Object> requestHeader, UserDAO userDAO, UserTokenDAO userTokenDAO) {
 		this.requestHeader = requestHeader;
@@ -36,7 +44,15 @@ public class AccessChecker {
 		this.editor = false;
 		this.publisher = false;
 		this.manager = false;
+		this.client = false;
 		this.token = null;
+		
+		this.userHaveAdminAcceess = false;
+		this.userHaveEditorAcceess = false;
+		this.userHavePublisherAcceess = false;
+		this.userHaveManagerAcceess = false;
+		this.userHaveClientAccess = false;
+		
 		CheckUser();
 	}
 
@@ -124,20 +140,34 @@ public class AccessChecker {
 				return text.equalsIgnoreCase("campaign-manager");
 			}
 		});
+		
+		boolean clientScop = Arrays.stream(scops).anyMatch(new Predicate<String>() {
+			@Override
+			public boolean test(String text) {
+				return text.equalsIgnoreCase("client");
+			}
+		});
 				
 		if(admin && adminScop) {
+			this.userHaveAdminAcceess = true;
 			return true;
 		}else if(editor && editorScop) {
+			this.userHaveEditorAcceess = true;
 			return true;
 		}else if(publisher && publisherScop) {
+			this.userHavePublisherAcceess = true;
 			return true;
 		}else if(manager && managerScop) {
+			this.userHaveManagerAcceess = true;
+			return true;
+		}else if(client && clientScop) {
+			this.userHaveClientAccess = true;
 			return true;
 		}else {
 			this.response.put("authentication", "fail");
 			this.response.put("status_code", 114);
 			this.response.put("message", "OOPS! You don't have permission");
-			this.response.put("status", "error");
+			this.response.put("status", "error");			
 			return false;
 		}
 		
@@ -169,6 +199,14 @@ public class AccessChecker {
 
 	public void setManager(boolean manager) {
 		this.manager = manager;
+	}
+	
+	public boolean isClient() {
+		return client;
+	}
+
+	public void setClient(boolean client) {
+		this.client = client;
 	}
 
 	public UserToken getUserToken() {

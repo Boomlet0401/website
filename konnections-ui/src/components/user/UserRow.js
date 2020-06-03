@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import Global from '../../data/Global';
 import { requestAPI } from '../../functions/load';
@@ -7,24 +7,15 @@ export default class UserRow extends Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
-            active: false,
         }
     }
 
     componentDidMount() {
-        this.setState({
-            active: this.props.user.active,
-        });
+
     }
 
     async activeInactiveUser(user) {
-
-        this.setState({
-            active: !this.state.active
-        });
-
         let url = Global.API.ACTIVE_INACTIVE_USER;
         let data = {
             selectedUserId: user.id,
@@ -32,13 +23,8 @@ export default class UserRow extends Component {
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
         if (res.status === "success") {
-            this.setState({
-                active: res.active,
-            });
+            this.props.refereshList();
         } else {
-            this.setState({
-                active: !this.state.active,
-            });
             alert(res.message);
         }
     }
@@ -49,6 +35,7 @@ export default class UserRow extends Component {
 
         let user = this.props.user;
         let index = this.props.index;
+        let active = this.props.user.active;
 
         return (
             <>
@@ -59,19 +46,22 @@ export default class UserRow extends Component {
                     <td>{user.mobile}</td>
                     <td>
                         {
-                            user.scops == null ?
-                                <button onClick={() => this.props.showAddScops(user)} className={'btn btn-blue small'}>
-                                    {"ADD SCOPS"}
-                                </button>
+                            user.scops === "client" ?
+                                <span>{user.scops}</span>
                                 :
-                                <span>
-                                    {user.scops}
-                                    <button onClick={() => this.props.showAddScops(user)} className={'btn'}>
-                                        <span className="material-icons small">
-                                            {"edit"}
-                                        </span>
+                                user.scops === null ?
+                                    <button onClick={() => this.props.showAddScops(user)} className={'btn btn-blue small'}>
+                                        {"ADD ROLES"}
                                     </button>
-                                </span>
+                                    :
+                                    <span>
+                                        {user.scops}
+                                        <button onClick={() => this.props.showAddScops(user)} className={'btn'}>
+                                            <span className="material-icons small">
+                                                {"edit"}
+                                            </span>
+                                        </button>
+                                    </span>
                         }
                     </td>
                     <td>
@@ -79,8 +69,8 @@ export default class UserRow extends Component {
                             type="switch"
                             id={"user-active-switch-" + user.id}
                             label="Active/In-active user"
-                            checked={this.state.active}
-                            onChange={(event) => {
+                            checked={active}
+                            onChange={() => {
                                 this.activeInactiveUser(user);
                             }}
                         />
@@ -90,3 +80,4 @@ export default class UserRow extends Component {
         )
     }
 }
+

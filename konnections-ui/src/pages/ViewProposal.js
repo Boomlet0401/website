@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import TopBarBlock from '../components/TopBarBlock';
-import filter from '../assets/icons/filter.svg';
-import { Container, Row, Col, Table, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import styles from '../../src/components/CampaignRow/CampaignRow.module.css';
-import yt from '../assets/icons/youtube.svg';
-import pie_chart from '../assets/icons/pie-chart.svg';
-
 import male from '../assets/icons/male.svg';
 import female from '../assets/icons/Female.svg';
-import Desclaimer_data from '../data/Desclaimer_data';
 import Global from '../data/Global';
-import { requestAPI } from '../functions/load';
-
+import { requestAPI, timespanToDate } from '../functions/load';
 import YoutubeBlock from '../components/proposal/view/YoutubeBlock';
 import BlogBlock from '../components/proposal/view/BlogBlock';
 import FacebookBlock from '../components/proposal/view/FacebookBlock';
@@ -78,11 +72,8 @@ class ViewProposal extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
-
             let proposal = res.proposal;
-
             this.setState({
                 loading: false,
                 proposal: true,
@@ -117,6 +108,11 @@ class ViewProposal extends Component {
                 influencerDetailYoutube: JSON.parse(proposal.influencerDetailYoutube),
                 influencerAnalysis: JSON.parse(proposal.influencerAnalysis),
                 disclaimers: JSON.parse(proposal.disclaimers),
+                statisticsSocialReach: proposal.statisticsSocialReach,
+                statisticsEstimatedEngagement: proposal.statisticsEstimatedEngagement,
+                statisticsEstimatedEngagementPrice: proposal.statisticsEstimatedEngagementPrice,
+                statisticsMale: proposal.statisticsMale,
+                statisticsFemale: proposal.statisticsFemale,
             });
         } else {
             this.setState({
@@ -192,7 +188,7 @@ class ViewProposal extends Component {
 
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #00000038', padding: '10px 0px', }}>
                                                 <div style={{ display: 'flex', }}>
-                                                    <p className={styles.content_heading}><strong>Campaign Date: </strong>{this.state.proposal_date}</p>
+                                                    <p className={styles.content_heading}><strong>Campaign Date: </strong>{timespanToDate(this.state.proposal_date)}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -226,64 +222,69 @@ class ViewProposal extends Component {
                                         {/* End Block */}
 
                                         {/* Analysis Block */}
-                                        <div>
-                                            <p className={'font-weight-bold m-0 py-4'}>Analysis </p>
-                                            <div className={'analysis_main_container'}>
-                                                <AnalyticBlock influencers={this.state.influencerAnalysis} />
+                                        {
+                                            this.state.influencerAnalysis.length !== 0 &&
+                                            <div>
+                                                <p className={'font-weight-bold m-0 py-4'}>Analysis </p>
+                                                <div className={'analysis_main_container'}>
+                                                    <AnalyticBlock influencers={this.state.influencerAnalysis} />
+                                                </div>
                                             </div>
-
-                                        </div>
+                                        }
                                         {/* End Analysis Block */}
 
                                         {/* Overall analysis Block */}
-
-                                        <div>
-                                            <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Overall Statistics</p>
-
+                                        {
+                                            this.state.influencerAnalysis.length !== 0 &&
                                             <div>
-                                                <Row>
-                                                    <Col lg={3}>
-                                                        <div className={'analytic-widght-block'}>
-                                                            <p className={'analytic-widght-heading'}>1</p>
-                                                            <p className={'analytic-widght-title'}>Influencer selected</p>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={3}>
-                                                        <div className={'analytic-widght-block'} style={{ background: '#1DA1F2' }}>
-                                                            <p className={'analytic-widght-heading'}>5.7M</p>
-                                                            <p className={'analytic-widght-title'}>Social Reach</p>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={3}>
-                                                        <div className={'analytic-widght-block'} style={{ background: '#2FC996' }}>
-                                                            <p className={'analytic-widght-heading'}>35k</p>
-                                                            <p className={'analytic-widght-title'}>Estimated Engagement</p>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={3}>
-                                                        <div className={'gender-widght-block'}>
-                                                            <div className={'gender-widght-contain mb-3'}>
-                                                                <img alt="" style={{}} src={male} />
-                                                                <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>77%</p>
-                                                            </div>
-                                                            <div className={'gender-widght-contain'}>
-                                                                <img alt="" style={{}} src={female} />
-                                                                <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>37%</p>
-                                                            </div>
-                                                        </div>
-                                                    </Col>
-                                                    <Col lg={3}>
-                                                        <div className={'analytic-widght-block'} style={{ background: '#D342D9' }}>
-                                                            <p className={'analytic-widght-heading'}>35k</p>
-                                                            <p className={'analytic-widght-title'}>Estimated Engagement</p>
-                                                            <p className={'analytic-widght-title mt-3'}>Avg Estimated price</p>
-                                                            <p className={'analytic-widght-title'}>$894</p>
-                                                        </div>
-                                                    </Col>
-                                                </Row>
-                                            </div>
-                                        </div>
+                                                <p style={{ fontSize: 14, opacity: '84%', color: '#262626', fontWeight: '600' }}>Overall Statistics</p>
 
+                                                <div>
+                                                    <Row>
+                                                        <Col lg={3}>
+                                                            <div className={'analytic-widght-block'}>
+                                                                <p className={'analytic-widght-heading'}>{this.state.influencerAnalysis.length}</p>
+                                                                <p className={'analytic-widght-title'}>Influencer selected</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={3}>
+                                                            <div className={'analytic-widght-block'} style={{ background: '#1DA1F2' }}>
+                                                                <p className={'analytic-widght-heading'}>{this.state.statisticsSocialReach}</p>
+                                                                <p className={'analytic-widght-title'}>Social Reach</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={3}>
+                                                            <div className={'analytic-widght-block'} style={{ background: '#2FC996' }}>
+                                                                <p className={'analytic-widght-heading'}>{this.state.statisticsEstimatedEngagement}</p>
+                                                                <p className={'analytic-widght-title'}>Estimated Engagement</p>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={3}>
+                                                            <div className={'gender-widght-block'}>
+                                                                <div className={'gender-widght-contain mb-3'}>
+                                                                    <img alt="" style={{}} src={male} />
+                                                                    <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>
+                                                                        {this.state.statisticsMale + "%"}
+                                                                    </p>
+                                                                </div>
+                                                                <div className={'gender-widght-contain'}>
+                                                                    <img alt="" style={{}} src={female} />
+                                                                    <p style={{ fontSize: 17, opacity: '84%', color: '#78909C', fontWeight: '600', margin: '0px 30px', }}>
+                                                                        {this.state.statisticsFemale + "%"}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                        <Col lg={3}>
+                                                            <div className={'analytic-widght-block'} style={{ background: '#D342D9' }}>
+                                                                <p className={'analytic-widght-heading'}>{this.state.statisticsEstimatedEngagementPrice}</p>
+                                                                <p className={'analytic-widght-title'}>Avg Estimated price</p>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                </div>
+                                            </div>
+                                        }
                                         {/* End block */}
 
                                         {/* Disclaimer Block */}
@@ -312,9 +313,7 @@ class ViewProposal extends Component {
                                         {/* End this block */}
                                     </Container>
                                 </>
-
                     }
-
                 </div>
             </div>
         );

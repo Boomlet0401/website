@@ -18,6 +18,9 @@
 		base-package="boomlet.web.service" />
 	<!--Provide support for conversion, formatting and validation -->
 	<mvc:annotation-driven />
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
 	<!-- Define Spring MVC view resolver -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -97,6 +100,18 @@
 	</bean>
 	
 	<bean id="disclaimerdao" class="boomlet.app.daoimpl.DisclaimerImpl">
+		<property name="template" ref="jt"></property>
+	</bean>
+	
+	<bean id="countriesDAO" class="boomlet.app.daoimpl.CountriesImpl">
+		<property name="template" ref="jt"></property>
+	</bean>
+	
+	<bean id="statesDAO" class="boomlet.app.daoimpl.StatesImpl">
+		<property name="template" ref="jt"></property>
+	</bean>
+	
+	<bean id="citiesDAO" class="boomlet.app.daoimpl.CitiesImpl">
 		<property name="template" ref="jt"></property>
 	</bean>
 

@@ -11,6 +11,8 @@ public interface ProposalDAO {
 	public void update(Proposal user,long id);
 	public void delete(long id);
 	public List<Proposal> list();
-	public Proposal get(long id);	
+	public Proposal get(long id);
+	public List<Proposal> listForPublisher(long id); 
+	public List<Proposal> listForClient(long id); 
 
 }

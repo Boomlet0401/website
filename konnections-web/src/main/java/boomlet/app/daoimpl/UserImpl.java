@@ -24,8 +24,8 @@ public class UserImpl implements UserDAO {
 
 	@Override
 	public long save(User user) {
-		String sql = "INSERT INTO " + table_name + " (name,email,pass,mobile) VALUES(?,?,?,?)";
-		return jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPass(), user.getMobile());
+		String sql = "INSERT INTO " + table_name + " (name,email,pass,mobile,scops) VALUES(?,?,?,?,?)";
+		return jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getPass(), user.getMobile(),user.getScops());
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class UserImpl implements UserDAO {
 
 	@Override
 	public List<User> list() {
-		String sql = "SELECT * FROM " + table_name;
+		String sql = "SELECT * FROM " + table_name+" WHERE 1 ORDER BY name ASC";
 		return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class));
 	}
 

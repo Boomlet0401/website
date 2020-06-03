@@ -1,39 +1,21 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { timespanToDate } from '../functions/load';
 
 class ManageProposalBody extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
 
 
     render() {
 
-        Date.prototype.format = function (format) {
-            var date = {
-                'M+': this.getMonth() + 1,
-                'd+': this.getDate(),
-                'h+': this.getHours(),
-                'm+': this.getMinutes(),
-                's+': this.getSeconds(),
-                'q+': Math.floor((this.getMonth() + 3) / 3),
-                'S+': this.getMilliseconds()
-            };
-
-            if (/(y+)/i.test(format)) {
-                format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
-            }
-
-            for (var k in date) {
-                if (new RegExp('(' + k + ')').test(format)) {
-                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? date[k] : ('00' + date[k]).substr(('' + date[k]).length));
-                }
-            }
-
-            return format;
-        }
-
         let item = this.props.item;
-        let approvedDate = new Date(item.created_at).format('yyyy-MM-dd');
-
+        let approvedDate = timespanToDate(item.created_at);
 
         return (
             <div

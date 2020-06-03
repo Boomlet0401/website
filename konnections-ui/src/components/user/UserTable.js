@@ -16,7 +16,7 @@ export default class UserTable extends Component {
             contentPublisher: false,
             campaignManager: false,
             selectedUserId: "",
-            btnUpdateScopsText: "Update Scops",
+            btnUpdateScopsText: "Update Roles",
             btnUpdateScopsState: false,
             formError: [],
             messageSuccessScop: "",
@@ -33,9 +33,7 @@ export default class UserTable extends Component {
         let campaignManager = false;
 
         if (user.scops != null) {
-            console.log(user.scops)
             let scops = user.scops.split(",");
-
             if (this.findArrayElement(scops, 'admin')) {
                 administrator = true;
             } else {
@@ -77,11 +75,17 @@ export default class UserTable extends Component {
 
     changeScopeAdmin(value) {
         this.setState({
-            administrator: true,
+            administrator: value,
             contentEditor: false,
             contentPublisher: false,
             campaignManager: false,
         });
+        // this.setState({
+        //     administrator: true,
+        //     contentEditor: false,
+        //     contentPublisher: false,
+        //     campaignManager: false,
+        // });
     }
 
     changeScopsToOther() {
@@ -106,7 +110,6 @@ export default class UserTable extends Component {
         }
         let response = await requestAPI(url, "post", data);
         let res = await response.json();
-        console.log(res);
         if (res.status === "success") {
             this.setState({
                 btnUpdateScopsText: "Update Scops",
@@ -140,7 +143,6 @@ export default class UserTable extends Component {
 
     }
 
-
     render() {
         return (
             <>
@@ -151,7 +153,7 @@ export default class UserTable extends Component {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
-                            <th>Scops</th>
+                            <th>Roles</th>
                             <th>Active</th>
                         </tr>
                     </thead>
@@ -159,7 +161,11 @@ export default class UserTable extends Component {
                         {
                             this.props.userList.map((user, index) => {
                                 return (
-                                    <UserRow user={user} index={index} key={index}
+                                    <UserRow
+                                        key={index}
+                                        user={user}
+                                        index={index}
+                                        refereshList={this.props.refereshList}
                                         showAddScops={this.showAddScops} />
                                 );
                             })
@@ -169,7 +175,7 @@ export default class UserTable extends Component {
 
                 <Modal show={this.state.showScopAdd}>
                     <Modal.Header>
-                        <Modal.Title>Add Scops to user</Modal.Title>
+                        <Modal.Title>Add Roles to user</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {
