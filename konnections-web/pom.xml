@@ -95,7 +95,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>src/main/resources/static</directory>
+							<directory>src/main/webapp/</directory>
 							<includes>
 								<include>static/</include>
 								<include>*.json</include>
@@ -120,7 +120,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>src/main/resources/static/</outputDirectory>
+							<outputDirectory>src/main/webapp/</outputDirectory>
 							<overwrite>true</overwrite>
 							<resources>
 								<resource>
